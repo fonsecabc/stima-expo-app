@@ -8,4 +8,10 @@ export class ApiEntitiesEndpointRepository implements ApiEntitiesEndpointContrac
         return [{ 'accessToken': accessToken }]
 
     }
+
+    async getClientList(params: ApiEntitiesEndpointContract.GetClientList.Params): Promise<ApiEntitiesEndpointContract.GetClientList.Response> {
+        const { accessToken } = params
+        return [{ 'accessToken': accessToken }]
+
+    }
 }

@@ -7,5 +7,6 @@ export interface Evaluation {
     bioimpedance: object
     measurements: object
     nutricionistForm: object
+    nutritionalRoutine: string
     createdAt: Date
 }

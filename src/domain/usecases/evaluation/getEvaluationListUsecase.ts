@@ -1,3 +1,5 @@
+import { EvaluationListObject } from '@/domain/entities'
+
 export interface GetEvaluationListUsecase {
     getList: (params: GetEvaluationListUsecase.Params) => Promise<GetEvaluationListUsecase.Response>
 }
@@ -6,5 +8,5 @@ export namespace GetEvaluationListUsecase {
         accessToken: string
     }
 
-    export type Response = object[] | undefined
+    export type Response = EvaluationListObject[] | undefined
 }
