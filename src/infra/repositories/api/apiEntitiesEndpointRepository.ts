@@ -14,4 +14,10 @@ export class ApiEntitiesEndpointRepository implements ApiEntitiesEndpointContrac
         return [{ 'accessToken': accessToken }]
 
     }
+
+    async getUser(params: ApiEntitiesEndpointContract.GetUser.Params): Promise<ApiEntitiesEndpointContract.GetUser.Response> {
+        const { accessToken } = params
+        return [{ 'accessToken': accessToken }]
+
+    }
 }
