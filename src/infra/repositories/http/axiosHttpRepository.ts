@@ -1,7 +1,7 @@
-import { HttpRequest, HttpResponse, HttpClient } from '@/domain/contracts'
+import { HttpRequest, HttpResponse, HttpClientContract } from '@/domain/contracts'
 import axios, { AxiosResponse } from 'axios'
 
-export class AxiosHttpClient implements HttpClient {
+export class AxiosHttpRepository implements HttpClientContract {
     async request(data: HttpRequest): Promise<HttpResponse> {
         let axiosResponse: AxiosResponse
         if (!data.url.startsWith('http://') && !data.url.startsWith('https://')) data.url = `https://${data.url}`
