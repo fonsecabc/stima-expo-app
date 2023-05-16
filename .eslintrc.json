@@ -46,5 +46,10 @@
       "build",
       "dist",
       "public"
-    ]
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
 }
