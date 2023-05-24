@@ -6,13 +6,14 @@ import { LoadEvaluationListUsecase } from '@/domain/usecases'
 export class LoadEvaluationListService implements LoadEvaluationListUsecase {
     constructor(
         private readonly axiosHttpRepository: HttpClientContract<EvaluationListObject[]>,
+        private readonly apiEndpoint: string
     ) { }
 
     async perform(params: LoadEvaluationListUsecase.Params): Promise<LoadEvaluationListUsecase.Response> {
         const { accessToken, userUid } = params
         const response = await this.axiosHttpRepository.request({
-            url:'',
-            method: 'POST',
+            url: `${this.apiEndpoint}/evaluations`,
+            method: 'GET',
             body: { userUid, type: GetType.LIST },
             headers: {
                 'Content-Type': 'application/json',

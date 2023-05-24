@@ -1,5 +1,6 @@
-import { LoadEvaluationListService } from '@/application/services'
 import { AxiosHttpRepositoryFactory } from '@/main/factories'
+import { variables } from '@/main/config'
+import { LoadEvaluationListService } from '@/application/services'
 
 export class LoadEvaluationListServiceFactory {
     private static instance: LoadEvaluationListServiceFactory
@@ -14,7 +15,8 @@ export class LoadEvaluationListServiceFactory {
 
     public make(): LoadEvaluationListService {
         return new LoadEvaluationListService(
-            AxiosHttpRepositoryFactory.getInstance().make()
+            AxiosHttpRepositoryFactory.getInstance().make(),
+            variables.apiEndpoint
         )
     }
 }
