@@ -1,5 +1,5 @@
-import { AxiosHttpRepositoryFactory } from '@/main/factories'
 import { variables } from '@/main/config'
+import { AxiosHttpRepositoryFactory } from '@/main/factories'
 import { LoadEvaluationListService } from '@/application/services'
 
 export class LoadEvaluationListServiceFactory {

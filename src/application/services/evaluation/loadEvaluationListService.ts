@@ -12,7 +12,7 @@ export class LoadEvaluationListService implements LoadEvaluationListUsecase {
     async perform(params: LoadEvaluationListUsecase.Params): Promise<LoadEvaluationListUsecase.Response> {
         const { accessToken, userUid } = params
         const response = await this.axiosHttpRepository.request({
-            url: `${this.apiEndpoint}/evaluations`,
+            url: `${this.apiEndpoint}/evaluation`,
             method: 'GET',
             body: { userUid, type: GetType.LIST },
             headers: {
