@@ -4,13 +4,13 @@ import { HttpRequest, HttpResponse, HttpClientContract } from '../../domain/cont
 
 import axios, { AxiosResponse } from 'axios'
 
-export class HttpRepository implements HttpClientContract {
+export class HttpRepository<R> implements HttpClientContract {
     public static async getInstance<R>(): Promise<HttpClientContract> {
-        const instance: HttpClientContract<R> = new HttpRepository()
+        const instance: HttpClientContract = new HttpRepository<R>()
         return instance
     }
 
-    async request(data: HttpRequest): Promise<HttpResponse> {
+    async request(data: HttpRequest): Promise<HttpResponse<R>> {
         let axiosResponse: AxiosResponse
         if (!data.url.startsWith('http://') && !data.url.startsWith('https://')) data.url = `https://${data.url}`
 
@@ -20,10 +20,10 @@ export class HttpRepository implements HttpClientContract {
                 method: data.method,
                 data: { apiKey: variables.apiKey, ...data.body },
                 headers: {
+                    ...data.headers,
+                    'Access-Control-Allow-Origin': 'http://localhost:19006',
                     'Content-Type': 'application/json', 
                     'Accept': '*/*',
-                    'Access-Control-Allow-Origin': 'http://localhost:19006',
-
                 }
             })
         } catch (err: any) {
@@ -33,9 +33,15 @@ export class HttpRepository implements HttpClientContract {
                 body: { error: error.message }
             }
         }
+        if (axiosResponse.status >= 200 && axiosResponse.status < 300) {
+            return {
+                statusCode: axiosResponse.status,
+                body: { data: axiosResponse.data }
+            }
+        }
         return {
             statusCode: axiosResponse.status,
-            body: axiosResponse.data
+            body: { error: axiosResponse.data.error }
         }
     }
 }

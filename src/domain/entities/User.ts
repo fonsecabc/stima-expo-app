@@ -1,4 +1,6 @@
-export interface User {
+import { User as FirebaseUser } from 'firebase/auth'
+
+export interface User extends FirebaseUser {
     uid: string
     name: string
     email: string

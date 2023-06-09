@@ -1,6 +1,6 @@
-import { AuthRepository } from '../../../infra/repositories'
+import { AuthRepository, LocalStorageRepository } from '../../../infra/repositories'
 
 export async function signOutUserService() {
-    
-    return await AuthRepository.instance.signOut()
+    await AuthRepository.instance.signOut()
+    await LocalStorageRepository.instance.removeData({ key: 'currentUser' })
 }

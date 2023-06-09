@@ -11,9 +11,7 @@ SendResetPasswordEmailContract {
     async loginWithEmailAndPassword(params: LoginWithEmailAndPasswordContract.Params): Promise<LoginWithEmailAndPasswordContract.Response> {
         const { email, password } = params
         try {
-            await authentication.signInWithEmailAndPassword(auth, email, password)
-            
-            return true
+            return (await authentication.signInWithEmailAndPassword(auth, email, password)).user
         } catch (err: any) {
             return await HandlerErrorService(err.code)
         }

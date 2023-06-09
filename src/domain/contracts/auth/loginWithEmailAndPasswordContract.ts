@@ -1,3 +1,5 @@
+import { User as FirebaseUser } from 'firebase/auth'
+
 export interface LoginWithEmailAndPasswordContract {
     loginWithEmailAndPassword: (params: LoginWithEmailAndPasswordContract.Params) => Promise<LoginWithEmailAndPasswordContract.Response>
 }
@@ -8,5 +10,5 @@ export namespace LoginWithEmailAndPasswordContract {
         password: string
     }
 
-    export type Response = true | Error
+    export type Response = FirebaseUser | Error
 }

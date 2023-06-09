@@ -1,6 +1,6 @@
 import { QueryOperators } from '../enums'
 
-export interface GetQuery {
+export type GetQuery = {
     param: string
     operator: QueryOperators
     comparison: string
