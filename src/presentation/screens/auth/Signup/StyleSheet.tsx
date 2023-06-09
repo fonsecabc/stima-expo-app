@@ -4,8 +4,9 @@ import { Colors, Shadows, Fonts } from '../../../styles'
 
 export const styleSheet = StyleSheet.create({
     image: {
-        width: '300',
-        height: '300',
+        width: 100,
+        height: 20,
+        margin: 20
     },
     container: {
         margin: 20,

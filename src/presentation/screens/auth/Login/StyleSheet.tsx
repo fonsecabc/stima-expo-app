@@ -3,10 +3,6 @@ import { Colors, Shadows, Fonts } from '../../../styles'
 
 
 export const styleSheet = StyleSheet.create({
-    image: {
-        width: '300',
-        height: 'auto',
-    },
     container: {
         margin: 20,
         padding: 20,

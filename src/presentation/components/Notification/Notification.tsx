@@ -1,7 +1,7 @@
 import React from 'react'
 import { styleSheet } from './StylesSheet'
 import { Text, View } from 'react-native'
-import { ExclamationTriangleIcon, CheckCircleIcon  } from 'react-native-heroicons/solid'
+import { ExclamationTriangleIcon, CheckCircleIcon  } from 'react-native-heroicons/outline'
 import { Colors } from '../../styles'
 
 interface NotificationProps {

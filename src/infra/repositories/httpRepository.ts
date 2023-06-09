@@ -1,6 +1,8 @@
-import { HttpRequest, HttpResponse, HttpClientContract } from '../../domain/contracts'
-import axios, { AxiosResponse } from 'axios'
 import { variables } from '../../main/config'
+import { HandlerErrorService } from '../../application/services'
+import { HttpRequest, HttpResponse, HttpClientContract } from '../../domain/contracts'
+
+import axios, { AxiosResponse } from 'axios'
 
 export class HttpRepository implements HttpClientContract {
     public static async getInstance<R>(): Promise<HttpClientContract> {
@@ -17,12 +19,15 @@ export class HttpRepository implements HttpClientContract {
                 url: data.url,
                 method: data.method,
                 data: { apiKey: variables.apiKey, ...data.body },
-                headers: data.headers
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Accept': '*/*',
+                    'Access-Control-Allow-Origin': 'http://localhost:19006',
+
+                }
             })
-        } catch (error: any) {
-            if (error.message === 'Network Error') {
-                error.message = 'Sem conexão'
-            }
+        } catch (err: any) {
+            const error = await HandlerErrorService(err.message)
             return {
                 statusCode: 400,
                 body: { error: error.message }

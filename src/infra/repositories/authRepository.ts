@@ -1,17 +1,12 @@
 import { auth } from '../../main/config'
-import * as authentication from 'firebase/auth'
+import { HandlerErrorService } from '../../application/services'
 import { LoginWithEmailAndPasswordContract, SendResetPasswordEmailContract } from '../../domain/contracts'
-import { EntityDoesntExistError, InvalidParamError, UnknownError } from '../../domain/errors'
 
+import * as authentication from 'firebase/auth'
 export class AuthRepository implements 
 LoginWithEmailAndPasswordContract,
 SendResetPasswordEmailContract {
     public static readonly instance: AuthRepository = new AuthRepository()
-    private ErrorMap: Map<string,Error> = new Map([
-        ['auth/user-not-found', new EntityDoesntExistError('Usuário')],
-        ['auth/invalid-email', new InvalidParamError('Email')],
-        ['auth/wrong-password', new InvalidParamError('Senha')],
-    ])
 
     async loginWithEmailAndPassword(params: LoginWithEmailAndPasswordContract.Params): Promise<LoginWithEmailAndPasswordContract.Response> {
         const { email, password } = params
@@ -20,18 +15,30 @@ SendResetPasswordEmailContract {
             
             return true
         } catch (err: any) {
-            return this.ErrorMap.get(err.code) ?? new UnknownError()
+            return await HandlerErrorService(err.code)
         }
     }
     
-    async SendResetPasswordEmail(params: SendResetPasswordEmailContract.Params): Promise<SendResetPasswordEmailContract.Response> {
+    async sendResetPasswordEmail(params: SendResetPasswordEmailContract.Params): Promise<SendResetPasswordEmailContract.Response> {
         const { email } = params
         try {
             await authentication.sendPasswordResetEmail(auth, email)
             
             return true
         } catch (err: any) {
-            return this.ErrorMap.get(err.code) ?? new UnknownError()
+            return await HandlerErrorService(err.code)
         }
     }
+
+    async signOut(): Promise<true | Error> {
+        try {
+            await authentication.signOut(auth)
+            
+            return true
+        } catch(err: any) {
+            return await HandlerErrorService(err.code)
+        }
+    }
+
+
 }

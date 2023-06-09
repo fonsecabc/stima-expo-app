@@ -1,8 +1,8 @@
 import { styleSheet } from './StyleSheet'
 import React, { ReactNode, useState } from 'react'
-import { Image, View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { ResetPasswordService } from '../../../../application/services'
-import { Button, CustomTextInput, Screen, Notification, Loader } from '../../../components'
+import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
 import validator from 'validator'
 
 interface ResetPasswordScreenProps {
@@ -45,7 +45,7 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps) => {
         <Screen background='gray'>
             {notification && <Notification text={notificationText} type={'error'}/>}
             {isLoading && <Loader/>}
-            <Image style={styleSheet.image} source={require('../../../public/logo-gradient.png')} />
+            <Logo/>
             <View style={[styleSheet.container]}>
                 <Text style={styleSheet.title}>Resetar Senha</Text>
                 <CustomTextInput 

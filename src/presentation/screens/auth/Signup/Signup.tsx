@@ -1,8 +1,8 @@
 import { styleSheet } from './StyleSheet'
 import React, { useState, useEffect, useRef } from 'react'
-import { Image, View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { CreateUserService } from '../../../../application/services'
-import { Button, CustomTextInput, Screen, Notification, Loader } from '../../../components'
+import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
 import validator from 'validator'
 
 interface SignupScreenProps {
@@ -63,7 +63,7 @@ export const SignupScreen = (props: SignupScreenProps) => {
         <Screen background='gray'>
             {notification && <Notification text={notificationText} type={'error'}/>}
             {isLoading && <Loader/>}
-            <Image style={styleSheet.image} source={require('../../../public/logo-gradient.png')} />
+            <Logo/>
             <View style={[styleSheet.container]}>
                 <Text style={styleSheet.title}>Crie sua conta</Text>
                 <CustomTextInput 
