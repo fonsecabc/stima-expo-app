@@ -15,6 +15,6 @@ export type HttpResponse<T = any> = {
   statusCode: number
   body: {
     error?: string,
-    data: T
+    data?: T
   }
 }

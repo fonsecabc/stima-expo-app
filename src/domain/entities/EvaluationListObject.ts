@@ -1,4 +1,4 @@
-import { NutritionalRoutineStatus } from '@/domain/enums'
+import { NutritionalRoutineStatus } from '../enums'
 
 export interface EvaluationListObject {
     uid: string

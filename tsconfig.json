@@ -8,15 +8,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "baseUrl": "./src",
-    "paths": { 
-      "@/*": [
-        "*"
-      ]
-    }
+    "jsx": "react-native"
   },
-  "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+  "compileOnSave": false,
+  "include": ["src", "App.tsx"  ]
 }

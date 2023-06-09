@@ -1,5 +1,5 @@
-import { Client } from '@/domain/entities'
-import { NutritionalRoutineStatus } from '@/domain/enums'
+import { Client } from '.'
+import { NutritionalRoutineStatus } from '../enums'
 
 export type Evaluation = {
     uid: string

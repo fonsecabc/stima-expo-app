@@ -1,4 +1,4 @@
-import { QueryOperators } from '@/domain/enums'
+import { QueryOperators } from '../enums'
 
 export interface GetQuery {
     param: string

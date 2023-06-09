@@ -4,10 +4,13 @@
     "slug": "App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "@/presentation/public/icon.png",
+    "plugins": [
+      "expo-build-properties"
+    ],
+    "icon": "./src/presentation/public/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "@/presentation/public/splash.png",
+      "image": "./src/presentation/public/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,16 +18,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.stima"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "@/presentation/public/adaptive-icon.png",
+        "foregroundImage": "./src/presentation/public/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.stima"
     },
     "web": {
-      "favicon": "@/presentation/public/favicon.png"
+      "favicon": "./src/presentation/public/favicon.png"
     }
   }
 }
