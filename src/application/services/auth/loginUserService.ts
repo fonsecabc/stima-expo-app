@@ -1,8 +1,9 @@
-import { User } from 'firebase/auth'
-import { LoginUserUsecase } from '../../../domain/usecases'
-import { AuthRepository, LocalStorageRepository } from '../../../infra/repositories'
 import { GetEntityService } from '../entities'
 import { GetType } from '../../../domain/enums'
+import { LoginUserUsecase } from '../../../domain/usecases'
+import { AuthRepository, LocalStorageRepository } from '../../../infra/repositories'
+
+import { User } from 'firebase/auth'
 
 export async function LoginUserService(params: LoginUserUsecase.Params): Promise<LoginUserUsecase.Response> {
     const { email, password } = params

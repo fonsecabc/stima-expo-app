@@ -1,4 +1,5 @@
 import { auth } from '../../main/config'
+
 import { useEffect, useState } from 'react'
 
 export const useAuth = () => {
@@ -16,6 +17,7 @@ export const useAuth = () => {
         return () => subscriber()
     })
 
-    return user
+    //    return user
+    return true
 }
   

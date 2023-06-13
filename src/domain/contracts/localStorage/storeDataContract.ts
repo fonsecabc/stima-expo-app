@@ -1,5 +1,5 @@
 export interface StoreDataContract {
-    storeData: (params: StoreDataContract.Params) => Promise<StoreDataContract.Response>
+    storeData(params: StoreDataContract.Params): Promise<StoreDataContract.Response>
 }
 
 export namespace StoreDataContract {

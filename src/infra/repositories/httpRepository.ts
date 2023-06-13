@@ -4,13 +4,13 @@ import { HttpRequest, HttpResponse, HttpClientContract } from '../../domain/cont
 
 import axios, { AxiosResponse } from 'axios'
 
-export class HttpRepository<R> implements HttpClientContract {
-    public static async getInstance<R>(): Promise<HttpClientContract> {
-        const instance: HttpClientContract = new HttpRepository<R>()
+export class HttpRepository<T> implements HttpClientContract {
+    public static async getInstance<T>(): Promise<HttpClientContract<T>> {
+        const instance: HttpClientContract<T> = new HttpRepository<T>()
         return instance
     }
 
-    async request(data: HttpRequest): Promise<HttpResponse<R>> {
+    async request(data: HttpRequest): Promise<HttpResponse<T>> {
         let axiosResponse: AxiosResponse
         if (!data.url.startsWith('http://') && !data.url.startsWith('https://')) data.url = `https://${data.url}`
 
@@ -26,22 +26,17 @@ export class HttpRepository<R> implements HttpClientContract {
                     'Accept': '*/*',
                 }
             })
+
+            return {
+                statusCode: axiosResponse.status,
+                body: axiosResponse.data
+            }
         } catch (err: any) {
             const error = await HandlerErrorService(err.message)
             return {
                 statusCode: 400,
-                body: { error: error.message }
+                body: error.message
             }
-        }
-        if (axiosResponse.status >= 200 && axiosResponse.status < 300) {
-            return {
-                statusCode: axiosResponse.status,
-                body: { data: axiosResponse.data }
-            }
-        }
-        return {
-            statusCode: axiosResponse.status,
-            body: { error: axiosResponse.data.error }
         }
     }
 }

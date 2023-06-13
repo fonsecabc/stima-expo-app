@@ -1,5 +1,5 @@
 export interface SendResetPasswordEmailContract {
-    sendResetPasswordEmail: (params: SendResetPasswordEmailContract.Params) => Promise<SendResetPasswordEmailContract.Response>
+    sendResetPasswordEmail(params: SendResetPasswordEmailContract.Params): Promise<SendResetPasswordEmailContract.Response>
 }
 
 export namespace SendResetPasswordEmailContract {

@@ -1,15 +1,16 @@
 import { styleSheet } from './StyleSheet'
+import { CreateEntityService } from '../../../../application/services'
+import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
+
+import validator from 'validator'
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { CreateUserService } from '../../../../application/services'
-import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
-import validator from 'validator'
 
 interface SignupScreenProps {
     navigation: any
 }
 
-export const SignupScreen = (props: SignupScreenProps) => {
+export const SignupScreen = ({ navigation }: SignupScreenProps) => {
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
     
@@ -38,8 +39,7 @@ export const SignupScreen = (props: SignupScreenProps) => {
     }
 
     useEffect(() => {
-        const state = checkPassword(password)
-        isValidPassword.current = state
+        isValidPassword.current = checkPassword(password)
     }, [password])
 
     async function SignupUser() {
@@ -49,12 +49,11 @@ export const SignupScreen = (props: SignupScreenProps) => {
         setIsValidEmail(emailIsValid)
         if (passwordIsValid  && emailIsValid) {
             setLoading(true)
-            const isCreated = await CreateUserService({ email, password, passwordConfirmation })
+            const isCreated = await CreateEntityService({ entity: 'user', body: { email, password, passwordConfirmation } })
             setLoading(false)
             if (isCreated instanceof Error) {
                 setNotificationText(isCreated.message)
                 showNotification(true)
-                console.log(isCreated.message)
             }
         } 
     }
@@ -90,10 +89,17 @@ export const SignupScreen = (props: SignupScreenProps) => {
                     <View style={[ styleSheet.passwordValidator, passwordState.current >= 4 && styleSheet.passwordValidator4 ]}/>
                 </View>
                 <Text style={[styleSheet.smText]}>
-                    {passwordState.current === 1 && 'Extremamente fraca'}
-                    {passwordState.current === 2 && 'Fraca'}
-                    {passwordState.current === 3 && 'Satisfatória'}
-                    {passwordState.current === 4 && 'Excelente'}
+                    {`${
+                        passwordState.current === 1
+                            ? 'Extremamente fraca'
+                            : passwordState.current === 2
+                                ? 'Fraca'
+                                : passwordState.current === 3
+                                    ? 'Satisfatória'
+                                    : passwordState.current === 4 
+                                        ? 'Excelente'
+                                        : ''
+                    }`}
                 </Text>
                 <CustomTextInput 
                     const={passwordConfirmation}
@@ -109,7 +115,7 @@ export const SignupScreen = (props: SignupScreenProps) => {
                 </Text>
                 <Button style={{ marginTop: 25 }} action={SignupUser} text='Criar' isDisabled={false}/>
                 <Text style={styleSheet.text}>
-                    Já tem conta? <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+                    Já tem conta? <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                         <Text style={styleSheet.link}>Entre</Text>
                     </TouchableOpacity>
                 </Text>

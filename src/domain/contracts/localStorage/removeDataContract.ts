@@ -1,5 +1,5 @@
 export interface RemoveDataContract {
-    removeData: (params: RemoveDataContract.Params) => Promise<RemoveDataContract.Response>
+    removeData(params: RemoveDataContract.Params): Promise<RemoveDataContract.Response>
 }
 
 export namespace RemoveDataContract {

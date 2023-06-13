@@ -5,16 +5,13 @@ export type HttpRequest = {
   headers?: any
 }
 
-export interface HttpClientContract<R = any> {
-  request: (data: HttpRequest) => Promise<HttpResponse<R>>
+export interface HttpClientContract<T = any> {
+  request(data: HttpRequest): Promise<HttpResponse<T>>
 }
 
 export type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE'
 
-export type HttpResponse<T = any> = {
+export type HttpResponse<R = any> = {
   statusCode: number
-  body: {
-    error?: string,
-    data?: T
-  }
+  body: R
 }

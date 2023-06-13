@@ -1,4 +1,4 @@
-import { User, Evaluation, Client } from '../../entities'
+import { Entity } from '../../entities'
 
 export namespace CreateEntityUsecase {
     export type Params = {
@@ -7,5 +7,5 @@ export namespace CreateEntityUsecase {
         body: object
     }
 
-    export type Response<Entity = User | Evaluation | Client> = Entity | Error
+    export type Response = Entity | Error
 }

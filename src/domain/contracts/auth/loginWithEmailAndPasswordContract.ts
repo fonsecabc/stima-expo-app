@@ -1,7 +1,7 @@
 import { User as FirebaseUser } from 'firebase/auth'
 
 export interface LoginWithEmailAndPasswordContract {
-    loginWithEmailAndPassword: (params: LoginWithEmailAndPasswordContract.Params) => Promise<LoginWithEmailAndPasswordContract.Response>
+    loginWithEmailAndPassword(params: LoginWithEmailAndPasswordContract.Params): Promise<LoginWithEmailAndPasswordContract.Response>
 }
 
 export namespace LoginWithEmailAndPasswordContract {
