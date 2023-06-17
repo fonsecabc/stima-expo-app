@@ -13,5 +13,5 @@ export type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE'
 
 export type HttpResponse<R = any> = {
   statusCode: number
-  body: R
+  body: R | string
 }

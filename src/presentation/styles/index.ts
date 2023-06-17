@@ -1,4 +1,6 @@
+export * from './Text'
 export * from './Fonts'
 export * from './Colors'
 export * from './Shadows'
+export * from './Container'
 export * from './Width&Height'

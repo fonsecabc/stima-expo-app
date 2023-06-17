@@ -1,26 +1,26 @@
-import { styleSheet } from './StyleSheet'
-import React, { ReactNode, useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { AlertContext } from '../../../contexts'
+import { Container, Text, Title } from './styles'
 import { LoginUserService } from '../../../../application/services'
-import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
-import validator from 'validator'
+import { Button, CustomTextInput, Screen, Logo } from '../../../components'
 
+import validator from 'validator'
+import { TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react'
 interface LoginScreenProps {
-    navigation: any
-    children: ReactNode
+  navigation: any
 }
 
-export const LoginScreen = (props: LoginScreenProps) => {
+export const LoginScreen = ({ navigation }: LoginScreenProps) => {
+
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
-    
+
     const [password, setPassword] = useState('')
     const [isValidPassword, setisValidPassword] = useState(true)
-    
+
     const [isLoading, setLoading] = useState(false)
 
-    const [notification, showNotification] = useState(false)
-    const [notificationText, setNotificationText] = useState('')
+    const { pushNewAlert } = useContext(AlertContext)
 
     function checkPassword(password: string) {
         const uniqueChars = [...new Set(password)]
@@ -36,57 +36,61 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
         return isValid
     }
-    
+
     async function LoginUser() {
         const passwordIsValid = checkPassword(password)
         const emailIsValid = checkEmail(email)
 
         if (emailIsValid && passwordIsValid) {
             setLoading(true)
-            const isLoggedIn = await LoginUserService({ email, password })
+            const response = await LoginUserService({ email, password })
             setLoading(false)
-            if (isLoggedIn instanceof Error) {
-                setNotificationText(isLoggedIn.message)
-                showNotification(true)
-                console.log(isLoggedIn.message)
+            if (response instanceof Error) {
+                pushNewAlert(response.message, 'error')
             }
         }
     }
 
     return (
         <Screen background='gray'>
-            {notification && <Notification text={notificationText} type={'error'}/>}
-            {isLoading && <Loader/>}
-            <Logo/>
-            <View style={[styleSheet.container]}>
-                <Text style={styleSheet.title}>Login</Text>
-                <CustomTextInput 
-                    const={email}
+            <Logo />
+            <Container>
+                <Title>Login</Title>
+                <CustomTextInput
+                    value={email}
                     isValid={isValidEmail}
                     isRequired={true}
                     placeholder='Email'
                     contentType='emailAddress'
-                    setConstAction={setEmail}
+                    setValueAction={setEmail}
                 />
-                <CustomTextInput 
-                    const={password}
+                <CustomTextInput
+                    value={password}
                     isValid={isValidPassword}
                     isSecured={true}
                     isRequired={true}
                     placeholder='Senha'
                     contentType='password'
-                    setConstAction={setPassword}
+                    setValueAction={setPassword}
                 />
-                <Button style={{ marginTop: 25 }} action={LoginUser} text='Entrar' isDisabled={false}/>
-                <Text style={[styleSheet.text]}>
-                    Novo usuário? <TouchableOpacity onPress={() => props.navigation.navigate('Signup')}>
-                        <Text style={styleSheet.link}>Cadastrar</Text>
+                <Button
+                    style={{ marginTop: 25 }}
+                    action={LoginUser}
+                    text='ENTRAR'
+                    isDisabled={isLoading}
+                    isLoading={isLoading}
+                />
+                <Text isLink={false}>
+                    Novo usuário?
+                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                        <Text isLink={true}>Cadastrar</Text>
                     </TouchableOpacity>
                 </Text>
-            </View>
-            <Text style={styleSheet.text}>
-                    Esqueceu a senha? <TouchableOpacity onPress={() => props.navigation.navigate('ResetPassword')}>
-                    <Text style={styleSheet.link}>Resetar</Text>
+            </Container>
+            <Text isLink={false}>
+                Esqueceu a senha?
+                <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
+                    <Text isLink={true}>Resetar</Text>
                 </TouchableOpacity>
             </Text>
         </Screen>

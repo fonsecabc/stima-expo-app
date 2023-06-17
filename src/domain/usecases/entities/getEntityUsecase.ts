@@ -1,5 +1,5 @@
 import { GetType } from '../../enums'
-import { User, GetQuery, Evaluation, Client } from '../../entities'
+import { GetQuery } from '../../entities'
 
 export namespace GetEntityUsecase {
     export type Params = {
@@ -11,5 +11,5 @@ export namespace GetEntityUsecase {
         userUid?: string
     }
 
-    export type Response<Entity = User | Evaluation | Client> = Entity | Entity[] | Error
+    export type Response<Entity = any> = Entity | Error
 }

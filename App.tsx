@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native'
 import { Routes } from './src/main/routes'
 import { testVariables } from './src/main/config'
 import { EnvironmentVariablesError } from './src/domain/errors'
+import { AlertProvider  } from './src/presentation/contexts/Alert'
 
 
 const App = () => {
@@ -12,7 +13,9 @@ const App = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Routes/>
+            <AlertProvider>
+                <Routes/>
+            </AlertProvider>
         </SafeAreaView>
     )
 }

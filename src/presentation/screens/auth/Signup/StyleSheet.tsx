@@ -22,7 +22,7 @@ export const styleSheet = StyleSheet.create({
         fontSize: Fonts.xl,
         fontWeight: '500',
         margin: 15,
-        color: Colors.black,
+        color: Colors.darkGray,
         textAlign: 'center'
     },
     passwordValidatorContainer: {
@@ -58,13 +58,13 @@ export const styleSheet = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: Fonts.xs,
         fontWeight: '500',
-        color: Colors.black,
+        color: Colors.darkGray,
         textAlign: 'left',
         marginHorizontal: 20
     },
     text: {
         fontSize: Fonts.sm,
-        color: Colors.black,
+        color: Colors.darkGray,
         textAlign: 'center',
         marginHorizontal: 20
     },

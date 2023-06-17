@@ -21,12 +21,12 @@ export const styleSheet = StyleSheet.create({
         fontSize: Fonts.xl,
         fontWeight: '500',
         margin: 15,
-        color: Colors.black,
+        color: Colors.darkGray,
         textAlign: 'center'
     },
     text: {
         fontSize: Fonts.sm,
-        color: Colors.black,
+        color: Colors.darkGray,
         textAlign: 'center',
         marginHorizontal: 20
     },

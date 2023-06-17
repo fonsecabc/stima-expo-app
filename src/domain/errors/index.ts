@@ -1,4 +1,5 @@
 export * from './unkwonError'
+export * from './networkError'
 export * from './invalidParamError'
 export * from './entityDoesntExistError'
 export * from './environmentVariablesError'

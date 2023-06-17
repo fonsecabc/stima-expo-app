@@ -1,9 +1,10 @@
 import { styleSheet } from './StyleSheet'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { ResetPasswordService } from '../../../../application/services'
-import { Button, CustomTextInput, Screen, Notification, Loader, Logo } from '../../../components'
+import { Button, CustomTextInput, Screen, Logo } from '../../../components'
 import validator from 'validator'
+import { AlertContext } from '../../../contexts'
 
 interface ResetPasswordScreenProps {
     navigation: any
@@ -16,8 +17,7 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps) => {
     
     const [isLoading, setLoading] = useState(false)
 
-    const [notification, showNotification] = useState(false)
-    const [notificationText, setNotificationText] = useState('')
+    const { pushNewAlert } = useContext(AlertContext)
 
     function checkEmail(email: string) {
         const isValid = validator.isEmail(email)
@@ -31,32 +31,34 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps) => {
 
         if (emailIsValid) {
             setLoading(true)
-            const isLoggedIn = await ResetPasswordService({ email })
+            const response = await ResetPasswordService({ email })
             setLoading(false)
-            if (isLoggedIn instanceof Error) {
-                setNotificationText(isLoggedIn.message)
-                showNotification(true)
-                console.log(isLoggedIn.message)
+            if (response instanceof Error) {
+                pushNewAlert(response.message, 'error')
             }
         }
     }
 
     return (
         <Screen background='gray'>
-            {notification && <Notification text={notificationText} type={'error'}/>}
-            {isLoading && <Loader/>}
             <Logo/>
             <View style={[styleSheet.container]}>
                 <Text style={styleSheet.title}>Resetar Senha</Text>
                 <CustomTextInput 
-                    const={email}
+                    value={email}
                     isValid={isValidEmail}
                     isRequired={true}
                     placeholder='Email'
                     contentType='emailAddress'
-                    setConstAction={setEmail}
+                    setValueAction={setEmail}
                 />
-                <Button style={{ marginTop: 25 }} action={SendResetPasswordEmail} text='Enviar' isDisabled={false}/>
+                <Button 
+                    style={{ marginTop: 25 }} 
+                    action={SendResetPasswordEmail} 
+                    text='Enviar' 
+                    isDisabled={isLoading}
+                    isLoading={isLoading}
+                />
             </View>
             <Text style={[styleSheet.text]}>
                     Senha Resetada? Faça <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
