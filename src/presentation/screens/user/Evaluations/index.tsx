@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Containers, Texts } from '../../styles'
-import { GetType } from '../../../domain/enums'
-import { EvaluationListObject } from '../../../domain/entities'
-import { GetEntityService } from '../../../application/services'
-import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../components'
+import { AlertContext } from '../../../contexts'
+import { GetType } from '../../../../domain/enums'
+import { Containers, Texts } from '../../../styles'
+import { EvaluationListObject } from '../../../../domain/entities'
+import { GetEntityService } from '../../../../application/services'
+import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
 
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, Text, View, TouchableOpacity } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
-import { AlertContext } from '../../contexts'
+import { FlatList, Text, View, TouchableOpacity } from 'react-native'
 
 export const EvaluationsScreen = (props: { navigation: any }) => {
     const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
@@ -53,7 +53,7 @@ export const EvaluationsScreen = (props: { navigation: any }) => {
     return (
         <Screen background='gray'>
             <HeaderTitle navigation={props.navigation} title='Avaliações'/>
-            <Button action={CreateEvaluation} text='ADICIONAR' icon={PlusIcon} isDisabled={false}/>
+            <Button action={CreateEvaluation} text='ADICIONAR' icon={<PlusIcon/>}/>
             <SearchBar handleSearch={handleSearch}placeholder='Pesquise pelo nome'/>
             <FlatList 
                 showsHorizontalScrollIndicator={false}

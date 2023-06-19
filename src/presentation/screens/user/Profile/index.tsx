@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavBar, HeaderTitle, Screen } from '../../components'
+import { NavBar, HeaderTitle, Screen } from '../../../components'
 
 export const ProfileScreen = (props: { navigation: any }) => {
     return (

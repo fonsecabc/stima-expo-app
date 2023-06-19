@@ -1,10 +1,11 @@
-import { styleSheet } from './StyleSheet'
-import React, { ReactNode, useContext, useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { AlertContext } from '../../../contexts'
+import { Container, Text, Title } from './styles'
 import { ResetPasswordService } from '../../../../application/services'
 import { Button, CustomTextInput, Screen, Logo } from '../../../components'
+
 import validator from 'validator'
-import { AlertContext } from '../../../contexts'
+import { TouchableOpacity } from 'react-native'
+import React, { ReactNode, useContext, useState } from 'react'
 
 interface ResetPasswordScreenProps {
     navigation: any
@@ -42,8 +43,8 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps) => {
     return (
         <Screen background='gray'>
             <Logo/>
-            <View style={[styleSheet.container]}>
-                <Text style={styleSheet.title}>Resetar Senha</Text>
+            <Container>
+                <Title>Resetar Senha</Title>
                 <CustomTextInput 
                     value={email}
                     isValid={isValidEmail}
@@ -59,10 +60,10 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps) => {
                     isDisabled={isLoading}
                     isLoading={isLoading}
                 />
-            </View>
-            <Text style={[styleSheet.text]}>
-                    Senha Resetada? Faça <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
-                    <Text style={styleSheet.link}>Login</Text>
+            </Container>
+            <Text isLink={false}>
+                    Senha Resetada? Faça<TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+                    <Text isLink={true}>Login</Text>
                 </TouchableOpacity>
             </Text>
         </Screen>

@@ -1,14 +1,14 @@
-import React, { ComponentClass } from 'react'
+import React from 'react'
 import { ButtonContainer, ButtonText, IconContainer } from './styles'
 import { Loader } from '../Loader'
 
 interface ButtonProps {
   action: any
   text: string
-  icon?: ComponentClass<{size: number}>
+  icon?: JSX.Element
   style?: any
-  isDisabled: boolean
-  isLoading: boolean
+  isDisabled?: boolean
+  isLoading?: boolean
 }
 
 export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
                     <ButtonText hasIcon={!!icon}>{text.toUpperCase()}</ButtonText>
                     {icon && (
                         <IconContainer>
-                            {React.createElement(icon, { size: 30 })}
+                            {icon}
                         </IconContainer>
                     )}
                 </>

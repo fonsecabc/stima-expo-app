@@ -14,7 +14,9 @@ export async function DeleteEntityService(params: DeleteEntityUsecase.Params): P
         headers: { 'Authorization': `Bearer ${accessToken}` }
     })
 
-    if (response.statusCode >= 200 && response.statusCode < 300) return new Error(JSON.stringify(response.body))
+    if (response.statusCode < 200 && response.statusCode > 300 && typeof response.body === 'string' || typeof response.body === 'string' ) {
+        return new Error(response.body)
+    }
 
     return response.body
 }

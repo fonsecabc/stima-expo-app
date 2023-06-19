@@ -17,7 +17,6 @@ export const useAuth = () => {
         return () => subscriber()
     })
 
-    //    return user
-    return false
+    return user
 }
   

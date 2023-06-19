@@ -1,10 +1,11 @@
-import { styleSheet } from './StyleSheet'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AlertContext } from '../../../contexts'
 import { CreateEntityService } from '../../../../application/services'
 import { Button, CustomTextInput, Screen, Logo } from '../../../components'
+
 import validator from 'validator'
 import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { Container, Text, TextSmall, Title } from './styles'
 
 interface SignupScreenProps {
   navigation: any
@@ -52,7 +53,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
     useEffect(() => {
         checkPassword(password)
         checkEmail(email)
-    })
+    }, [password, email])
 
     async function SignupUser() {
         const passwordIsValid = checkPassword(password)
@@ -71,8 +72,8 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
     return (
         <Screen background='gray'>
             <Logo />
-            <View style={[styleSheet.container]}>
-                <Text style={styleSheet.title}>Crie sua conta</Text>
+            <Container>
+                <Title>Crie sua conta</Title>
                 <CustomTextInput
                     value={email}
                     isValid={email !== '' ? isValidEmail : true}
@@ -90,25 +91,17 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
                     contentType='password'
                     setValueAction={setPassword}
                 />
-                <View style={styleSheet.passwordValidatorContainer}>
-                    <View style={[styleSheet.passwordValidator, passwordState >= 1 && styleSheet.passwordValidator1]} />
-                    <View style={[styleSheet.passwordValidator, passwordState >= 2 && styleSheet.passwordValidator2]} />
-                    <View style={[styleSheet.passwordValidator, passwordState >= 3 && styleSheet.passwordValidator3]} />
-                    <View style={[styleSheet.passwordValidator, passwordState >= 4 && styleSheet.passwordValidator4]} />
-                </View>
-                <Text style={[styleSheet.smText]}>
-                    {`${
-                        passwordState === 1
-                            ? 'Extremamente fraca'
-                            : passwordState === 2
-                                ? 'Fraca'
-                                : passwordState === 3
-                                    ? 'Satisfatória'
-                                    : passwordState === 4
-                                        ? 'Excelente'
-                                        : ''
-                    }`}
-                </Text>
+                <TextSmall>
+                    {passwordState === 1
+                        ? 'Senha extremamente fraca'
+                        : passwordState === 2
+                            ? 'Senha fraca'
+                            : passwordState === 3
+                                ? 'Senha satisfatória'
+                                : passwordState === 4
+                                    ? 'Senha excelente'
+                                    : ''}
+                </TextSmall>
                 <CustomTextInput
                     value={passwordConfirmation}
                     isValid={passwordsMatch}
@@ -118,7 +111,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
                     contentType='password'
                     setValueAction={setPasswordConfirmation}
                 />
-                <Text style={[styleSheet.smText]}>{!passwordsMatch && 'Senhas devem bater'}</Text>
+                <TextSmall>{!passwordsMatch && 'Senhas devem bater'}</TextSmall>
                 <Button
                     style={{ marginTop: 25 }}
                     action={SignupUser}
@@ -126,13 +119,11 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
                     isDisabled={isLoading}
                     isLoading={isLoading}
                 />
-                <Text style={styleSheet.text}>
-          Já tem conta?{' '}
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styleSheet.link}>Entre</Text>
-                    </TouchableOpacity>
+                <Text isLink={false}>
+                    Já tem conta?
+                    <Text isLink={true} onPress={() => navigation.navigate('Login')}>Entre</Text>
                 </Text>
-            </View>
+            </Container>
         </Screen>
     )
 }

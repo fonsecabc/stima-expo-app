@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetType } from '../../../domain/enums'
-import { AlertContext } from '../../contexts'
-import { ClientListObject } from '../../../domain/entities'
-import { Containers, Fonts, Texts, Colors } from '../../styles'
-import { GetEntityService } from '../../../application/services'
-import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../components'
+import { GetType } from '../../../../domain/enums'
+import { AlertContext } from '../../../contexts'
+import { ClientListObject } from '../../../../domain/entities'
+import { Containers, Fonts, Texts, Colors } from '../../../styles'
+import { GetEntityService } from '../../../../application/services'
+import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
 
 import React, { useContext, useEffect, useState } from 'react'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
@@ -53,7 +53,7 @@ export const ClientsScreen = (props: { navigation: any }) => {
     return (
         <Screen background='gray'>
             <HeaderTitle navigation={props.navigation} title='Clientes'/>
-            <Button action={CreateClient} text='NOVO CLIENTE' icon={PlusIcon} isDisabled={false}/>
+            <Button action={CreateClient} icon={<PlusIcon/>} text='NOVO CLIENTE'/>
             <SearchBar handleSearch={handleSearch} placeholder='Pesquise pelo nome'/>
             <FlatList 
                 showsHorizontalScrollIndicator={false}

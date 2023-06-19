@@ -32,7 +32,7 @@ export class HttpRepository<T> implements HttpClientContract {
                 body: axiosResponse.data
             }
         } catch (err: any) {
-            const error = await HandlerErrorService(err.message)
+            const error = await HandlerErrorService(err.response.data.error)
             return {
                 statusCode: 400,
                 body: error.message
