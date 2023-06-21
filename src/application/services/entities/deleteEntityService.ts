@@ -1,6 +1,6 @@
 import { variables } from '../../../main/config'
 import { HttpRepository } from '../../../infra/repositories'
-import { HttpClientContract } from '../../../domain/contracts'
+import { HttpClientContract } from '../../contracts'
 import { DeleteEntityUsecase } from '../../../domain/usecases'
 
 export async function DeleteEntityService(params: DeleteEntityUsecase.Params): Promise<DeleteEntityUsecase.Response> {

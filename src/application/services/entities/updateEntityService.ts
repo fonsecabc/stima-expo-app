@@ -1,6 +1,6 @@
 import { variables } from '../../../main/config'
 import { HttpRepository } from '../../../infra/repositories'
-import { HttpClientContract } from '../../../domain/contracts'
+import { HttpClientContract } from '../../contracts'
 import { UpdateEntityUsecase } from '../../../domain/usecases'
 
 export async function UpdateEntityService(params: UpdateEntityUsecase.Params): Promise<UpdateEntityUsecase.Response> {

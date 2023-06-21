@@ -1,5 +1,5 @@
-import { HandlerErrorService } from '../../application/services'
-import { ReadDataContract, RemoveDataContract, StoreDataContract } from '../../domain/contracts'
+import { handleErrorService } from '../../application/services'
+import { ReadDataContract, RemoveDataContract, StoreDataContract } from '../../application/contracts'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { EntityDoesntExistError } from '../../domain/errors'
@@ -18,7 +18,7 @@ RemoveDataContract {
 
             return true
         } catch(err: any) {
-            return await HandlerErrorService(err.message ?? err.code)
+            return await handleErrorService(err.message ?? err.code)
         }
     }
 
@@ -29,7 +29,7 @@ RemoveDataContract {
 
             return data ? JSON.parse(data) : new EntityDoesntExistError(key)
         } catch(err: any) {
-            return await HandlerErrorService(err.message ?? err.code)
+            return await handleErrorService(err.message ?? err.code)
         }
     }
 
@@ -40,7 +40,7 @@ RemoveDataContract {
 
             return true
         } catch(err: any) {
-            return await HandlerErrorService(err.message ?? err.code)
+            return await handleErrorService(err.message ?? err.code)
         }
     }
     

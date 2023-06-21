@@ -1,6 +1,6 @@
 import { variables } from '../../main/config'
-import { HandlerErrorService } from '../../application/services'
-import { HttpRequest, HttpResponse, HttpClientContract } from '../../domain/contracts'
+import { handleErrorService } from '../../application/services'
+import { HttpRequest, HttpResponse, HttpClientContract } from '../../application/contracts'
 
 import axios, { AxiosResponse } from 'axios'
 
@@ -32,7 +32,7 @@ export class HttpRepository<T> implements HttpClientContract {
                 body: axiosResponse.data
             }
         } catch (err: any) {
-            const error = await HandlerErrorService(err.response.data.error)
+            const error = await handleErrorService(err.response.data.error)
             return {
                 statusCode: 400,
                 body: error.message

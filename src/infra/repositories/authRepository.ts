@@ -1,6 +1,6 @@
 import { auth } from '../../main/config'
-import { HandlerErrorService } from '../../application/services'
-import { LoginWithEmailAndPasswordContract, SendResetPasswordEmailContract } from '../../domain/contracts'
+import { handleErrorService } from '../../application/services'
+import { LoginWithEmailAndPasswordContract, SendResetPasswordEmailContract } from '../../application/contracts'
 
 import * as authentication from 'firebase/auth'
 export class AuthRepository implements 
@@ -13,7 +13,7 @@ SendResetPasswordEmailContract {
         try {
             return (await authentication.signInWithEmailAndPassword(auth, email, password)).user
         } catch (err: any) {
-            return await HandlerErrorService(err.code)
+            return await handleErrorService(err.code)
         }
     }
     
@@ -24,7 +24,7 @@ SendResetPasswordEmailContract {
             
             return true
         } catch (err: any) {
-            return await HandlerErrorService(err.code)
+            return await handleErrorService(err.code)
         }
     }
 
@@ -34,7 +34,7 @@ SendResetPasswordEmailContract {
             
             return true
         } catch(err: any) {
-            return await HandlerErrorService(err.code)
+            return await handleErrorService(err.code)
         }
     }
 

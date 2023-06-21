@@ -1,7 +1,7 @@
 import { variables } from '../../../main/config'
 import { Entity } from '../../../domain/entities'
 import { HttpRepository } from '../../../infra/repositories'
-import { HttpClientContract } from '../../../domain/contracts'
+import { HttpClientContract } from '../../contracts'
 import { CreateEntityUsecase } from '../../../domain/usecases'
 
 export async function CreateEntityService(params: CreateEntityUsecase.Params): Promise<CreateEntityUsecase.Response> {

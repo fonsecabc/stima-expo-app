@@ -2,7 +2,7 @@ import { GetType } from '../../../domain/enums'
 import { variables } from '../../../main/config'
 import { GetEntityUsecase } from '../../../domain/usecases'
 import { HttpRepository } from '../../../infra/repositories'
-import { HttpClientContract } from '../../../domain/contracts'
+import { HttpClientContract } from '../../contracts'
 
 export async function GetEntityService<Entity = any>(params: GetEntityUsecase.Params): Promise<GetEntityUsecase.Response<Entity>> {
     const { accessToken, entity, type, uid, query, userUid } = params

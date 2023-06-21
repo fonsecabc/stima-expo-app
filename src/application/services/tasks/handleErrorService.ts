@@ -2,8 +2,7 @@ import { ErrorMap } from '../../../domain/entities'
 import { UnknownError } from '../../../domain/errors'
 import { HandleErrorUsecase } from '../../../domain/usecases'
 
-export async function HandlerErrorService(params: HandleErrorUsecase.Params): Promise<HandleErrorUsecase.Response> {
-    const err = params 
+export async function handleErrorService({ err }: HandleErrorUsecase.Params): Promise<HandleErrorUsecase.Response> {
     const error = ErrorMap.get(err)
     
     if (error) return error
