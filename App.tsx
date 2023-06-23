@@ -1,21 +1,18 @@
+import { Routes } from './src/routes'
+import { setupApp } from './src/config'
+import { Providers  } from './src/app/contexts'
+
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import { Routes } from './src/main/routes'
-import { testVariables } from './src/main/config'
-import { EnvironmentVariablesError } from './src/domain/errors'
-import { AlertProvider  } from './src/presentation/contexts/Alert'
-
 
 const App = () => {
-    const isValidVariables = testVariables()
-
-    if (!isValidVariables) throw new EnvironmentVariablesError()
+    setupApp()
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <AlertProvider>
+            <Providers>
                 <Routes/>
-            </AlertProvider>
+            </Providers>
         </SafeAreaView>
     )
 }
