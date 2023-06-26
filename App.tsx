@@ -4,6 +4,8 @@ import { Providers  } from './src/app/contexts'
 
 import React from 'react'
 import { SafeAreaView } from 'react-native'
+import Toast from 'react-native-toast-message'
+
 
 const App = () => {
     setupApp()
@@ -13,6 +15,7 @@ const App = () => {
             <Providers>
                 <Routes/>
             </Providers>
+            <Toast/>
         </SafeAreaView>
     )
 }

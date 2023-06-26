@@ -1,40 +1,41 @@
-import { AlertContext } from '../../../contexts/AlertProvider'
+import { useAuth } from '../../../contexts'
 import { Container, Text, Title } from './styles'
 import { Button, CustomTextInput, Screen, Logo } from '../../../components'
 
 import validator from 'validator'
+import React, { useState } from 'react'
+import Toast from 'react-native-toast-message'
 import { TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
 
 interface ResetPasswordScreenProps {
     navigation: any
 }
 
 export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) => {
+    const { resetPassword } = useAuth()
+    const [isLoading, setLoading] = useState(false)
+
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
     
-    const [isLoading, setLoading] = useState(false)
 
-    const { pushNewAlert } = useContext(AlertContext)
-
-    const checkEmail = (email: string) => {
+    const checkEmail = async (email: string) => {
         const isValid = validator.isEmail(email)
         setIsValidEmail(isValid)
 
         return isValid
     }
     
-    const resetPassword = () =>  {
-        const emailIsValid = checkEmail(email)
+    const sendPasswordResetEmail = async () =>  {
+        const emailIsValid = await checkEmail(email)
 
         if (emailIsValid) {
-            //setLoading(true)
-            //const response = await ResetPasswordService({ email })
-            //setLoading(false)
-            //if (response instanceof Error) {
-            //    pushNewAlert({ message: response.message, type: 'error' })
-            //}
+            setLoading(true)
+            const response = await resetPassword(email)
+            if (response instanceof Error) {
+                Toast.show({ type: 'error', text1: response.message })
+            }
+            setLoading(false)
         }
     }
 
@@ -53,7 +54,7 @@ export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) =>
                 />
                 <Button 
                     style={{ marginTop: 25 }} 
-                    action={resetPassword} 
+                    action={sendPasswordResetEmail} 
                     text='Enviar' 
                     isDisabled={isLoading}
                     isLoading={isLoading}

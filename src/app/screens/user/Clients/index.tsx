@@ -1,8 +1,10 @@
-import { useAlerts } from '../../../contexts/AlertProvider'
+import { useAuth } from '../../../contexts'
 import { ClientListObject } from '../../../../types/entities'
+import { getClientsList } from '../../../../modules/requests'
 import { Containers, Fonts, Texts, Colors } from '../../../styles'
 import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
 
+import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
@@ -12,31 +14,31 @@ type ClientScreenProps = {
 }
 
 export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
+    const { accessToken, currentUser } = useAuth()
+
     const [clientsList, setClientsList] = useState<ClientListObject[]>([])
     const [originalClientsList, setOriginalClientsList] = useState<ClientListObject[]>([])
     
-    const { pushNewAlert } = useAlerts()
-    
     useEffect(() => {
         const fetchData = async () =>  {
-            //const list = getClientList()
-            //setClientsList(list)
-            //setOriginalClientsList(list)
+            const list = await getList()
+            setClientsList(list)
+            setOriginalClientsList(list)
         }
         fetchData()
     }, [])
     
-    const getClientList = () => {
-        //const response = await GetEntityService<ClientListObject[]>({ entity: 'client', type: GetType.LIST, })
-        //if (response instanceof Error) {
-        //    pushNewAlert({ message: response.message, type: 'error'})
-        //    return []
-        //} 
+    const getList = async () => {
+        const response = await getClientsList(await accessToken(), currentUser?.uid ?? '')
+        if (response instanceof Error) {
+            Toast.show({ type: 'error', text1: response.message })
+            return []
+        }
 
-        //return response
+        return response.data
     }
     
-    function handleSearch(searchText: string) {
+    const handleSearch = (searchText: string) => {
         if (!searchText) {
             setClientsList(originalClientsList)
         } else {
@@ -48,7 +50,7 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
     }
     
     const createClient = () => {
-        navigation.navigate('Criar Cliente')
+        navigation.navigate('Create Client')
     }
 
     return (

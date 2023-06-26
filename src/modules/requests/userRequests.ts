@@ -1,50 +1,85 @@
-import axios from 'axios'
 import { User } from '../../types/entities'
 import { GetType } from '../../types/enums'
+import { treatError } from '../errorHandler'
+
+import axios from 'axios'
 
 const endpoint = '/user'
 
-export function createUser(
+export async function createUser(
     email: string,
     password: string,
     passwordConfirmation: string
 ){
-    return axios.post<User>(endpoint, {
-        email,
-        password,
-        passwordConfirmation
-    })
+    try {
+        return await axios.request<User>({
+            url: endpoint, 
+            data: {
+                email,
+                password,
+                passwordConfirmation
+            }, 
+            method: 'post' 
+        })
+    } catch (err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function getUser(
+export async function getUser(
     accessToken: string,
     uid: string,
 ){
-    return axios.post<User>(endpoint, {
-        accessToken,
-        uid,
-        type: GetType.ENTITY
-    })
+    try {
+        return await axios.request<User>({
+            url: endpoint, 
+            params: {
+                accessToken,
+                uid,
+                type: GetType.ENTITY
+            }, 
+            method: 'get' 
+        })
+    } catch (err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
+
 }
 
-export function updateUser(
+export async function updateUser(
     accessToken: string,
     uid: string,
     attrs: object
-) {
-    return axios.post(endpoint, {
-        accessToken,
-        uid,
-        attrs
-    })
+){
+    try {
+        return await axios.request({ 
+            url: endpoint,
+            data: {
+                accessToken,
+                uid,
+                attrs
+            }, 
+            method: 'update' 
+        })
+    } catch (err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function deleteUser(
+export async function deleteUser(
     accessToken: string,
     uid: string,
-) {
-    return axios.post(endpoint, {
-        accessToken,
-        uid,
-    })
+){
+    try {
+        return await axios.request({ 
+            url: endpoint,
+            data: {
+                accessToken,
+                uid,
+            },
+            method: 'delete' 
+        })
+    } catch (err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }

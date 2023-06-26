@@ -9,13 +9,12 @@ export const AuthStack = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator 
-                initialRouteName='Signup'
+                initialRouteName='Login'
                 screenOptions={{ headerShown: false }}
             >
                 <Stack.Screen name='Login' component={LoginScreen}/>
                 <Stack.Screen name='Signup' component={SignupScreen}/>
                 <Stack.Screen name='ResetPassword' component={ResetPasswordScreen}/>
-
             </Stack.Navigator>
         </NavigationContainer>
     )

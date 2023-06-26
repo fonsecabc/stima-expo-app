@@ -1,9 +1,11 @@
-import { AlertContext } from '../../../contexts/AlertProvider'
+import { useAuth } from '../../../contexts'
 import { Containers, Texts } from '../../../styles'
 import { EvaluationListObject } from '../../../../types/entities'
+import { getEvaluationsList } from '../../../../modules/requests'
 import { NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
 
-import React, { useContext, useEffect, useState } from 'react'
+import Toast from 'react-native-toast-message'
+import React, { useEffect, useState } from 'react'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
 import { FlatList, Text, View, TouchableOpacity } from 'react-native'
 
@@ -12,31 +14,31 @@ type EvaluationScreenProps = {
 }
 
 export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
+    const { accessToken, currentUser } = useAuth()
+
     const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
     const [originalEvaluationList, setOriginalEvaluationList] = useState<EvaluationListObject[]>([])
 
-    const { pushNewAlert } = useContext(AlertContext)
-
     useEffect(() => {
-        const fetchData = async () => {
-            //const list = await getEvaluationList()
-            //setEvaluationList(list)
-            //setOriginalEvaluationList(list)
+        const fetchData = async () =>  {
+            const list = await getList()
+            setEvaluationList(list)
+            setOriginalEvaluationList(list)
         }
         fetchData()
     }, [])
+    
+    const getList = async () => {
+        const response = await getEvaluationsList(await accessToken(), currentUser?.uid ?? '')
+        if (response instanceof Error) {
+            Toast.show({ type: 'error', text1: response.message })
+            return []
+        }
 
-    const getEvaluationList = async () => {
-        //const response = await GetEntityService({ entity: 'evaluation', type: GetType.LIST, })
-        //if (response instanceof Error) {
-        //    pushNewAlert(response.message, 'error')
-        //    return []
-        //} 
-
-        //return response
+        return response.data
     }
 
-    function handleSearch(searchText: string) {
+    const handleSearch = (searchText: string) => {
         if (!searchText) {
             setEvaluationList(originalEvaluationList)
         } else {
@@ -48,19 +50,19 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
     }
 
     const CreateEvaluation = () => {
-        navigation.navigate('Criar Avaliação')
+        navigation.navigate('Create Evaluation')
     }
 
     return (
         <Screen background='gray'>
             <HeaderTitle navigation={navigation} title='Avaliações'/>
             <Button action={CreateEvaluation} text='ADICIONAR' icon={<PlusIcon/>}/>
-            <SearchBar handleSearch={handleSearch}placeholder='Pesquise pelo nome'/>
+            <SearchBar handleSearch={handleSearch} placeholder='Pesquise pelo nome'/>
             <FlatList 
                 showsHorizontalScrollIndicator={false}
                 style={{ flex: 1 , marginHorizontal: 20, paddingTop: 10 }}
                 data={evaluationList}
-                extraData={setEvaluationList}
+                extraData={evaluationList}
                 renderItem={({ item }) => 
                     <View style={[Containers.list_item,]}>
                         <View>

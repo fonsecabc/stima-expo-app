@@ -1,10 +1,12 @@
-import axios from 'axios'
-import { Evaluation, GetQuery } from '../../types/entities'
+import { Evaluation, EvaluationListObject, GetQuery } from '../../types/entities'
 import { GetType, Sex } from '../../types/enums'
+import { treatError } from '../errorHandler'
+
+import axios from 'axios'
 
 const endpoint = '/evaluation'
 
-export function createEvaluation(
+export async function createEvaluation(
     accessToken: string,
     userUid: string,
     client: {
@@ -17,70 +19,118 @@ export function createEvaluation(
     bioimpedance?: object,
     measurements?: object,
     nutricionistForm?: object
-){
-    return axios.post<Evaluation>(endpoint, {
-        accessToken,
-        userUid,
-        client,
-        bioimpedance,
-        measurements,
-        nutricionistForm
-    })
+){ 
+    try {
+        return await axios.request<Evaluation>({
+            url: endpoint,
+            data: {
+                accessToken: accessToken,
+                userUid: userUid,
+                client: client,
+                bioimpedance: bioimpedance,
+                measurements: measurements,
+                nutricionistForm: nutricionistForm
+            },
+            method: 'post' 
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function getEvaluation(
+export async function getEvaluation(
     accessToken: string,
     uid: string,
-){
-    return axios.post<Evaluation>(endpoint, {
-        accessToken,
-        uid,
-        type: GetType.ENTITY
-    })
+){ 
+    try {
+        return await axios.request<Evaluation>({
+            url: endpoint,
+            params: {
+                accessToken: accessToken,
+                uid: uid,
+                type: GetType.ENTITY
+            },
+            method: 'get'
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function getEvaluationsList(
+export async function getEvaluationsList(
     accessToken: string,
     userUid: string,
-){
-    return axios.post<Evaluation>(endpoint, {
-        accessToken,
-        userUid,
-        type: GetType.LIST
-    })
+){ 
+    try {
+        return await axios.request<EvaluationListObject[]>({
+            url: endpoint,
+            params: {
+                accessToken: accessToken,
+                userUid: userUid,
+                type: GetType.LIST
+            },
+            method: 'get' 
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function getEvaluationsQuery(
+export async function getEvaluationsQuery(
     accessToken: string,
     userUid: string,
     query: GetQuery
-){
-    return axios.post<Evaluation>(endpoint, {
-        accessToken,
-        userUid,
-        query,
-        type: GetType.QUERY
-    })
+){ 
+    try {
+        return await axios.request<EvaluationListObject[]>({
+            url: endpoint,
+            params: {
+                accessToken: accessToken,
+                userUid: userUid,
+                query: query,
+                type: GetType.QUERY
+            },
+            method: 'get' 
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function updateEvaluation(
+export async function updateEvaluation(
     accessToken: string,
     uid: string,
     attrs: object
-) {
-    return axios.post(endpoint, {
-        accessToken,
-        uid,
-        attrs
-    })
+){ 
+    try {
+        return await axios.request({
+            url: endpoint,
+            data: {
+                accessToken: accessToken,
+                uid: uid,
+                attrs: attrs
+            },
+            method: 'update' 
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }
 
-export function deleteEvaluation(
+export async function deleteEvaluation(
     accessToken: string,
     uid: string,
-) {
-    return axios.post(endpoint, {
-        accessToken,
-        uid,
-    })
+){ 
+    try {
+        return await axios.request({
+            url: endpoint,
+            data: {
+                accessToken: accessToken,
+                uid: uid,
+            },
+            method: 'delete' 
+        })
+    } catch(err: any) {
+        return treatError(err.response?.data.error ?? err.message)
+    }
 }

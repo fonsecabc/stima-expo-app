@@ -1,9 +1,10 @@
+import { useAuth } from '../../../contexts'
 import { Container, Text, Title } from './styles'
-import { useAlerts } from '../../../contexts/AlertProvider'
 import { Button, CustomTextInput, Screen, Logo } from '../../../components'
 
 import validator from 'validator'
 import React, { useState } from 'react'
+import Toast from 'react-native-toast-message'
 import { TouchableOpacity } from 'react-native'
 
 interface LoginScreenProps {
@@ -11,43 +12,41 @@ interface LoginScreenProps {
 }
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
+    const { login } = useAuth()
+    const [isLoading, setLoading] = useState(false)
 
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
 
     const [password, setPassword] = useState('')
-    const [isValidPassword, setisValidPassword] = useState(true)
+    const [isValidPassword, setIsValidPassword] = useState(true)
 
-    const [isLoading, setLoading] = useState(false)
-
-    const { pushNewAlert } = useAlerts()
-
-    const checkPassword = (password: string) => {
+    const checkPassword = async (password: string) => {
         const uniqueChars = [...new Set(password)]
         const isValid = uniqueChars.length > 2 && password.length >= 8
-        setisValidPassword(isValid)
+        setIsValidPassword(isValid)
 
         return isValid
     }
 
-    const checkEmail = (email: string) => {
+    const checkEmail = async (email: string) => {
         const isValid = validator.isEmail(email)
         setIsValidEmail(isValid)
 
         return isValid
     }
 
-    const loginUser = () => {
-        const passwordIsValid = checkPassword(password)
-        const emailIsValid = checkEmail(email)
+    const loginUser = async () => {
+        const passwordIsValid = await checkPassword(password)
+        const emailIsValid = await checkEmail(email)
 
         if (emailIsValid && passwordIsValid) {
-            //setLoading(true)
-            //const response = await LoginUserService({ email, password })
-            //setLoading(false)
-            //if (response instanceof Error) {
-            //    pushNewAlert({ message: response.message, type: 'error'} )
-            //}
+            setLoading(true)
+            const response = await login(email, password)
+            if (response instanceof Error) {
+                Toast.show({ type: 'error', text1: response.message })
+            }
+            setLoading(false)
         }
     }
 

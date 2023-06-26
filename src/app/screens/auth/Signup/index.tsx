@@ -1,15 +1,20 @@
-import { AlertContext } from '../../../contexts/AlertProvider'
+import { useAuth } from '../../../contexts'
+import { createUser } from '../../../../modules/requests'
+import { Container, Text, TextSmall, Title } from './styles'
 import { Button, CustomTextInput, Screen, Logo } from '../../../components'
 
 import validator from 'validator'
-import React, { useState, useEffect, useContext } from 'react'
-import { Container, Text, TextSmall, Title } from './styles'
+import Toast from 'react-native-toast-message'
+import React, { useState, useEffect } from 'react'
 
 interface SignupScreenProps {
   navigation: any
 }
 
 export const SignupScreen = ({ navigation }: SignupScreenProps) => {
+    const { login } = useAuth()
+    const [isLoading, setLoading] = useState(false)
+
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
 
@@ -19,11 +24,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
     const [passwordState, setPasswordState] = useState(0)
     const passwordsMatch = password === passwordConfirmation
 
-    const { pushNewAlert } = useContext(AlertContext)
-
-    const [isLoading, setLoading] = useState(false)
-
-    function checkPassword(password: string) {
+    const checkPassword = async (password: string) => {
         if (password !== '') {
             const uniqueChars = [...new Set(password)]
             const hasSpecialCharacters = /[!@#$%^&*(),.?':{}|<>]/.test(password)
@@ -41,7 +42,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
         }
     }
 
-    function checkEmail(email: string) {
+    const checkEmail = async (email: string) => {
         const isValid = validator.isEmail(email)
         setIsValidEmail(isValid)
 
@@ -53,17 +54,24 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
         checkEmail(email)
     }, [password, email])
 
-    const signupUser = () => {
-        const passwordIsValid = checkPassword(password)
-        const emailIsValid = checkEmail(email)
+    const signupUser = async () => {
+        const passwordIsValid = await checkPassword(password)
+        const emailIsValid = await checkEmail(email)
 
         if (passwordIsValid && emailIsValid) {
-            //setLoading(true)
-            //const response = await CreateEntityService({ entity: 'user', body: { email, password, passwordConfirmation } })
-            //setLoading(false)
-            //if (response instanceof Error) {
-            //    pushNewAlert({ message: response.message, type: 'error'})
-            //}
+            setLoading(true)
+            let response
+            response = await createUser(email, password, passwordConfirmation)
+            if (response instanceof Error) {
+                setLoading(false)
+                return Toast.show({ type: 'error', text1: response.message })
+            }
+            response = await login(email, password)
+            if (response instanceof Error) {
+                setLoading(false)
+                return Toast.show({ type: 'error', text1: response.message })
+            }
+            setLoading(false)
         }
     }
 

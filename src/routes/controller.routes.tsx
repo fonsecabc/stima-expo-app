@@ -5,6 +5,7 @@ import { UserStack, AuthStack } from './'
 export const Routes = () => {
     const { currentUser } = useAuth()
 
+
     return (
         currentUser 
             ? <UserStack/> 

@@ -1,5 +1,4 @@
 export * from './Logo'
-export * from './Alert'
 export * from './NavBar'
 export * from './Button'
 export * from './Screen'

@@ -1,11 +1,17 @@
 import { User } from '../../types/entities'
+import { auth } from '../../config/firebase'
+import { treatError } from '../../modules/errorHandler'
+import * as storage from '../../modules/storageHelper'
 
-import { ReactNode, SetStateAction, Dispatch, createContext, useState, useContext,  } from 'react'
+import { ReactNode, createContext, useState, useContext  } from 'react'
+import { signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth'
 
 type AuthContextProps = {
     currentUser: User | undefined
-    setCurrentUser: Dispatch<SetStateAction<User | undefined>>
-    logout: () => void
+    accessToken: () => Promise<string>
+    login: (email: string, password: string) => Promise<void | Error>
+    logout: () => Promise<void | Error>
+    resetPassword: (email: string) => Promise<void | Error>
 }
 
 type AuthProviderProps = {
@@ -14,8 +20,10 @@ type AuthProviderProps = {
 
 const initAuthContextPropsState = {
     currentUser: undefined,
-    setCurrentUser: () => {},
-    logout: () => {}
+    accessToken: async () => '',
+    login: async () => {},
+    logout: async () => {},
+    resetPassword: async () => {}
 }
 
 export const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState)
@@ -25,16 +33,42 @@ export const useAuth = () => {
 } 
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
-    const [currentUser, setCurrentUser] = useState<User>()
+    const [currentUser, setCurrentUser] = useState<any>()
 
-    const logout = () => {
-        setCurrentUser(undefined)
-    } 
+    onAuthStateChanged(auth, (user) => user && setCurrentUser(user))
+
+    const accessToken = async () => await auth.currentUser?.getIdToken(true) ?? ''
+
+    const login = async (email: string, password: string): Promise<void | Error> => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+            setCurrentUser(auth.currentUser)
+            await storage.store({ key: 'currentUser', value: auth.currentUser })
+        } catch (err: any) {
+            return treatError(err)
+        }
+    }
+
+    const logout = async (): Promise<void | Error> => {
+        try {
+            await signOut(auth)
+            return setCurrentUser(undefined)
+        } catch (err: any) {
+            return treatError(err)
+        }
+    }
+
+    const resetPassword = async (email: string): Promise<void | Error> => {
+        try {
+            return await sendPasswordResetEmail(auth, email)
+        } catch (err: any) {
+            return treatError(err)
+        }
+    }
 
     return (
-        <AuthContext.Provider value={{ currentUser, setCurrentUser, logout }}>
+        <AuthContext.Provider value={{ currentUser, accessToken, login, logout, resetPassword }}>
             {children}
         </AuthContext.Provider>
     )
-
 }
