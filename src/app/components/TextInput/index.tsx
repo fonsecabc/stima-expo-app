@@ -1,43 +1,66 @@
-import { TextInputContainer, TextInput, HideIcon } from './styles'
+import { 
+  TextInputContainer, 
+  TextInput, 
+  HideIcon, 
+  MaskTextInput, 
+  ErrorText, 
+  Label, 
+  DescriptionText 
+} from './styles'
+import { Colors } from '../../styles'
 
 import React, { useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline'
 
 interface CustomTextInputProps {
-    value: any
-    setValueAction: any
-    isValid?: boolean
-    isSecured?: true
-    isRequired: boolean
-    placeholder: string
-    contentType?: 'emailAddress' | 'password'
+  label: string
+  setValue: any
+  isSecured?: boolean
+  error?: string
+  placeholder?: string
+  mask?: string
+  description?: string
 }
 
 export const CustomTextInput = (props: CustomTextInputProps) => {
-    const { value, setValueAction, placeholder, isValid, isSecured, isRequired, contentType } = props
+  const { label, setValue, placeholder, isSecured, error, mask, description } = props
 
-    const [hideText, setHideText] = useState(!!isSecured)
-    const [isFocused, setFocus] = useState(false)
+  const [hideText, setHideText] = useState(!!isSecured)
+  const [isFocused, setFocus] = useState(false)
 
-    return (
-        <TextInputContainer isFocused={isFocused} isValid={isValid} isRequired={isRequired} behavior='padding'>
-            <TextInput
-                defaultValue={value}
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
-                placeholder={placeholder}
-                clearButtonMode='while-editing'
-                underlineColorAndroid='transparent'
-                secureTextEntry={hideText ? true : false}
-                onChangeText={(text) => setValueAction(text)}
-                onSubmitEditing={() => setValueAction(value)}
-                textContentType={contentType ? contentType : 'none'}
-            />
-            {isSecured && (
-                <HideIcon onPress={() => setHideText(!hideText)}>
-                    {hideText ? <EyeIcon size={20} /> : <EyeSlashIcon size={20} />}
-                </HideIcon>
-            )}
-        </TextInputContainer>
-    )
+  return (
+    <>
+      <Label>{label}</Label>
+      {description && <DescriptionText>{description}</DescriptionText>}
+      <TextInputContainer isFocused={isFocused} isValid={!(error)}>
+        { mask 
+          ? <MaskTextInput
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            placeholder={placeholder}
+            clearButtonMode='while-editing'
+            underlineColorAndroid='transparent'
+            secureTextEntry={hideText ? true : false}
+            onChangeText={(text) => setValue(text)}
+            mask={mask}
+          />
+          : <TextInput
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            placeholder={placeholder}
+            clearButtonMode='while-editing'
+            underlineColorAndroid='transparent'
+            secureTextEntry={hideText ? true : false}
+            onChangeText={(text) => setValue(text)}
+          />
+        }
+        {isSecured && (
+          <HideIcon onPress={() => setHideText(!hideText)}>
+            {hideText ? <EyeIcon color={Colors.darkGray}/> : <EyeSlashIcon color={Colors.darkGray}/>}
+          </HideIcon>
+        )}
+      </TextInputContainer>
+      { error && <ErrorText>{error}</ErrorText>}
+    </>
+  )
 }

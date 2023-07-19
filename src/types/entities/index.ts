@@ -1,4 +1,5 @@
 export * from './User'
+export * from './Input'
 export * from './Entity'
 export * from './Client'
 export * from './GetQuery'

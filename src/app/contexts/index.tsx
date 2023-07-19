@@ -7,11 +7,11 @@ interface ProvidersProps {
 }
 
 export const Providers: React.FC<ProvidersProps> = ({ children }: ProvidersProps) => {
-    return (
-        <AuthProvider>
-            {children}
-        </AuthProvider>
-    )
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  )
 }
 
 export * from './AuthProvider'

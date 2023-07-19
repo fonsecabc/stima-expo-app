@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "App",
-    "slug": "App",
+    "name": "Stima",
+    "slug": "stima",
     "version": "1.0.0",
     "orientation": "portrait",
     "plugins": [
@@ -23,13 +23,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/app/public/adaptive-icon.png",
+        "foregroundImage": "./src/app/public/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.stima"
     },
     "web": {
       "favicon": "./src/app/public/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "949b9a1e-a010-44c9-a411-f74195916d60"
+      }
+    },
+    "owner": "fonsecabc"
   }
 }

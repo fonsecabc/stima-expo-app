@@ -7,7 +7,11 @@ interface ScreenProps {
 }
 
 export const Screen = (props: ScreenProps) => {
-    const { background, children } = props
+  const { background, children } = props
 
-    return <ScreenContainer background={background}>{children}</ScreenContainer>
+  return <ScreenContainer 
+    background={background} 
+  >
+    {children}
+  </ScreenContainer>
 }

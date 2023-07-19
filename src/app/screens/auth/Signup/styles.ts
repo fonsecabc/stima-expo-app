@@ -1,9 +1,9 @@
 import styled from 'styled-components/native'
-import { Colors, Fonts, Shadows } from '../../../styles'
+import { Colors, FontSizes, Shadows, Fonts } from '../../../styles'
 
 export const Container = styled.View`
     margin: 20px
-    padding: 20px
+    padding: 10px
     border-radius: 16px
     background-color: ${Colors.white}
     align-self: center
@@ -13,30 +13,28 @@ export const Container = styled.View`
 `
 
 export const Title = styled.Text`
-    font-size: ${Fonts.xl}px
-    font-weight: 500
+    font-size: ${FontSizes.xl}px
+    font-family: ${Fonts.medium}
     margin: 15px
     color: ${Colors.darkGray}
     text-align: center
 `
 
 export const Text = styled.Text`
-    font-size: ${Fonts.sm}px
+    font-size: ${FontSizes.sm}px
     color: ${Colors.darkGray}
     text-align: center
     margin-horizontal: 5px
     ${({ isLink }: { isLink: boolean }) => (!isLink ? '' : `
-        border-bottom-width: 1px
-        border-bottom-color: ${Colors.lightBlue}
         color: ${Colors.lightBlue}
-        font-weight: 500
+        font-family: ${Fonts.medium}
     `)}
 `
 
 export const TextSmall = styled.Text`
     padding-horizontal: 5px
-    font-size: ${Fonts.xs}px
-    font-weight: 500
+    font-size: ${FontSizes.xs}px
+    font-family: ${Fonts.medium}
     color: ${Colors.darkGray}
     text-align: left
     margin-horizontal: 20px

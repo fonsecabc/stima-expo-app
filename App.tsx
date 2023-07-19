@@ -1,23 +1,56 @@
-import { Routes } from './src/routes'
+import { Colors } from './src/app/styles'
 import { setupApp } from './src/config'
+import { Routes } from './src/config/routes'
 import { Providers  } from './src/app/contexts'
 
 import React from 'react'
-import { SafeAreaView } from 'react-native'
+import AppLoading from 'expo-app-loading'
+import { SafeAreaView, View } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 import Toast from 'react-native-toast-message'
 
 
-const App = () => {
-    setupApp()
+import { 
+  useFonts,
+  Outfit_100Thin,
+  Outfit_200ExtraLight,
+  Outfit_300Light,
+  Outfit_400Regular,
+  Outfit_500Medium,
+  Outfit_600SemiBold,
+  Outfit_700Bold,
+  Outfit_800ExtraBold,
+  Outfit_900Black,
+} from '@expo-google-fonts/outfit'
 
-    return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <Providers>
-                <Routes/>
-            </Providers>
-            <Toast/>
-        </SafeAreaView>
-    )
+const App = () => {
+  const [fontsLoaded] = useFonts({
+    Outfit_100Thin,
+    Outfit_200ExtraLight,
+    Outfit_300Light,
+    Outfit_400Regular,
+    Outfit_500Medium,
+    Outfit_600SemiBold,
+    Outfit_700Bold,
+    Outfit_800ExtraBold,
+    Outfit_900Black,
+  })
+
+  const app = setupApp()
+
+  if (!fontsLoaded || !app) {
+    return <AppLoading />
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Providers>
+        <Routes/>
+      </Providers>
+      <Toast/>
+      <StatusBar style='dark' backgroundColor={Colors.slate}/>
+    </View>
+  )
 }
 
 export default App

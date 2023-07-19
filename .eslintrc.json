@@ -18,7 +18,7 @@
       "react-hooks/exhaustive-deps": "off",
       "quotes": ["error", "single"],
       "import/no-unresolved": 0,
-      "indent": ["error", 4],
+      "indent": ["error", 2],
       "semi": "off",
       "max-len": ["error", { "code": 200 }],
       "require-jsdoc": 0,

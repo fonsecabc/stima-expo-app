@@ -10,24 +10,33 @@ interface ButtonProps {
   style?: any
   isDisabled?: boolean
   isLoading?: boolean
+  type: 'default' | 'outline'
 }
 
 export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
-    const { action, text, icon, style, isDisabled, isLoading } = props
+  const { action, text, icon, style, isDisabled, isLoading, type } = props
 
-    return (
-        <ButtonContainer style={style} onPress={action} disabled={isDisabled}>
-            {isLoading ? <Loader /> : 
-                <>
-                    <ButtonText hasIcon={!!icon}>{text.toUpperCase()}</ButtonText>
-                    {icon && (
-                        <IconContainer>
-                            {icon}
-                        </IconContainer>
-                    )}
-                </>
-            }
-        </ButtonContainer>
+  return (
+    <ButtonContainer 
+      style={style} 
+      onPress={action} 
+      disabled={isDisabled}
+      type={type}
+    >
+      {isLoading ? <Loader /> : 
+        <>
+          <ButtonText 
+            hasIcon={!!icon}
+            type={type}
+          >{text.toUpperCase()}</ButtonText>
+          {icon && (
+            <IconContainer>
+              {icon}
+            </IconContainer>
+          )}
+        </>
+      }
+    </ButtonContainer>
 
-    )
+  )
 }

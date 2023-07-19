@@ -1,10 +1,10 @@
-import { Colors, Shadows, Fonts } from '../../../styles'
+import { Colors, Shadows, FontSizes, Fonts } from '../../../styles'
 
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
     margin: 20px
-    padding: 20px
+    padding: 10px
     border-radius: 16px
     background-color: ${Colors.white}
     align-self: center
@@ -14,22 +14,20 @@ export const Container = styled.View`
 `
 
 export const Title = styled.Text`
-    font-size: ${Fonts.xl}px
-    font-weight: 500
+    font-size: ${FontSizes.xl}px
+    font-family: ${Fonts.medium}
     margin: 15px
     color: ${Colors.darkGray}
     text-align: center
 `
 
 export const Text = styled.Text`
-    font-size: ${Fonts.sm}px
+    font-size: ${FontSizes.sm}px
     color: ${Colors.darkGray}
     text-align: center
-    margin-horizontal: 5px
+    margin: 5px
     ${({ isLink }: { isLink: boolean }) => (!isLink ? '' : `
-      border-bottom-width: 1px
-      border-bottom-color: ${Colors.lightBlue}
       color: ${Colors.lightBlue}
-      font-weight: 500
+      font-family: ${Fonts.medium}
     `)}
 `

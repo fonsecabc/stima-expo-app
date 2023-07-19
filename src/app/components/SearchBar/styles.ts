@@ -1,4 +1,4 @@
-import { Colors, Shadows, Fonts } from '../../styles'
+import { Colors, Shadows, FontSizes, Fonts } from '../../styles'
 
 import styled from 'styled-components/native'
 
@@ -10,10 +10,11 @@ export const SearchBarContainer = styled.KeyboardAvoidingView`
 
 export const SearchInputContainer = styled.View`
   flex: 1
-  margin: 20px
+  margin-left: 20px
+  margin-right: 10px
   margin-vertical: 10px
-  padding: 20px
-  height: ${Fonts.md * 3}px
+  padding-horizontal: 20px
+  height: ${FontSizes.md * 3}px
   flex-direction: row
   align-items: center
   border-radius: 16px
@@ -24,8 +25,8 @@ export const SearchInputContainer = styled.View`
 export const SearchTextInput = styled.TextInput`
   margin-right: auto
   color: ${Colors.darkGray}
-  font-weight: 500
-  font-size: ${Fonts.md}px
+  font-family: ${Fonts.medium}
+  font-size: ${FontSizes.md}px
   flex: 1
   outline-width: 0
 `
@@ -35,7 +36,8 @@ export const SearchIcon = styled.TouchableOpacity`
   padding: 10px
   padding-right: 20px
   padding-left: 20px
-  height: ${Fonts.md * 3}px
+  justify-content: center
+  height: ${FontSizes.md * 3}px
   border-radius: 16px
   color: ${Colors.white}
   background-color: ${Colors.green}
