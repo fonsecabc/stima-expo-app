@@ -1,4 +1,4 @@
-import { Text } from './styles'
+import { Text, Container } from './styles'
 import { useAuth } from '../../../contexts'
 import { userForm } from '../../../../modules/_forms'
 import { Screen, Logo, Form } from '../../../components'
@@ -33,20 +33,22 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
   return (
     <Screen background='gray'>
       <Logo />
-      <Form
-        values={{}}
-        title='Login'
-        inputs={userForm}
-        submitAction={loginUser}
-        buttonText='Entrar'
-        isLoading={isLoading}
-      />
-      <Text isLink={false}>
-        Novo usuário? <Text isLink={true} onPress={() => navigation.navigate('Signup')}> Cadastrar</Text>
-      </Text>
-      <Text isLink={false}>
-        Esqueceu a senha? <Text isLink={true} onPress={() => navigation.navigate('ResetPassword')}> Resetar</Text>
-      </Text>
+      <Container>
+        <Form
+          values={{}}
+          title='Login'
+          inputs={userForm}
+          submitAction={loginUser}
+          buttonText='Entrar'
+          isLoading={isLoading}
+        />
+        <Text isLink={false}>
+          Novo usuário? <Text isLink={true} onPress={() => navigation.navigate('Signup')}> Cadastrar</Text>
+        </Text>
+        <Text isLink={false}>
+          Esqueceu a senha? <Text isLink={true} onPress={() => navigation.navigate('ResetPassword')}> Resetar</Text>
+        </Text>
+      </Container>
     </Screen>
   )
 }

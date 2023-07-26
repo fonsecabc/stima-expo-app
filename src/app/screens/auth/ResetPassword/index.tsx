@@ -1,4 +1,4 @@
-import { Text } from './styles'
+import { Text, Container } from '../Login/styles'
 import { useAuth } from '../../../contexts'
 import { Screen, Logo, Form } from '../../../components'
 import { resetPasswordForm } from '../../../../modules/_forms'
@@ -28,17 +28,19 @@ export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) =>
   return (
     <Screen background='gray'>
       <Logo/>
-      <Form
-        values={{}}
-        title='Resetar Senha'
-        inputs={resetPasswordForm}
-        submitAction={sendPasswordResetEmail}
-        buttonText='Enviar'
-        isLoading={isLoading}
-      />
-      <Text isLink={false}>
-        Senha Resetada? Faça <Text isLink={true} onPress={() => navigation.navigate('Login')}>Login</Text>
-      </Text>
+      <Container>
+        <Form
+          values={{}}
+          title='Resetar Senha'
+          inputs={resetPasswordForm}
+          submitAction={sendPasswordResetEmail}
+          buttonText='Enviar'
+          isLoading={isLoading}
+        />
+        <Text isLink={false}>
+          Senha Resetada? Faça <Text isLink={true} onPress={() => navigation.navigate('Login')}>Login</Text>
+        </Text>
+      </Container>
     </Screen>
   )
 }

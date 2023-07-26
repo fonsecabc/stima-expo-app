@@ -47,31 +47,3 @@ export const Placeholder = styled.Text`
   font-size: ${FontSizes.md}px
   flex: 1
 `
-
-export const Label = styled.Text`
-  padding-horizontal: 5px
-  font-size: ${FontSizes.md}px
-  font-family: ${Fonts.medium}
-  color: ${Colors.darkGray}
-  text-align: left
-  margin-top: 20px
-  margin-horizontal: 20px
-`
-
-export const DescriptionText = styled.Text`
-    padding-horizontal: 5px
-    font-size: ${FontSizes.xs}px
-    font-family: ${Fonts.light}
-    color: ${Colors.darkGray}
-    text-align: left
-    margin-horizontal: 20px
-`
-
-export const ErrorText = styled.Text`
-  padding-horizontal: 5px
-  font-size: ${FontSizes.xs}px
-  font-family: ${Fonts.medium}
-  color: ${Colors.red}
-  text-align: left
-  margin-horizontal: 20px
-`

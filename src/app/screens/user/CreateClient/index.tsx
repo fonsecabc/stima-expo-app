@@ -6,6 +6,7 @@ import { HeaderTitle, Screen, Form } from '../../../components'
 
 import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
+import { Container } from '../CreateEvaluation/styles'
 
 type CreateClientScreenProps = { 
     navigation: any
@@ -46,14 +47,16 @@ export const CreateClientScreen = ({ navigation }: CreateClientScreenProps) => {
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true}/>
-      <Form
-        title='Cliente'
-        inputs={clientForm}
-        submitAction={createNewClient}
-        buttonText='CRIAR'
-        isLoading={isLoading}
-        values={{}}
-      />
+      <Container>
+        <Form
+          title='Cliente'
+          inputs={clientForm}
+          submitAction={createNewClient}
+          buttonText='CRIAR'
+          isLoading={isLoading}
+          values={{}}
+        />
+      </Container>
     </Screen>
   )
 }

@@ -24,7 +24,7 @@ export const ButtonText = styled.Text<{
   color: ${({ type }: { type: 'default' | 'outline' }) => (type === 'outline' ? Colors.green : Colors.white)}
   font-family: ${Fonts.semiBold}
   font-size: ${FontSizes.md}px
-  ${(hasIcon) => (hasIcon ? 'margin-right: auto' : '')}
+  ${(hasIcon) => (!hasIcon ? 'margin-right: auto' : '')}
 `
 
 export const IconContainer = styled.View`

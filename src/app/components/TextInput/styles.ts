@@ -8,11 +8,11 @@ export const TextInputContainer = styled.View<{
     isFocused: boolean
     isValid?: boolean
   }>`
-    margin: 20px
+    margin: 15px
     margin-top: 5px
     margin-bottom: 0px
     padding-horizontal: 20px
-    height: ${FontSizes.lg * 2}px
+    height: ${FontSizes.xl * 2}px
     flex-direction: row
     align-items: center
     border-radius: 16px
@@ -45,7 +45,6 @@ export const HideIcon = styled.TouchableOpacity`
 `
 
 export const Label = styled.Text`
-    padding-horizontal: 5px
     font-size: ${FontSizes.md}px
     font-family: ${Fonts.medium}
     color: ${Colors.darkGray}
@@ -55,7 +54,6 @@ export const Label = styled.Text`
 `
 
 export const DescriptionText = styled.Text`
-    padding-horizontal: 5px
     font-size: ${FontSizes.xs}px
     font-family: ${Fonts.light}
     color: ${Colors.darkGray}
@@ -64,10 +62,10 @@ export const DescriptionText = styled.Text`
 `
 
 export const ErrorText = styled.Text`
-    padding-horizontal: 5px
     font-size: ${FontSizes.xs}px
     font-family: ${Fonts.medium}
     color: ${Colors.red}
     text-align: left
+    margin-top: 3px
     margin-horizontal: 20px
 `

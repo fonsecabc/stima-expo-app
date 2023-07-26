@@ -1,11 +1,12 @@
+import { Container } from './styles'
 import { useAuth } from '../../../contexts'
+import { Client } from '../../../../types/entities'
 import * as forms from '../../../../modules/_forms'
 import { createEvaluation } from '../../../../modules/_requests'
 import { HeaderTitle, Screen, Form, ProgressBar } from '../../../components'
 
 import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
-import { Client } from '../../../../types/entities'
 
 type CreateEvaluationScreenProps = { 
     navigation: any
@@ -51,64 +52,66 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true}/>
       <ProgressBar progress={formProgress}/>
-      {
-        formProgress === 0 && <Form
-          title='Cliente'
-          inputs={forms.clientForm}
-          submitAction={(params) => { 
-            setClient(params)
-            setFormProgress(0.33)
-          }}
-          isMultipage={true}
-          canGoBack={false}
-          buttonText='SALVAR'
-          isLoading={isLoading}
-          values={client}
-        />
-      }
-      {
-        formProgress === 0.33 && <Form
-          title='Avaliação Nutricional'
-          inputs={forms.nutricionistForm}
-          submitAction={(params) => { 
-            setNutricionistForm(params)
-            setFormProgress(0.66)
-          }}
-          isMultipage={true}
-          canGoBack={false}
-          buttonText='SALVAR'
-          isLoading={isLoading}
-          values={nutricionistForm}
-        />
-      }
-      {
-        formProgress === 0.66 && <Form
-          title='Bioimpedância'
-          inputs={forms.bioimpedanceForm}
-          submitAction={(params) => { 
-            setBioimpedance(params)
-            setFormProgress(0.99)
-          }}
-          isMultipage={true}
-          canGoBack={false}
-          buttonText='SALVAR'
-          isLoading={isLoading}
-          values={bioimpedance}
-        />
-      }
-      {
-        formProgress === 0.99 && <Form
-          title='Medidas'
-          inputs={forms.measurementsForm}
-          submitAction={(params) => { 
-            setMeasurements(params)
-            createNewEvaluation()
-          }}
-          buttonText='SALVAR'
-          isLoading={isLoading}
-          values={measurements}
-        />
-      }
+      <Container>
+        {
+          formProgress === 0 && <Form
+            title='Cliente'
+            inputs={forms.clientForm}
+            submitAction={(params) => { 
+              setClient(params)
+              setFormProgress(0.33)
+            }}
+            isMultipage={true}
+            canGoBack={false}
+            buttonText='SALVAR'
+            isLoading={isLoading}
+            values={client}
+          />
+        }
+        {
+          formProgress === 0.33 && <Form
+            title='Avaliação Nutricional'
+            inputs={forms.nutricionistForm}
+            submitAction={(params) => { 
+              setNutricionistForm(params)
+              setFormProgress(0.66)
+            }}
+            isMultipage={true}
+            canGoBack={false}
+            buttonText='SALVAR'
+            isLoading={isLoading}
+            values={nutricionistForm}
+          />
+        }
+        {
+          formProgress === 0.66 && <Form
+            title='Bioimpedância'
+            inputs={forms.bioimpedanceForm}
+            submitAction={(params) => { 
+              setBioimpedance(params)
+              setFormProgress(0.99)
+            }}
+            isMultipage={true}
+            canGoBack={false}
+            buttonText='SALVAR'
+            isLoading={isLoading}
+            values={bioimpedance}
+          />
+        }
+        {
+          formProgress === 0.99 && <Form
+            title='Medidas'
+            inputs={forms.measurementsForm}
+            submitAction={(params) => { 
+              setMeasurements(params)
+              createNewEvaluation()
+            }}
+            buttonText='SALVAR'
+            isLoading={isLoading}
+            values={measurements}
+          />
+        }
+      </Container>
     </Screen>
   )
 }

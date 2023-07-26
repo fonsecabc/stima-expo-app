@@ -1,5 +1,6 @@
 import { Colors } from '../../styles'
-import { ErrorText, Label, SelectInput, Item, Placeholder, BottomModal, DescriptionText } from './styles'
+import { SelectInput, Item, Placeholder, BottomModal } from './styles'
+import { ErrorText, Label, DescriptionText } from '../TextInput/styles'
 
 import React, { useState } from 'react'
 import { FlatList, View } from 'react-native'

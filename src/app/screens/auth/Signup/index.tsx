@@ -1,4 +1,4 @@
-import { Text } from './styles'
+import { Text, Container } from '../Login/styles'
 import { useAuth } from '../../../contexts'
 import { Screen, Logo, Form } from '../../../components'
 import { createUser } from '../../../../modules/_requests'
@@ -42,17 +42,19 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
   return (
     <Screen background='gray'>
       <Logo />
-      <Form
-        values={{}}
-        title='Crie sua conta'
-        inputs={userForm}
-        submitAction={signupUser}
-        buttonText='Criar'
-        isLoading={isLoading}
-      />
-      <Text isLink={false}>
-        Já tem conta?  <Text isLink={true} onPress={() => navigation.navigate('Login')}>Entre</Text>
-      </Text>
+      <Container>
+        <Form
+          values={{}}
+          title='Crie sua conta'
+          inputs={userForm}
+          submitAction={signupUser}
+          buttonText='Criar'
+          isLoading={isLoading}
+        />
+        <Text isLink={false}>
+          Já tem conta?  <Text isLink={true} onPress={() => navigation.navigate('Login')}>Entre</Text>
+        </Text>
+      </Container> 
     </Screen>
   )
 }

@@ -4,7 +4,8 @@ import { NutritionalRoutineStatus } from '../enums'
 export type Evaluation = {
     uid: string
     userUid: string
-    client: Client
+    clientName: string
+    clientUid: string
     bioimpedance: object
     measurements: object
     nutricionistForm: object
