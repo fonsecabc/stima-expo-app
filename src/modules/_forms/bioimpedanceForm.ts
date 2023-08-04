@@ -13,6 +13,17 @@ export const bioimpedanceForm: input[] = [
     validate: 'numberHigherThanZero'
   },
   {
+    name: 'visceralFat',
+    label: 'Visceral',
+    description: 'Nivel de gordura visceral',
+    placeholder: '0',
+    value: '',
+    mask: '9',
+    type: 'text',
+    isRequired: false,
+    validate: 'numberHigherThanZero'
+  },
+  {
     name: 'muscleMassPercentage',
     label: 'Massa magra',
     description: 'Percentual de massa magra',

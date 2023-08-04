@@ -26,7 +26,7 @@ export const HeaderTitle: React.FC<HeaderTitleProps> = ({ navigation, title, goB
                   <GoBackIcon/>
                 </TouchableOpacity>
       }
-      <HeaderTitleText>{goBack ? 'Voltar' : title}</HeaderTitleText>
+      <HeaderTitleText>{goBack && !title ? 'Voltar' : title}</HeaderTitleText>
       <TouchableOpacity onPress={handlePress.notifications}>
         <NotificationIcon/>
       </TouchableOpacity>

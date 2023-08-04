@@ -1,6 +1,9 @@
 import { useAuth } from '../../../contexts'
-import { NavBar, HeaderTitle, Screen, } from '../../../components'
-import { getClient as getClientRequest } from '../../../../modules/_requests'
+import { QueryOperators } from '../../../../types/enums'
+import { ScrollView } from 'react-native'
+import { Client, EvaluationListObject } from '../../../../types/entities'
+import { getClient as getClientRequest, getEvaluationsQuery,  } from '../../../../modules/_requests'
+import { NavBar, HeaderTitle, Screen, ClientInfoDisplay, ClientEvaluationsList } from '../../../components'
 
 import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
@@ -14,15 +17,15 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   const { accessToken, currentUser } = useAuth()
   const { clientUid } = route.params
 
-  const [client, setClient] = useState({})
-  const [isLoading, setIsLoading] = useState(false)
+  const [client, setClient] = useState<Client>()
+  const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
 
   useEffect(() => {
     const fetchData = async () =>  {
-      setIsLoading(true)
       const client = await getClient()
+      const evaluationList = await getEvaluationsList()
       setClient(client)
-      setIsLoading(false)
+      setEvaluationList(evaluationList)
     }
     fetchData()
   }, [])
@@ -35,7 +38,25 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
     })
     if (response instanceof Error) {
       Toast.show({ type: 'error', text1: response.message })
-      return {}
+      return undefined
+    }
+
+    return response.data
+  }
+
+  const getEvaluationsList = async () => {
+    const response = await getEvaluationsQuery(
+      await accessToken(),
+      currentUser?.uid ?? '',
+      {
+        param: clientUid,
+        operator: QueryOperators.EQUAL,
+        comparison: 'client.uid'
+      }
+    )
+    if (response instanceof Error) {
+      Toast.show({ type: 'error', text1: response.message })
+      return []
     }
 
     return response.data
@@ -43,7 +64,22 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
 
   return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} goBack={true}/>
+      <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
+      {client 
+        ? (
+          <ScrollView style={{ flex: 1 }}>
+            <ClientInfoDisplay client={client}/>
+
+            <ClientEvaluationsList 
+              evaluationList={evaluationList} 
+              navigation={navigation}
+            />
+          </ScrollView>
+        )
+        : (
+          <ScrollView style={{ flex: 1 }}/>
+        )
+      }
       <NavBar navigation={navigation} activeScreen={2}/>
     </Screen>
   )

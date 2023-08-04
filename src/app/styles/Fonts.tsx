@@ -1,14 +1,16 @@
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
+const xl3 = RFPercentage(4)
 const xl2 = RFPercentage(3.6)
 const xl = RFPercentage(3.2)
 const lg = RFPercentage(3)
 const md = RFPercentage(2.3)
-const sm = RFPercentage(2)
+const sm = RFPercentage(2.2)
 const xs = RFPercentage(1.8)
 
 export const FontSizes = {
-  xl2: xl2 >= 26 ? 26 : xl2,
+  xl3: xl3 >= 36 ? 36 : xl3,
+  xl2: xl2 >= 30 ? 30 : xl2,
   xl: xl >= 26 ? 26 : xl,
   lg: lg >= 22 ? 22 : lg,
   md: md >= 20 ? 20 : md,

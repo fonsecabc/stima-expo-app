@@ -1,11 +1,10 @@
-import { Colors } from './src/app/styles'
 import { setupApp } from './src/config'
+import { Colors } from './src/app/styles'
 import { Routes } from './src/config/routes'
-import { Providers  } from './src/app/contexts'
+import { Providers } from './src/app/contexts'
 
 import React from 'react'
-import AppLoading from 'expo-app-loading'
-import { SafeAreaView, View } from 'react-native'
+import { View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import Toast from 'react-native-toast-message'
 
@@ -22,6 +21,7 @@ import {
   Outfit_800ExtraBold,
   Outfit_900Black,
 } from '@expo-google-fonts/outfit'
+import { SplashScreen } from './src/app/components'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -39,7 +39,7 @@ const App = () => {
   const app = setupApp()
 
   if (!fontsLoaded || !app) {
-    return <AppLoading />
+    return <SplashScreen />
   }
 
   return (

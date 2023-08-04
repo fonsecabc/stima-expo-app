@@ -1,10 +1,11 @@
 import { Colors, Shadows, FontSizes, Fonts } from '../../styles'
 
+import { Platform } from 'react-native'
 import styled from 'styled-components/native'
 import { BellIcon, ChevronLeftIcon } from 'react-native-heroicons/outline'
 
 export const HeaderTitleContainer = styled.View`
-  margin-top: 60px
+  margin-top: ${Platform.OS === 'web' ? '20' : '60'}px
   margin-bottom: 20px
   margin-horizontal: 20px
   padding-horizontal: 20px

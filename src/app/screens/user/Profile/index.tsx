@@ -4,7 +4,7 @@ import { NavBar, HeaderTitle, Screen } from '../../../components'
 
 import React from 'react'
 import * as icons from 'react-native-heroicons/outline'
-import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Linking, Text, TouchableOpacity } from 'react-native'
 
 type ProfileScreenProps = {
   navigation: any
@@ -15,13 +15,8 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
   const settingsList = [
     {
-      name: 'Minhas informações',
-      onPress: () => navigation.navigate('My Information'),
-      icon: <icons.IdentificationIcon color={Colors.darkGray} size={FontSizes.lg}/> 
-    },
-    {
       name: 'Ajuda',
-      onPress: () => navigation.navigate('Help'),
+      onPress: () => Linking.openURL('https://wa.me//5531983904021?text=Preciso%20de%20ajuda%20com%20o%20Stima!'),
       icon: <icons.InformationCircleIcon color={Colors.darkGray} size={FontSizes.lg}/> 
     },
     {
@@ -33,13 +28,13 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
   return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} title='Perfil'/>
+      <HeaderTitle navigation={navigation} title='Opções'/>
       <FlatList
         showsHorizontalScrollIndicator={false}
         style={{ flex: 1 , marginHorizontal: 20, paddingTop: 10 }}
         data={settingsList}
         extraData={settingsList}
-        renderItem={({item}) => 
+        renderItem={({ item }) => 
           <TouchableOpacity 
             style={[Containers.listItem, { justifyContent: 'space-between' }]} 
             onPress={() => item.onPress()}

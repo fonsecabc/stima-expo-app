@@ -2,7 +2,7 @@ import { NavBarContainer, NavButton, IconText } from './styles'
 
 import React from 'react'
 import * as solid from 'react-native-heroicons/solid'
-import { ClipboardDocumentListIcon, UserGroupIcon, UserCircleIcon } from 'react-native-heroicons/outline'
+import { ClipboardDocumentListIcon, UserGroupIcon, Cog6ToothIcon } from 'react-native-heroicons/outline'
 import { Colors } from '../../styles'
 
 interface NavBarProps {
@@ -22,8 +22,8 @@ export const NavBar = ({ navigation, activeScreen }: NavBarProps) => {
         <IconText isActive={activeScreen === 2}>Clientes</IconText>
       </NavButton>
       <NavButton isActive={activeScreen === 3} onPress={() => navigation.navigate('Profile')}>
-        {activeScreen === 3 ? <solid.UserCircleIcon size={30} color={Colors.lightBlue}/> : <UserCircleIcon size={30} color={Colors.darkGray} />}
-        <IconText isActive={activeScreen === 3}>Perfil</IconText>
+        {activeScreen === 3 ? <solid.Cog6ToothIcon size={30} color={Colors.lightBlue}/> : <Cog6ToothIcon size={30} color={Colors.darkGray} />}
+        <IconText isActive={activeScreen === 3}>Opções</IconText>
       </NavButton>
     </NavBarContainer>
   )
