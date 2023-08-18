@@ -1,12 +1,10 @@
-import { treatError } from '../_helpers'
+import { makeRequest } from './axiosHelper'
 import { GetType, Sex } from '../../types/enums'
-import { Client, ClientListObject, GetQuery } from '../../types/entities'
+import { Client, ClientListObject, ClientsEvaluationHistory, GetQuery } from '../../types/entities'
 
-import axios from 'axios'
+const endpoint = '/entities/client'
 
-const endpoint = '/client'
-
-export type CreateClientRequest = {
+interface CreateClientRequest {
   accessToken: string
   userUid: string
   name: string
@@ -18,113 +16,100 @@ export type CreateClientRequest = {
   height: number
 }
 
-export async function createClient(params: CreateClientRequest){
-  try {
-    return await axios.request<Client>({ 
-      url: endpoint,
-      data: params, 
-      method: 'post' 
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
-}
-
-export type GetClientRequest = {
+interface GetClientRequest {
   accessToken: string
   uid: string
   userUid: string
 }
 
-export async function getClient(params: GetClientRequest){
-  try {
-    return await axios.request<Client>({
-      url: endpoint,
-      params: {
-        ...params,
-        type: GetType.ENTITY
-      },
-      method: 'get'
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
+interface GetClientsEvaluationHistoryRequest {
+  uid: string
+  userUid: string
 }
 
-export async function getClientsList(
-  accessToken: string,
-  userUid: string,
-){
-  try {
-    return await axios.request<ClientListObject[]>({ 
-      url: endpoint,
-      params: {
-        accessToken: accessToken,
-        userUid: userUid,
-        type: GetType.LIST
-      }, 
-      method: 'get' 
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
+interface GetClientListRequest {
+  accessToken: string
+  userUid: string
 }
 
-export async function getClientsQuery(
-  accessToken: string,
-  userUid: string,
+interface GetClientQueryRequest {
+  accessToken: string
+  userUid: string
   query: GetQuery
-){
-  try {
-    return await axios.request<ClientListObject[]>({ 
-      url: endpoint,
-      params: {
-        accessToken,
-        userUid,
-        query,
-        type: GetType.QUERY
-      }, 
-      method: 'get' 
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
 }
 
-export async function updateClient(
-  accessToken: string,
-  uid: string,
+interface UpdateClientRequest {
+  accessToken: string
+  uid: string
   attrs: object
-){
-  try {
-    return await axios.request({ 
-      url: endpoint,
-      data: {
-        accessToken,
-        uid,
-        attrs
-      }, 
-      method: 'update' 
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
 }
 
-export async function deleteClient(
-  accessToken: string,
-  uid: string,
-){
-  try {
-    return await axios.request({ 
-      url: endpoint,
-      data: {
-        accessToken,
-        uid,
-      }, 
-      method: 'delete' 
-    })
-  } catch(err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
+interface DeleteClientRequest {
+  accessToken: string
+  uid: string
+}
+
+export async function createClient(params: CreateClientRequest){
+  return await makeRequest<Client>({ 
+    path: `${endpoint}/create`,
+    body: params, 
+    method: 'POST' 
+  })
+}
+
+export async function getClient(params: GetClientRequest){
+  return await makeRequest<Client>({
+    path: `${endpoint}/get`,
+    body: {
+      ...params,
+      type: GetType.ENTITY
+    },
+    method: 'GET'
+  })
+}
+
+export async function getClientsEvaluationHistory(params: GetClientsEvaluationHistoryRequest){
+  return await makeRequest<ClientsEvaluationHistory>({
+    path: `${endpoint}/get-evaluations-history`,
+    body: params,
+    method: 'GET'
+  })
+}
+
+export async function getClientsList(params: GetClientListRequest){
+  return await makeRequest<ClientListObject[]>({ 
+    path: `${endpoint}/get`,
+    body: {
+      ...params,
+      type: GetType.LIST
+    }, 
+    method: 'GET' 
+  })
+}
+
+export async function getClientsQuery(params: GetClientQueryRequest){
+  return await makeRequest<ClientListObject[]>({ 
+    path: `${endpoint}/get`,
+    body: {
+      ...params,
+      type: GetType.QUERY
+    }, 
+    method: 'GET' 
+  })
+}
+
+export async function updateClient(params: UpdateClientRequest){
+  return await makeRequest({ 
+    path: `${endpoint}/update`,
+    body: params, 
+    method: 'PUT' 
+  })
+}
+
+export async function deleteClient(params: DeleteClientRequest){
+  return await makeRequest({ 
+    path: `${endpoint}/delete`,
+    body: params, 
+    method: 'DELETE' 
+  })
 }

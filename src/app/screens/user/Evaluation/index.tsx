@@ -4,7 +4,6 @@ import { getEvaluation as getEvaluationRequest } from '../../../../modules/_requ
 import { NavBar, HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay } from '../../../components'
 
 import { ScrollView } from 'react-native'
-import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
 
 type EvaluationScreenProps = { 
@@ -38,12 +37,8 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
       uid: evaluationUid,
       userUid: currentUser?.uid ?? ''
     })
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-      return {}
-    }
 
-    return response.data
+    return response instanceof Error ? navigation.goBack() : response.body
   }
 
   return (

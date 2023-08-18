@@ -4,7 +4,6 @@ import { Screen, Logo, Form } from '../../../components'
 import { resetPasswordForm } from '../../../../modules/_forms'
 
 import React, { useState } from 'react'
-import Toast from 'react-native-toast-message'
 
 interface ResetPasswordScreenProps {
     navigation: any
@@ -16,10 +15,7 @@ export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) =>
     
   const sendPasswordResetEmail = async ({ email }: { email: string}) =>  {
     setLoading(true)
-    const response = await resetPassword(email)
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-    }
+    await resetPassword(email)
     setLoading(false)
   }
 

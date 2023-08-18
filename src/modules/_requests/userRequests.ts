@@ -1,85 +1,83 @@
 import { User } from '../../types/entities'
-import { GetType } from '../../types/enums'
-import { treatError } from '../_helpers'
-
-import axios from 'axios'
+import { makeRequest } from './axiosHelper'
 
 const endpoint = '/user'
 
-export async function createUser(
-  email: string,
-  password: string,
-  passwordConfirmation: string
-){
-  try {
-    return await axios.request<User>({
-      url: endpoint, 
-      data: {
-        email,
-        password,
-        passwordConfirmation
-      }, 
-      method: 'post' 
-    })
-  } catch (err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
+interface CreateUserParams {
+  email: string
+  password: string
 }
 
-export async function getUser(
-  accessToken: string,
-  uid: string,
-){
-  try {
-    return await axios.request<User>({
-      url: endpoint, 
-      params: {
-        accessToken,
-        uid,
-        type: GetType.ENTITY
-      }, 
-      method: 'get' 
-    })
-  } catch (err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
-
+interface GetUserParams {
+  accessToken: string
+  uid: string
 }
 
-export async function updateUser(
-  accessToken: string,
-  uid: string,
+interface UpdateUserParams {
+  accessToken: string
+  uid: string
   attrs: object
-){
-  try {
-    return await axios.request({ 
-      url: endpoint,
-      data: {
-        accessToken,
-        uid,
-        attrs
-      }, 
-      method: 'update' 
-    })
-  } catch (err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
 }
 
-export async function deleteUser(
-  accessToken: string,
-  uid: string,
-){
-  try {
-    return await axios.request({ 
-      url: endpoint,
-      data: {
-        accessToken,
-        uid,
-      },
-      method: 'delete' 
-    })
-  } catch (err: any) {
-    return treatError(err.response?.data.error ?? err.message)
-  }
+interface DeleteUserParams {
+  accessToken: string
+  uid: string
+}
+
+export async function createUser({
+  email,
+  password
+}: CreateUserParams){
+  return await makeRequest<User>({
+    path: `${endpoint}/create`, 
+    body: {
+      email,
+      password
+    }, 
+    method: 'POST' 
+  })
+}
+
+export async function getUser({
+  accessToken,
+  uid,
+}: GetUserParams){
+  return await makeRequest<User>({
+    path: `${endpoint}/get`, 
+    body: {
+      accessToken,
+      uid
+    }, 
+    method: 'GET' 
+  })
+}
+
+export async function updateUser({
+  accessToken,
+  uid,
+  attrs
+}: UpdateUserParams){
+  return await makeRequest<boolean>({
+    path: `${endpoint}/update`, 
+    body: {
+      accessToken,
+      uid,
+      attrs
+    }, 
+    method: 'PUT' 
+  })
+}
+
+export async function deleteUser({
+  accessToken,
+  uid,
+}: DeleteUserParams){
+  return await makeRequest<boolean>({
+    path: `${endpoint}/delete`, 
+    body: {
+      accessToken,
+      uid
+    }, 
+    method: 'DELETE' 
+  })
 }

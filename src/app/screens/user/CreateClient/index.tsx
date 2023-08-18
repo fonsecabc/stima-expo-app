@@ -33,16 +33,15 @@ export const CreateClientScreen = ({ navigation }: CreateClientScreenProps) => {
       userUid: currentUser?.uid ?? '',
       ...params
     })
-    if (response instanceof Error) {
-      setLoading(false)
-      return Toast.show({ type: 'error', text1: response.message })
-    }
-
     setLoading(false)
-    navigation.navigate('Client', { clientUid: response.data.uid })
-    return Toast.show({ type: 'success', text1: `Cliente ${response.data.name} criado com sucesso.` })
-  }
 
+    if (response instanceof Error || !response.body) return
+    
+    const client = response.body
+    
+    navigation.navigate('Client', { clientUid: client.uid })
+    return Toast.show({ type: 'success', text1: `Cliente ${client.name} criado com sucesso.` })
+  }
   
   return (
     <Screen background='gray'>

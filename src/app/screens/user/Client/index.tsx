@@ -1,12 +1,10 @@
 import { useAuth } from '../../../contexts'
-import { QueryOperators } from '../../../../types/enums'
 import { ScrollView } from 'react-native'
-import { Client, EvaluationListObject } from '../../../../types/entities'
-import { getClient as getClientRequest, getEvaluationsQuery,  } from '../../../../modules/_requests'
-import { NavBar, HeaderTitle, Screen, ClientInfoDisplay, ClientEvaluationsList } from '../../../components'
+import { getClientsEvaluationHistory  } from '../../../../modules/_requests'
+import { NavBar, HeaderTitle, Screen, ClientInfoDisplay, BodyComposition, Bioimpedance } from '../../../components'
 
-import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
+import { ClientsEvaluationHistory } from '../../../../types/entities'
 
 type ClientScreenProps = { 
   navigation: any
@@ -14,66 +12,39 @@ type ClientScreenProps = {
 }
 
 export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
-  const { accessToken, currentUser } = useAuth()
+  const { currentUser } = useAuth()
   const { clientUid } = route.params
 
-  const [client, setClient] = useState<Client>()
-  const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
+  const [clientsHistory, setClientsHistory] = useState<ClientsEvaluationHistory>()
 
   useEffect(() => {
     const fetchData = async () =>  {
-      const client = await getClient()
-      const evaluationList = await getEvaluationsList()
-      setClient(client)
-      setEvaluationList(evaluationList)
+      const clientsHistory = await getClientHistory()
+      setClientsHistory(clientsHistory)
     }
     fetchData()
   }, [])
     
-  const getClient = async () => {
-    const response = await getClientRequest({
-      accessToken: await accessToken(),
+  const getClientHistory = async () => {
+    const response = await getClientsEvaluationHistory({
       uid: clientUid,
       userUid: currentUser?.uid ?? ''
     })
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-      return undefined
-    }
 
-    return response.data
-  }
-
-  const getEvaluationsList = async () => {
-    const response = await getEvaluationsQuery(
-      await accessToken(),
-      currentUser?.uid ?? '',
-      {
-        param: clientUid,
-        operator: QueryOperators.EQUAL,
-        comparison: 'client.uid'
-      }
-    )
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-      return []
-    }
-
-    return response.data
+    return response instanceof Error ? undefined : response.body
   }
 
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
-      {client 
+      {clientsHistory 
         ? (
           <ScrollView style={{ flex: 1 }}>
-            <ClientInfoDisplay client={client}/>
-
-            <ClientEvaluationsList 
-              evaluationList={evaluationList} 
-              navigation={navigation}
-            />
+            <ClientInfoDisplay client={clientsHistory.client}/>
+            <BodyComposition client={clientsHistory.client}/>
+            {clientsHistory.newestEvaluation && (
+              <Bioimpedance bioimpedance={JSON.parse(clientsHistory.newestEvaluation.bioimpedance)} client={clientsHistory.client}/>
+            )}
           </ScrollView>
         )
         : (

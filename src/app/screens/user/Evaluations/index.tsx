@@ -4,7 +4,6 @@ import { EvaluationListObject } from '../../../../types/entities'
 import { getEvaluationsList } from '../../../../modules/_requests'
 import { List, NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
 
-import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
@@ -33,13 +32,12 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
   }, [])
     
   const getList = async () => {
-    const response = await getEvaluationsList(await accessToken(), currentUser?.uid ?? '')
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-      return []
-    }
+    const response = await getEvaluationsList({
+      accessToken: await accessToken(), 
+      userUid: currentUser?.uid ?? ''
+    })
 
-    return response.data
+    return response instanceof Error ? [] : response.body || []
   }
 
   const handleSearch = (searchText: string) => {

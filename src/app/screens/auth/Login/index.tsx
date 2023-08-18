@@ -4,7 +4,6 @@ import { userForm } from '../../../../modules/_forms'
 import { Screen, Logo, Form } from '../../../components'
 
 import React, { useState } from 'react'
-import Toast from 'react-native-toast-message'
 
 interface LoginScreenProps {
   navigation: any
@@ -23,10 +22,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
     const { email, password } = params
 
     setLoading(true)
-    const response = await login(email, password)
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-    }
+    await login(email, password)
     setLoading(false)
   }
 

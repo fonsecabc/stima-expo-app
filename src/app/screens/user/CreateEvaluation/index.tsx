@@ -30,21 +30,18 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
       return Toast.show({ type: 'error', text1: 'Preencha os dados do cliente' })
     }
 
-    const response = await createEvaluation(
-      await accessToken(),
-      currentUser?.uid ?? '',
+    const response = await createEvaluation({
+      accessToken: await accessToken(),
+      userUid: currentUser?.uid ?? '',
       client,
       bioimpedance,
       measurements,
       nutricionistForm
-    )
-    if (response instanceof Error) {
-      setLoading(false)
-      return Toast.show({ type: 'error', text1: response.message })
-    }
-
+    })
     setLoading(false)
-    navigation.navigate('Evaluation', { evaluationId: response.data.uid })
+    if (response instanceof Error || !response.body) return
+
+    navigation.navigate('Evaluation', { evaluationId: response.body.uid })
     return Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
   }
   

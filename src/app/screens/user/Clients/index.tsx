@@ -4,7 +4,6 @@ import { getClientsList } from '../../../../modules/_requests'
 import { Containers, Texts, Colors } from '../../../styles'
 import { NavBar, HeaderTitle, Button, SearchBar, Screen, List, Avatar } from '../../../components'
 
-import Toast from 'react-native-toast-message'
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
@@ -33,17 +32,16 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
   }, [])
     
   const getList = async () => {
-    const response = await getClientsList(await accessToken(), currentUser?.uid ?? '')
-    if (response instanceof Error) {
-      Toast.show({ type: 'error', text1: response.message })
-      return []
-    }
+    const response = await getClientsList({
+      accessToken: await accessToken(), 
+      userUid: currentUser?.uid ?? ''
+    })
 
-    return response.data
+    return response instanceof Error ? [] : response.body || []
   }
     
   const handleSearch = (searchText: string) => {
-    if (!searchText) {
+    if (!searchText || !originalClientsList) {
       setClientsList(originalClientsList)
     } else {
       const filteredList = originalClientsList.filter((client) =>

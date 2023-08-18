@@ -6,6 +6,8 @@ import {
   UserAlreadyExistsError
 } from '../../types/errors'
 
+import Toast from 'react-native-toast-message'
+
 export const ErrorMap: Map<string, Error> = new Map([
   ['User already exists!!', new UserAlreadyExistsError()],
   ['Firebase: Error (auth/invalid-email).', new InvalidParamError('Email')],
@@ -22,15 +24,20 @@ export const treatError = (error: any): Error => {
 
   if (message.startsWith('Invalid param: ')) {
     const param = message.replace('Invalid param: ', '')
-    return new InvalidParamError(param.charAt(0).toUpperCase() + param.slice(1))
-  }
 
-  if (message.endsWith('not found!!')) {
+    error = new InvalidParamError(param.charAt(0).toUpperCase() + param.slice(1))
+
+  } else if (message.endsWith('not found!!')) {
     const param = message.replace('Informed ', '').replace(' not found!!', '')
-    return new EntityDoesntExistError(param.charAt(0).toUpperCase() + param.slice(1))
+
+    error = new EntityDoesntExistError(param.charAt(0).toUpperCase() + param.slice(1))
+  } else {
+    error = ErrorMap.get(message) ?? logError(message)
   }
  
-  return ErrorMap.get(message) ?? logError(message)
+  Toast.show({ type: 'error', text1: error.message })
+  
+  return error 
 }
 
 export const logError = (error: string): Error => {
