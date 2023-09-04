@@ -7,6 +7,7 @@ import { NavBar, HeaderTitle, Button, SearchBar, Screen, List, Avatar } from '..
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
+import { formatDate } from '../../../../modules/_helpers'
 
 type ClientScreenProps = { 
     navigation: any
@@ -51,9 +52,7 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
     }
   }
     
-  const createClient = () => {
-    navigation.navigate('Create Client')
-  }
+  const createClient = () => navigation.navigate('Create Client')
 
   return (
     <Screen background='gray'>
@@ -70,10 +69,12 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
         emptyListMessage={isLoading ? 'Carregando...' : 'Nenhum cliente cadastrado'}
         ItemComponent={({ item }: {item: ClientListObject}) => {
           let lastEvaluatedAt = 'Cliente a ser avaliado'
+
           if (item.lastEvaluatedAt) {
-            const lastEvaluatedAtDate = new Date(item.lastEvaluatedAt)
-            lastEvaluatedAt = `Data da ultima avaliação: ${lastEvaluatedAtDate.getDate()}/${lastEvaluatedAtDate.getMonth()}/${lastEvaluatedAtDate.getFullYear()}`
+            const lastEvaluatedAtDate = formatDate(item.lastEvaluatedAt)
+            lastEvaluatedAt = `Data da ultima avaliação: ${lastEvaluatedAtDate}`
           }
+
           return (
             <View style={[Containers.listItem,]}>
               <Avatar letter={item.name.charAt(0)}/>

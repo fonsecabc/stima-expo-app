@@ -54,6 +54,5 @@ export const bioimpedanceForm: input[] = [
     type: 'text',
     isRequired: false,
     validate: 'numberHigherThanZero'
-
   },
 ]

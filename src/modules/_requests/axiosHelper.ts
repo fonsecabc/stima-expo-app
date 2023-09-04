@@ -1,5 +1,6 @@
-import axios from 'axios'
 import { treatError } from '../_helpers'
+
+import axios from 'axios'
 
 interface HttpRequest<T = any> {
   path: string
@@ -16,20 +17,11 @@ export async function makeRequest<T = any>(request: HttpRequest): Promise<HttpRe
   try {
     const { path, body, method } = request
 
-    let response
-    if (method === 'GET') {
-      response = await axios.request<T>({
-        url: path, 
-        params: body,
-        method: method 
-      })
-    } else {
-      response = await axios.request<T>({
-        url: path, 
-        data: body,
-        method: method 
-      })
-    }
+    const response = await axios.request<T>({ 
+      method, 
+      url: path, 
+      [method === 'GET' ? 'params' : 'data']: body 
+    })
 
     return {
       statusCode: response.status,

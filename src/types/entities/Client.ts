@@ -7,7 +7,7 @@ export interface Client {
     email: string
     phone: string
     weight: number
-    height: numbe
+    height: number
     dateOfBirth: string
     sex: Sex
     lastEvaluatedAt?: Date

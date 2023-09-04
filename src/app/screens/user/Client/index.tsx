@@ -1,10 +1,19 @@
+import { 
+  NavBar, 
+  HeaderTitle, 
+  Screen, 
+  ClientInfoDisplay, 
+  BodyComposition, 
+  Bioimpedance, 
+  ClientEvaluationsList, 
+  LineChartDisplay 
+} from '../../../components'
 import { useAuth } from '../../../contexts'
-import { ScrollView } from 'react-native'
-import { getClientsEvaluationHistory  } from '../../../../modules/_requests'
-import { NavBar, HeaderTitle, Screen, ClientInfoDisplay, BodyComposition, Bioimpedance } from '../../../components'
-
-import React, { useEffect, useState } from 'react'
 import { ClientsEvaluationHistory } from '../../../../types/entities'
+import { getClientsEvaluationHistory  } from '../../../../modules/_requests'
+
+import { ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 
 type ClientScreenProps = { 
   navigation: any
@@ -41,10 +50,17 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
         ? (
           <ScrollView style={{ flex: 1 }}>
             <ClientInfoDisplay client={clientsHistory.client}/>
+            {clientsHistory.evaluationList.length > 0 && (
+              <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} navigation={navigation}/>
+            )}
             <BodyComposition client={clientsHistory.client}/>
             {clientsHistory.newestEvaluation && (
-              <Bioimpedance bioimpedance={JSON.parse(clientsHistory.newestEvaluation.bioimpedance)} client={clientsHistory.client}/>
+              <Bioimpedance bioimpedance={clientsHistory.newestEvaluation.bioimpedance} client={clientsHistory.client}/>
             )}
+            <LineChartDisplay
+              title='IMC'
+              description=' kg/m²'
+            />
           </ScrollView>
         )
         : (

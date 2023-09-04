@@ -7,6 +7,7 @@ import { List, NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../c
 import React, { useEffect, useState } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
+import { formatDate } from '../../../../modules/_helpers'
 
 type EvaluationScreenProps = { 
     navigation: any
@@ -69,12 +70,13 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
         list={evaluationList}
         emptyListMessage={isLoading ? 'Carregando...' : 'Nenhuma avaliação encontrada'}
         ItemComponent={({ item }: {item: EvaluationListObject}) => {
-          const createdAt = new Date(item.createdAt)
+          const evaluationDate = formatDate(item.createdAt)
+
           return (
             <View style={[Containers.listItem,]}>
               <View>
                 <Text style={Texts.md}>{item.clientName}</Text>
-                <Text style={Texts.xs}>Data da avaliação: {createdAt.getDate()}/{createdAt.getMonth()}/{createdAt.getFullYear()}</Text>
+                <Text style={Texts.xs}>Data da avaliação: {evaluationDate}</Text>
               </View>
               <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => navigation.navigate('Evaluation', { evaluationUid: item.uid })}>
                 <EyeIcon color={Colors.darkGray}/>

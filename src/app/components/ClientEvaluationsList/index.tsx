@@ -1,11 +1,11 @@
 import { List } from '../List'
-import { Label } from './styles'
+import { Label, Title } from './styles'
 import { EvaluationListObject } from '../../../types/entities'
-import { Colors, Containers, Texts } from '../../styles'
+import { Colors, Containers } from '../../styles'
 
 import React from 'react'
 import { EyeIcon } from 'react-native-heroicons/outline'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 interface ClientEvaluationsListProps {
   evaluationList: EvaluationListObject[]
@@ -25,7 +25,7 @@ export const ClientEvaluationsList = (props: ClientEvaluationsListProps) => {
           const createdAt = new Date(item.createdAt)
           return (
             <View style={[Containers.listItem,]}>
-              <Text style={Texts.md}>Data da avaliação: {createdAt.getDate()}/{createdAt.getMonth()}/{createdAt.getFullYear()}</Text>
+              <Title>Data da avaliação: {createdAt.getDate()}/{createdAt.getMonth()}/{createdAt.getFullYear()}</Title>
               <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => navigation.navigate('Evaluation', { evaluationUid: item.uid })}>
                 <EyeIcon color={Colors.darkGray}/>
               </TouchableOpacity>
