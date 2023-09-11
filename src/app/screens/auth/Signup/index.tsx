@@ -1,11 +1,10 @@
-import { Text, Container } from '../Login/styles'
 import { useAuth } from '../../../contexts'
+import { Text, Container } from '../Login/styles'
+import { userForm } from '../../../../modules/_forms'
 import { Screen, Logo, Form } from '../../../components'
 import { createUser } from '../../../../modules/_requests'
 
-import Toast from 'react-native-toast-message'
 import React, { useState } from 'react'
-import { userForm } from '../../../../modules/_forms'
 
 interface SignupScreenProps {
   navigation: any
@@ -14,7 +13,6 @@ interface SignupScreenProps {
 type SignupUserFunction = {
   email: string
   password: string
-  passwordConfirmation: string
 }
 
 export const SignupScreen = ({ navigation }: SignupScreenProps) => {
@@ -22,26 +20,18 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
   const [isLoading, setLoading] = useState(false)
 
   const signupUser = async (params: SignupUserFunction) => {
-    const { email, password, passwordConfirmation } = params
-
     setLoading(true)
-    let response
-    response = await createUser(email, password, passwordConfirmation)
-    if (response instanceof Error) {
-      setLoading(false)
-      return Toast.show({ type: 'error', text1: response.message })
-    }
-    response = await login(email, password)
-    if (response instanceof Error) {
-      setLoading(false)
-      return Toast.show({ type: 'error', text1: response.message })
-    }
+    const response = await createUser(params)
+    
+    if (response instanceof Error) return setLoading(false)
+    
+    await login(params)
     setLoading(false)
   }
 
   return (
     <Screen background='gray'>
-      <Logo />
+      <Logo/>
       <Container>
         <Form
           values={{}}

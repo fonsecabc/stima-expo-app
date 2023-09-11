@@ -26,7 +26,7 @@ export const measurementsForm: input[] = [
     label: 'Ombros',
     placeholder: '00cm',
     value: '',
-    mask: '99',
+    mask: '999',
     type: 'text',
     isRequired: false,
     validate: 'numberHigherThanZero'
@@ -46,7 +46,7 @@ export const measurementsForm: input[] = [
     label: 'Quadril',
     placeholder: '00cm',
     value: '',
-    mask: '99',
+    mask: '999',
     type: 'text',
     isRequired: false,
     validate: 'numberHigherThanZero'
@@ -56,7 +56,7 @@ export const measurementsForm: input[] = [
     label: 'Coxa esquerda',
     placeholder: '00cm',
     value: '',
-    mask: '99',
+    mask: '999',
     type: 'text',
     isRequired: false,
     validate: 'numberHigherThanZero'
@@ -66,7 +66,7 @@ export const measurementsForm: input[] = [
     label: 'Coxa direita',
     placeholder: '00cm',
     value: '',
-    mask: '99',
+    mask: '999',
     type: 'text',
     isRequired: false,
     validate: 'numberHigherThanZero'

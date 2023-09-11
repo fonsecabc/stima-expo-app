@@ -1,58 +1,69 @@
 import { 
   Display,
-  Label,
+  DisplayLabel,
   Container
 } from './styles'
 import { Colors } from '../../styles'
 
 import React from 'react'
-import { View } from 'react-native'
-import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
+import { LineChart } from 'react-native-chart-kit'
+import { getPercentOfWidth } from '../../styles/Screen'
 
 interface LineChartDisplayProps {
-  yAxisValues?: number[]
-  xAxisValues?: number[]
+  yAxisLabel?: string
+  xAxisValues: number[]
+  xAxisLabels: string[]
   title: string
   description?: string
   values?: number[]
+  fromNumber: number
+  fromZero?: boolean
+  color: 'lightBlue' | 'darkBlue' | 'green' 
 }
 
 export const LineChartDisplay = (props: LineChartDisplayProps) => {
-  const { title  } = props
+  const { title, yAxisLabel, xAxisLabels, xAxisValues, color, fromNumber, fromZero = false } = props
 
-  const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
-  const axesSvg = { fontSize: 10, fill: 'grey' };
-  
+  const data = {
+    labels: xAxisLabels,
+    datasets: [
+      {
+        data: xAxisValues,
+        strokeWidth: 2,
+      },
+    ],
+  }
+
   return (
     <>
-      <Label>{title}</Label>
       <Container>
         <Display>
-          <View style={{ height: 200, flexDirection: 'row' }}>
-            <YAxis
-              data={data}
-              style={{ marginBottom: 10 }}
-              contentInset={{ top: 10, bottom: 10 }}
-              svg={axesSvg}
-            />
-            <View style={{ flex: 1, marginLeft: 10 }}>
-              <LineChart
-                style={{ flex: 1 }}
-                data={data}
-                contentInset={{ top: 10, bottom: 10 }}
-                svg={{ stroke: Colors.lightBlue, strokeWidth: 2,  }}
-              >
-                <Grid/>
-              </LineChart>
-              <XAxis
-                style={{ marginHorizontal: -10, height: 10 }}
-                data={data}
-                formatLabel={(value, index) => index}
-                contentInset={{ left: 10, right: 10 }}
-                svg={axesSvg}
-              />
-            </View>
-          </View>
+          <DisplayLabel>{title}</DisplayLabel>  
+          <LineChart
+            data={data}
+            height={220}
+            width={getPercentOfWidth(80)}
+            style={{
+              marginBottom: -10,
+              marginLeft: -18,
+            }}
+            yLabelsOffset={15}
+            yAxisSuffix={yAxisLabel}
+            chartConfig={{
+              propsForBackgroundLines: {
+                stroke: Colors.darkGray,
+                strokeWidth: 1
+              },
+              labelColor: () => Colors.darkGray,
+              color: () => Colors[color],
+              decimalPlaces: 0,
+            }}
+            fromNumber={fromNumber}
+            segments={data.datasets[0].data.length}
+            fromZero={fromZero}
+            transparent
+            bezier
+          />
         </Display>
       </Container>
     </>

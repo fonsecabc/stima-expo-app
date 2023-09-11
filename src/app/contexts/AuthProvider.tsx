@@ -6,16 +6,21 @@ import * as storage from '../../modules/_helpers/storageHelper'
 import { ReactNode, createContext, useState, useContext  } from 'react'
 import { signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth'
 
-type AuthContextProps = {
-    currentUser: User | undefined
-    accessToken: () => Promise<string>
-    login: (email: string, password: string) => Promise<void | Error>
-    logout: () => Promise<void | Error>
-    resetPassword: (email: string) => Promise<void | Error>
+type AuthProviderProps = { children: ReactNode }
+
+type ResetPasswordProps = { email: string }
+
+type LoginProps = {
+  email: string
+  password: string
 }
 
-type AuthProviderProps = {
-    children: ReactNode
+type AuthContextProps = {
+  currentUser: User | undefined
+  accessToken: () => Promise<string>
+  login: (params: LoginProps) => Promise<void | Error>
+  logout: () => Promise<void | Error>
+  resetPassword: (params: ResetPasswordProps) => Promise<void | Error>
 }
 
 const initAuthContextPropsState = {
@@ -28,9 +33,7 @@ const initAuthContextPropsState = {
 
 export const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState)
 
-export const useAuth = () => {
-  return useContext(AuthContext)
-} 
+export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<any>()
@@ -39,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
 
   const accessToken = async () => await auth.currentUser?.getIdToken(true) ?? ''
 
-  const login = async (email: string, password: string): Promise<void | Error> => {
+  const login = async ({ email, password }: LoginProps): Promise<void | Error> => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       setCurrentUser(auth.currentUser)
@@ -50,25 +53,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
   }
 
   const logout = async (): Promise<void | Error> => {
-    try {
-      await signOut(auth)
-      return setCurrentUser(undefined)
-    } catch (err: any) {
-      return treatError(err)
-    }
+    await signOut(auth)
+      .then(() => setCurrentUser(undefined))
+      .catch(treatError)
   }
 
-  const resetPassword = async (email: string): Promise<void | Error> => {
-    try {
-      return await sendPasswordResetEmail(auth, email)
-    } catch (err: any) {
-      return treatError(err)
-    }
+  const resetPassword = async ({ email }: ResetPasswordProps): Promise<void | Error> => {
+    return await sendPasswordResetEmail(auth, email).catch(treatError)
   }
 
-  return (
-    <AuthContext.Provider value={{ currentUser, accessToken, login, logout, resetPassword }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  const value = { currentUser, accessToken, login, logout, resetPassword }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

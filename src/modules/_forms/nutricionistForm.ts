@@ -141,7 +141,7 @@ export const nutricionistForm: input[] = [
   },
   {
     name: 'eatingHabits',
-    label: 'Refeições', 
+    label: 'Refeições Fora de Casa', 
     description: 'Selecione as refeições você faz fora de casa',
     placeholder: '',
     value: '',

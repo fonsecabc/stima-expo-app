@@ -2,10 +2,10 @@ import { Client } from './Client'
 import { Evaluation } from './Evaluation'
 import { EvaluationListObject } from './EvaluationListObject'
 
-type HistoryObject = {
-    date: string
+export type HistoryObject = {
+    date: Date
     value: number
-  }
+}
   
 export type ClientsEvaluationHistory = {
     client: Client

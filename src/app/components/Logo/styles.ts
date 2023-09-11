@@ -5,7 +5,7 @@ import { Platform } from 'react-native'
 const height = RFPercentage(10) >= 80 ? 80 : RFPercentage(10)
 
 export const LogoContainer = styled.View`
-  margin-top: ${Platform.OS === 'web' ? '0' : '60'}px
+  margin-top: ${Platform.OS === 'web' ? '20' : '60'}px
   margin-bottom: 10px
   align-self: center
 `

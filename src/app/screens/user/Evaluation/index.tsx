@@ -1,7 +1,7 @@
 import { useAuth } from '../../../contexts'
 import { Evaluation } from '../../../../types/entities'
 import { getEvaluation as getEvaluationRequest } from '../../../../modules/_requests'
-import { NavBar, HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay } from '../../../components'
+import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay } from '../../../components'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
@@ -24,9 +24,9 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
     const fetchData = async () =>  {
       const evaluation = await getEvaluation()
       setEvaluation(evaluation)
-      setBioimpedance(JSON.parse(evaluation.bioimpedance))
-      //setMeasurements(JSON.parse(evaluation.measurements))
-      //setNutricionistForm(JSON.parse(evaluation.nutricionistForm))
+      setBioimpedance(evaluation.bioimpedance)
+      //setMeasurements(evaluation.measurements)
+      //setNutricionistForm(evaluation.nutricionistForm)
     }
     fetchData()
   }, [])
@@ -41,27 +41,29 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
     return response instanceof Error ? navigation.goBack() : response.body
   }
 
+  if (!evaluation) return (
+    <Screen background='gray'>
+      <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
+      <ScrollView style={{ flex: 1, paddingTop: 10 }}>
+      </ScrollView>
+    </Screen>
+  )
+
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
-      {evaluation 
-        ? (
-          <ScrollView style={{ flex: 1 }}>
-            <ClientInfoDisplay client={evaluation.client}/>
+      <ScrollView style={{ flex: 1, paddingTop: 20 }}>
+        <ClientInfoDisplay client={evaluation.client}/>
 
-            <BodyComposition client={evaluation.client}/>
-            
-            {(bioimpedance && bioimpedance.fatPercentage && bioimpedance.muscleMassPercentage) && (
-            
-              <Bioimpedance bioimpedance={bioimpedance} client={evaluation.client}/>
-            
-            )}
+        <BodyComposition client={evaluation.client}/>
+          
+        {(bioimpedance && bioimpedance.fatPercentage && bioimpedance.muscleMassPercentage) && (
+          
+          <Bioimpedance bioimpedance={bioimpedance} client={evaluation.client}/>
+          
+        )}
 
-          </ScrollView>
-        )
-        : (<ScrollView style={{ flex: 1 }}/>)
-      }
-      <NavBar navigation={navigation} activeScreen={1}/>
+      </ScrollView>
     </Screen>
   )
 }

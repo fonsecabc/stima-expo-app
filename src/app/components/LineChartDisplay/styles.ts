@@ -11,6 +11,14 @@ export const Display = styled.View`
   ${Shadows.default}
 `
 
+export const DisplayLabel = styled.Text`
+  margin-bottom: 20px
+  font-size: ${FontSizes.md}px
+  font-family: ${Fonts.medium}
+  color: ${Colors.darkGray}
+  text-align: left
+`
+
 export const Container = styled.View`
   display: flex
   flex-direction: row

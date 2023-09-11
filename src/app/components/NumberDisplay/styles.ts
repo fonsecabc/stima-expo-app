@@ -34,7 +34,9 @@ export const DisplayState = styled.Text<{
   color: ${({ state }) => state === 'abaixo' ? Colors.yellow 
     : state === 'acima' ? Colors.orange 
       :  state === 'muito acima' ? Colors.red 
-        : state === 'normal' ? Colors.green : Colors.darkGray }
+        : state === 'normal'? Colors.green 
+          : Colors.darkGray
+}
   text-align: left
 `
 

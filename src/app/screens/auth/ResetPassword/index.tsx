@@ -1,25 +1,25 @@
-import { Text, Container } from '../Login/styles'
 import { useAuth } from '../../../contexts'
+import { Text, Container } from '../Login/styles'
 import { Screen, Logo, Form } from '../../../components'
 import { resetPasswordForm } from '../../../../modules/_forms'
 
 import React, { useState } from 'react'
 
 interface ResetPasswordScreenProps {
-    navigation: any
+  navigation: any
 }
+
+type ResetPasswordProps = { email: string }
 
 export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) => {
   const { resetPassword } = useAuth()
   const [isLoading, setLoading] = useState(false)
     
-  const sendPasswordResetEmail = async ({ email }: { email: string}) =>  {
+  async function sendPasswordResetEmail(params: ResetPasswordProps)  {
     setLoading(true)
-    await resetPassword(email)
+    await resetPassword(params)
     setLoading(false)
   }
-
-
 
   return (
     <Screen background='gray'>

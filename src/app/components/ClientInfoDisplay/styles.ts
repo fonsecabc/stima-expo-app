@@ -3,9 +3,9 @@ import { Colors, FontSizes, Fonts, Shadows } from '../../styles'
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-  flex: 1
   background-color: ${Colors.white}
   margin-horizontal: 20px
+  margin-vertical: 10px
   border-radius: 16px
   padding: 20px
   ${Shadows.default}

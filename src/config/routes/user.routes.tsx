@@ -9,8 +9,7 @@ export const UserStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName='Evaluations'
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: false, title: 'Stima' }}
       >
         <Stack.Screen name='Evaluations' component={screens.EvaluationsScreen}/>
         <Stack.Screen name='Clients' component={screens.ClientsScreen}/>

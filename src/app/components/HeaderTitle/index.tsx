@@ -1,4 +1,4 @@
-import { GoBackIcon, HeaderTitleContainer, HeaderTitleText, NotificationIcon } from './styles'
+import { GoBackIcon, HeaderTitleContainer, HeaderTitleText, /*NotificationIcon*/ } from './styles'
 
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
@@ -22,14 +22,15 @@ export const HeaderTitle: React.FC<HeaderTitleProps> = ({ navigation, title, goB
   return (
     <HeaderTitleContainer>
       {goBack && 
-                <TouchableOpacity onPress={handlePress.goBack}>
-                  <GoBackIcon/>
-                </TouchableOpacity>
+        <TouchableOpacity onPress={handlePress.goBack}>
+          <GoBackIcon/>
+        </TouchableOpacity>
       }
       <HeaderTitleText>{goBack && !title ? 'Voltar' : title}</HeaderTitleText>
-      <TouchableOpacity onPress={handlePress.notifications}>
+      
+      {/* <TouchableOpacity onPress={handlePress.notifications}>
         <NotificationIcon/>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </HeaderTitleContainer>
   )
 }

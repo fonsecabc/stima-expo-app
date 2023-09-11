@@ -19,7 +19,9 @@ export const Title = styled.Text`
   text-align: left
 `
 
-export const Container = styled.View`
-  margin-top: 10px
-  padding-horizontal: 20px
+export const Text = styled.Text`
+  font-size: ${FontSizes.md}px
+  font-family: ${Fonts.medium}
+  color: ${Colors.darkGray}
+  text-align: left
 `

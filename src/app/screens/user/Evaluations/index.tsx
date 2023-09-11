@@ -85,7 +85,6 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
           )
         }}
       />
-                
       <NavBar navigation={navigation} activeScreen={1}/>
     </Screen>
   )

@@ -11,7 +11,7 @@ import React from 'react'
 interface NumberDisplayProps {
   title: string
   description: string
-  number: number
+  number: number | string
   state?: 'normal' | 'acima' | 'muito acima' | 'abaixo'
 }
 

@@ -3,6 +3,7 @@ import { NumberDisplay } from '../NumberDisplay'
 import { Container, Label } from './styles'
 import { Client } from '../../../types/entities'
 import { BarChartDisplay } from '../BarChartDisplay'
+import { getAge } from '../../../modules/_helpers'
 
 interface BioimpedanceProps {
   bioimpedance: any
@@ -23,17 +24,6 @@ function getFatPercentageState(fatPercentage: number, sex: Sex) {
           : fatPercentage >= 25 ? 'muito acima' 
             : 'normal'
   }
-}
-
-function getAge(dateOfBirth: string) {
-  const today = new Date()
-  const birthDate = new Date(dateOfBirth)
-  let age = today.getFullYear() - birthDate.getFullYear()
-  const month = today.getMonth() - birthDate.getMonth()
-  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-    age--
-  }
-  return age
 }
 
 function getMetabolicAgeState(metabolicAge: number, age: number) {
@@ -93,7 +83,7 @@ export const Bioimpedance = (props: BioimpedanceProps) => {
         <NumberDisplay 
           number={bioimpedance.muscleMassPercentage} 
           state={'normal'} 
-          title='Massa Muscular'
+          title='Massa Magra'
           description='%' 
         />
       </Container>

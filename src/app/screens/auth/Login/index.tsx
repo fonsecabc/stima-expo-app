@@ -19,10 +19,8 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [isLoading, setLoading] = useState(false)
 
   const loginUser = async (params: LoginUserFunction) => {
-    const { email, password } = params
-
     setLoading(true)
-    await login(email, password)
+    await login(params)
     setLoading(false)
   }
 
