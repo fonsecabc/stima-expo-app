@@ -9,7 +9,7 @@ import {
 } from './styles'
 import { Colors } from '../../styles'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline'
 
 interface CustomTextInputProps {
@@ -20,13 +20,18 @@ interface CustomTextInputProps {
   placeholder?: string
   mask?: string
   description?: string
+  value?: string
 }
 
 export const CustomTextInput = (props: CustomTextInputProps) => {
-  const { label, setValue, placeholder, isSecured, error, mask, description } = props
+  const { label, setValue, placeholder, isSecured, error, mask, description, value } = props
 
   const [hideText, setHideText] = useState(!!isSecured)
   const [isFocused, setFocus] = useState(false)
+
+  useEffect(() => {
+    if (value) setValue(value)
+  }, [])
 
   return (
     <>
@@ -35,23 +40,25 @@ export const CustomTextInput = (props: CustomTextInputProps) => {
       <TextInputContainer isFocused={isFocused} isValid={!(error)}>
         { mask 
           ? <MaskTextInput
+            value={value}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder={placeholder}
             clearButtonMode='while-editing'
             underlineColorAndroid='transparent'
-            secureTextEntry={hideText ? true : false}
-            onChangeText={(text) => setValue(text)}
+            secureTextEntry={hideText}
+            onChangeText={setValue}
             mask={mask}
           />
           : <TextInput
+            value={value}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder={placeholder}
             clearButtonMode='while-editing'
             underlineColorAndroid='transparent'
-            secureTextEntry={hideText ? true : false}
-            onChangeText={(text) => setValue(text)}
+            secureTextEntry={hideText}
+            onChangeText={setValue}
           />
         }
         {isSecured && (

@@ -2,7 +2,7 @@ import { Colors } from '../../styles'
 import { SelectInput, Item, Placeholder, BottomModal } from './styles'
 import { ErrorText, Label, DescriptionText } from '../TextInput/styles'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { ChevronDownIcon } from 'react-native-heroicons/outline'
 
@@ -10,6 +10,7 @@ interface CustomSelectInputProps {
   items: Array<SelectItem>
   label: string
   setValue: any
+  value?: string
   placeholder: string 
   error?: string
   description?: string
@@ -20,9 +21,19 @@ type SelectItem = {
 }
 
 export const CustomSelectInput = (props: CustomSelectInputProps) => {
-  const { items, label, setValue, placeholder, error, description } = props
+  const { items, label, setValue, value, placeholder, error, description } = props
   const [isFocused, setFocus] = useState(false)
   const [selectedLabel, setSelectedLabel] = useState('')
+
+  useEffect(() => {
+    if (value && !selectedLabel) {
+      const selectedItem = items.find((item: SelectItem) => item.value === value)
+      if (selectedItem) {
+        setSelectedLabel(selectedItem.key)
+        setValue(selectedItem.value)
+      }
+    }
+  }, [])
 
   return (
     <>

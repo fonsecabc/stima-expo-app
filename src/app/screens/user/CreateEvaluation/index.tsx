@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
 
 type CreateEvaluationScreenProps = { 
-    navigation: any
+  navigation: any
 }
  
 export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenProps) => {
@@ -18,25 +18,25 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
 
   const [formProgress, setFormProgress] = useState(0)
 
-  const [client, setClient] = useState<Client>()
-  const [bioimpedance, setBioimpedance] = useState()
-  const [measurements, setMeasurements] = useState()
-  const [nutricionistForm, setNutricionistForm] = useState()
+  const [formValues, setFormValues] = useState({
+    client: {},
+    bioimpedance: {},
+    measurements: {},
+    nutricionistForm: {}
+  })
 
   const createNewEvaluation = async () => {
+    if (!formValues.client) return
+    
     setLoading(true)
-    if (!client) {
-      setLoading(false)
-      return Toast.show({ type: 'error', text1: 'Preencha os dados do cliente' })
-    }
 
     const response = await createEvaluation({
       accessToken: await accessToken(),
       userUid: currentUser?.uid ?? '',
-      client,
-      bioimpedance,
-      measurements,
-      nutricionistForm
+      client: formValues.client as Client,
+      bioimpedance: formValues.bioimpedance,
+      measurements: formValues.measurements,
+      nutricionistForm: formValues.nutricionistForm
     })
     setLoading(false)
     if (response instanceof Error || !response.body) return
@@ -44,7 +44,7 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
     navigation.navigate('Evaluation', { evaluationId: response.body.uid })
     return Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
   }
-  
+
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true}/>
@@ -55,14 +55,14 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
             title='Cliente'
             inputs={forms.clientForm}
             submitAction={(params) => { 
-              setClient(params)
+              setFormValues({ ...formValues, client: params })
               setFormProgress(0.33)
             }}
             isMultipage={true}
             canGoBack={false}
             buttonText='SALVAR'
             isLoading={isLoading}
-            values={client}
+            values={formValues.client}
           />
         }
         {
@@ -70,14 +70,15 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
             title='Avaliação Nutricional'
             inputs={forms.nutricionistForm}
             submitAction={(params) => { 
-              setNutricionistForm(params)
+              setFormValues({ ...formValues, nutricionistForm: params })
               setFormProgress(0.66)
             }}
+            goBack={() => setFormProgress(0)}
             isMultipage={true}
-            canGoBack={false}
+            canGoBack={true}
             buttonText='SALVAR'
             isLoading={isLoading}
-            values={nutricionistForm}
+            values={formValues.nutricionistForm}
           />
         }
         {
@@ -85,14 +86,15 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
             title='Bioimpedância'
             inputs={forms.bioimpedanceForm}
             submitAction={(params) => { 
-              setBioimpedance(params)
+              setFormValues({ ...formValues, bioimpedance: params })
               setFormProgress(0.99)
             }}
             isMultipage={true}
-            canGoBack={false}
+            canGoBack={true}
+            goBack={() => setFormProgress(0.33)}
             buttonText='SALVAR'
             isLoading={isLoading}
-            values={bioimpedance}
+            values={formValues.bioimpedance}
           />
         }
         {
@@ -100,12 +102,14 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
             title='Medidas'
             inputs={forms.measurementsForm}
             submitAction={(params) => { 
-              setMeasurements(params)
+              setFormValues({ ...formValues, measurements: params })
               createNewEvaluation()
             }}
+            goBack={() => setFormProgress(0.66)}
             buttonText='SALVAR'
+            canGoBack={true}
             isLoading={isLoading}
-            values={measurements}
+            values={formValues.measurements}
           />
         }
       </Container>

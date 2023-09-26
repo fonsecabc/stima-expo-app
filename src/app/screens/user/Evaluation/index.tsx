@@ -12,14 +12,15 @@ type EvaluationScreenProps = {
 }
 
 export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) => {
-  const { accessToken, currentUser } = useAuth()
+  const { accessToken, currentUser, logout } = useAuth()
   const { evaluationUid } = route.params
 
+  
   const [evaluation, setEvaluation] = useState<Evaluation>()
   //const [measurements, setMeasurements] = useState<Evaluation['measurements']>()
   const [bioimpedance, setBioimpedance] = useState<Evaluation['bioimpedance']>()
   //const [nutricionistForm, setNutricionistForm] = useState<Evaluation['nutricionistForm']>()
-
+  
   useEffect(() => {
     const fetchData = async () =>  {
       const evaluation = await getEvaluation()
@@ -32,10 +33,12 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
   }, [])
     
   const getEvaluation = async () => {
+    if (!currentUser) return logout()
+
     const response: any = await getEvaluationRequest({
       accessToken: await accessToken(),
       uid: evaluationUid,
-      userUid: currentUser?.uid ?? ''
+      userUid: currentUser.uid
     })
 
     return response instanceof Error ? navigation.goBack() : response.body

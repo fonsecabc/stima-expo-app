@@ -3,7 +3,7 @@ import { Colors } from '../../styles'
 import { SelectInput, BottomModal, Placeholder } from '../SelectInput/styles'
 import { ErrorText, Label, DescriptionText } from '../TextInput/styles'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { ChevronDownIcon } from 'react-native-heroicons/outline'
 
@@ -14,6 +14,7 @@ interface MultiSelectInputProps {
   placeholder: string 
   error?: string
   description?: string
+  value?: string
 }
 
 type SelectItem = {
@@ -21,9 +22,16 @@ type SelectItem = {
 }
 
 export const MultiSelectInput = (props: MultiSelectInputProps) => {
-  const { items, label, setValue, placeholder, error, description } = props
+  const { items, label, setValue, value, placeholder, error, description } = props
   const [isFocused, setFocus] = useState(false)
   const [selectedLabel, setSelectedLabel] = useState('')
+
+  useEffect(() => {
+    if (value && !selectedLabel) {
+      setSelectedLabel(value)
+      setValue(value)
+    }
+  }, [])
 
   return (
     <>

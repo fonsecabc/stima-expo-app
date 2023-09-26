@@ -3,7 +3,7 @@ import { input } from '../../../types/entities'
 import { CustomTextInput, CustomSelectInput, Button, MultiSelectInput } from '..'
 import * as validations from '../../../modules/_validations'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Field } from 'formik'
 import { KeyboardAvoidingView, View } from 'react-native'
 
@@ -21,11 +21,17 @@ type FormProps = {
 
 export const Form = (props: FormProps) => {
   const { title, inputs, submitAction, isLoading, buttonText, values, isMultipage, canGoBack, goBack } = props
+  
+  const [formValues, setFormValues] = useState(values)
+
+  useEffect(() => {
+    setFormValues(values)
+  }, [values])
 
   const initialValues = inputs.reduce(
-    (values, input) => ({ ...values, [input.name]: input.value }),
-    values
-  )
+    (values, input) => ({ ...values, [input.name]: formValues[input.name] ?? input.value }),
+    {}
+  ) 
 
   return (
     <KeyboardAvoidingView
@@ -40,8 +46,8 @@ export const Form = (props: FormProps) => {
           <>
             {inputs.map((input) => (
               <Field
-                key={input.name}
                 name={input.name}
+                key={input.name}
                 validate={
                   (value: any) => (input.validate && !input.isRequired && !value) ? undefined 
                     : input.validate === 'email' ? validations.checkEmail(value)
@@ -59,6 +65,7 @@ export const Form = (props: FormProps) => {
                     <CustomTextInput
                       label={input.label}
                       setValue={(value: any) => field.onChange(input.name)(value)}
+                      value={field.value}
                       isSecured={input.isSecured}
                       placeholder={input.placeholder}
                       mask={input.mask}
@@ -71,10 +78,10 @@ export const Form = (props: FormProps) => {
                         label={input.label}
                         items={input.items ?? []}
                         setValue={(value: any) => field.onChange(input.name)(value)}
+                        value={field.value}
                         placeholder={input.placeholder ?? ''}
                         error={showError ? form.errors[input.name] : undefined}
                         description={input.description}
-
                       />
                     ) 
                       : input.type === 'multiSelect' ? (
@@ -82,6 +89,7 @@ export const Form = (props: FormProps) => {
                           label={input.label}
                           items={input.items ?? []}
                           setValue={(value: any) => field.onChange(input.name)(value)}
+                          value={field.value}
                           placeholder={input.placeholder ?? ''}
                           error={showError ? form.errors[input.name] : undefined}
                           description={input.description}
