@@ -49,7 +49,7 @@ export const cardForm: input[] = [
     mask: '99',
     type: 'select',
     isRequired: true,
-    items: Array.from({length: 30}, (_, i) => ({
+    items: Array.from({ length: 30 }, (_, i) => ({
       key: (currentYear + i).toString(),
       value: currentYear + i
     }))

@@ -22,9 +22,8 @@ export const Title = styled.Text`
 `
 
 export const Description = styled.Text`
-  font-size: ${FontSizes.lg}px
+  font-size: ${FontSizes.md}px
   font-family: ${Fonts.regular}
-  margin: 10px
   color: ${Colors.darkGray}
   text-align: center
 `

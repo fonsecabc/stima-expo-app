@@ -6,12 +6,13 @@ import { Bar } from 'react-native-progress'
 
 interface ProgressBarProps {
   progress: number
+  label: string
 }
 
-export const ProgressBar = ({ progress }: ProgressBarProps) => {
+export const ProgressBar = ({ progress, label }: ProgressBarProps) => {
   return (
     <>
-      <Label>Progresso {progress * 100}%</Label>
+      <Label>{label}</Label>
       <Bar
         style={{ marginHorizontal: 25, marginTop: 10 }}
         animated={true}

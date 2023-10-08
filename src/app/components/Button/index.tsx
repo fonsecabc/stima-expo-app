@@ -10,11 +10,11 @@ interface ButtonProps {
   style?: any
   isDisabled?: boolean
   isLoading?: boolean
-  type: 'default' | 'outline'
+  type: 'default' | 'outline' | 'red'
 }
 
 export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
-  const { action, text, icon, style, isDisabled, isLoading, type } = props
+  const { action, text, icon, style, isDisabled = false, isLoading, type } = props
 
   return (
     <ButtonContainer 

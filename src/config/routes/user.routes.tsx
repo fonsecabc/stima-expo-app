@@ -45,8 +45,8 @@ export const UserStack = (props: UserStackProps) => {
         <Stack.Screen name='Evaluation'>
           {(screenProps: ScreenProps) => <screens.EvaluationScreen {...screenProps} route={{ params: { ...props, evaluationUid: screenProps?.route?.params?.evaluationUid } }} />}
         </Stack.Screen>
-        <Stack.Screen name='Pix Payment'>
-          {(screenProps: ScreenProps) => <screens.PixPaymentScreen {...screenProps} route={{ params: { ...props, order: screenProps?.route?.params?.order } }} />}
+        <Stack.Screen name='Payment'>
+          {(screenProps: ScreenProps) => <screens.PaymentScreen {...screenProps} route={{ params: { ...props, order: screenProps?.route?.params?.order } }} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

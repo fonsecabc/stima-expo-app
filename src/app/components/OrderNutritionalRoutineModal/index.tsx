@@ -6,64 +6,123 @@ import {
   TextContainer, 
   Title 
 } from '@components/OrderNutritionalRoutineModal/styles'
-import { PaymentMethod } from '@enums'
-import { Card, Order, User } from '@entities'
+import { User } from '@entities'
 import { Button, CustomSelectInput } from '@components'
+import { NutritionalRoutineStatus, PaymentMethod, PaymentStatus } from '@enums'
 import { orderNutritionalRoutine as orderNutritionalRoutineRequest  } from '@requests'
 
 import React, { useState } from 'react'
+import { Linking } from 'react-native'
 
 interface OrderNutritionalRoutineModalProps {
   evaluationUid: string
   accessToken: string
   currentUser: User
   navigation: any
+  nutritionalRoutineStatus: NutritionalRoutineStatus
+  nutritionalRoutinePaymentStatus?: PaymentStatus 
+  nutritionalRoutineLink?: string
 }
 
 export const OrderNutritionalRoutineModal = (props: OrderNutritionalRoutineModalProps) => {
-  const { evaluationUid, accessToken, currentUser, navigation } = props
+  const { evaluationUid, accessToken, currentUser, navigation, nutritionalRoutinePaymentStatus, nutritionalRoutineStatus, nutritionalRoutineLink } = props
   
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.PIX)
-  const [isOrdering, setIsOrdering] = useState(false)
-  const [order, setOrder] = useState<Order>()
-  const [isFocused, setFocus] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isOrderNutritionalRoutineModalFocused, setOrderNutritionalRoutineModalFocus] = useState(false)
 
   const orderNutritionalRoutine = async () => {
-    setIsOrdering(true)
+    setIsLoading(true)
 
-    console.log({
+    const response = await orderNutritionalRoutineRequest({
       accessToken,
       evaluationUid,
       paymentMethod,
       customerUid: currentUser.customerUid
     })
+    setIsLoading(false)
+    setOrderNutritionalRoutineModalFocus(false) 
+    
+    if (response instanceof Error) return 
+    return navigation.navigate('Payment', { order: response.body })
+  }
 
-    const response: any = await orderNutritionalRoutineRequest({
-      accessToken,
-      evaluationUid,
-      paymentMethod,
-      customerUid: currentUser.customerUid
-    })
-    setIsOrdering(false)
+  const contactSuport = () => {
+    Linking.openURL('https://wa.me//5531983904021?text=Pagamento%20da%20rotina%20nutricional%20falhou%20no%20Stima!%0A%0AUid%20da%20avaliacao:%20' + evaluationUid)
+  }
 
-    if (response instanceof Error) return setFocus(false)
+  if (
+    nutritionalRoutineStatus === NutritionalRoutineStatus.REQUESTED &&
+    nutritionalRoutinePaymentStatus === PaymentStatus.PENDING
+  ) {
+    return  (
+      <Button
+        text='Pagamento da rotina pendente'
+        type='default'
+        isDisabled={true}
+        action={() => {}}
+      />
+    )
+  }
 
-    setOrder(response.body)
-    return navigation.navigate('Pix Payment', { order })
+  if (
+    nutritionalRoutineStatus === NutritionalRoutineStatus.REQUESTED &&
+    nutritionalRoutinePaymentStatus === PaymentStatus.PAID && 
+    nutritionalRoutineLink
+  ) {
+    return  (
+      <Button
+        text='Rotina sendo feita pela nutricionista'
+        type='default'
+        isDisabled={true}
+        action={() => {}}
+      />
+    )
+  }
+
+  if (
+    nutritionalRoutineStatus === NutritionalRoutineStatus.RECEIVED &&
+    nutritionalRoutinePaymentStatus === PaymentStatus.PAID &&
+    nutritionalRoutineLink
+  ) {
+    return  (
+      <Button
+        text='Abrir rotina nutricional'
+        type='default'
+        action={() => Linking.openURL(nutritionalRoutineLink)}
+      />
+    )
   }
 
   return (
     <>
-      <Button
-        text='Pedir Rotina Nutricional'
-        action={() => setFocus(true)}
-        style={{ marginBottom: 0 }}
-        type='default'
-      />
+      {(
+        nutritionalRoutineStatus === NutritionalRoutineStatus.REQUESTED &&
+        nutritionalRoutinePaymentStatus === PaymentStatus.FAILED
+      ) && (
+        <Button
+          text='Pagamento da rotina falhou'
+          type='red'
+          action={contactSuport}
+        />
+      )}
+
+
+      {(
+        nutritionalRoutineStatus === NutritionalRoutineStatus.NOT_REQUESTED
+      ) && (
+        <Button
+          text='Pedir Rotina Nutricional'
+          action={() => setOrderNutritionalRoutineModalFocus(true)}
+          style={{ marginBottom: 0 }}
+          type='default'
+        />
+      )}
+
       <BottomModal
-        isVisible={isFocused}
-        onBackdropPress={() => setFocus(false)}
-        onSwipeComplete={() => setFocus(false)}
+        isVisible={isOrderNutritionalRoutineModalFocused}
+        onBackdropPress={() => setOrderNutritionalRoutineModalFocus(false)}
+        onSwipeComplete={() => setOrderNutritionalRoutineModalFocus(false)}
         backdropOpacity={0.3}
       >
         <Container>
@@ -79,8 +138,8 @@ export const OrderNutritionalRoutineModal = (props: OrderNutritionalRoutineModal
             setValue={setPaymentMethod}
             items={[
               { key: 'Pix', value: 'pix' },
-              { key: 'Cartão de crédito', value: 'creditCard' },
-              { key: 'Cartão de débito', value: 'debitCard' },
+              //{ key: 'Cartão de crédito', value: 'creditCard' },
+              //{ key: 'Cartão de débito', value: 'debitCard' },
             ]}
             placeholder='Selecione'
           />
@@ -89,7 +148,7 @@ export const OrderNutritionalRoutineModal = (props: OrderNutritionalRoutineModal
             action={orderNutritionalRoutine}
             style={{ marginRight: 0, marginLeft: 0, marginTop: 40 }}
             type='default'
-            isLoading={isOrdering}
+            isLoading={isLoading}
           />
         </Container>
       </BottomModal>

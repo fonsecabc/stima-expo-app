@@ -1,10 +1,9 @@
 import { Evaluation } from '@entities'
 import { getEvaluation as getEvaluationRequest } from '@requests'
-import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, Button, OrderNutritionalRoutineModal } from '@components'
+import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, OrderNutritionalRoutineModal } from '@components'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { NutritionalRoutineStatus } from '@enums'
 
 type EvaluationScreenProps = { 
   navigation: any
@@ -14,38 +13,27 @@ type EvaluationScreenProps = {
 export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) => {
   const { accessToken, currentUser, evaluationUid } = route.params
 
-  const [client, setClient] = useState<Evaluation['client']>()
-  //const [measurements, setMeasurements] = useState<Evaluation['measurements']>()
-  const [bioimpedance, setBioimpedance] = useState<Evaluation['bioimpedance']>()
-  const [nutritionalRoutineStatus, setNutritionalRoutineStatus] = useState<Evaluation['nutritionalRoutineStatus']>()
-  //const [nutricionistForm, setNutricionistForm] = useState<Evaluation['nutricionistForm']>()
+  const [evaluation, setEvaluation] = useState<Evaluation>()
   
   useEffect(() => {
     const fetchData = async () =>  {
       const evaluation = await getEvaluation()
-      if (evaluation) {
-        setClient(evaluation.client)
-        setBioimpedance(evaluation.bioimpedance)
-        setNutritionalRoutineStatus(evaluation.nutritionalRoutineStatus)
-        //setMeasurements(evaluation.measurements)
-        //setNutricionistForm(evaluation.nutricionistForm)
-      }
+      if (evaluation) return setEvaluation(evaluation)
     }
     fetchData()
   }, [])
 
-  const getEvaluation = async () => {
+  async function getEvaluation(): Promise<void | Evaluation> {
     const response = await getEvaluationRequest({
       accessToken: accessToken,
       uid: evaluationUid,
       userUid: currentUser.uid
     })
-    console.log(response)
 
     return response instanceof Error ? navigation.goBack() : response.body
   }
 
-  if (!client || !nutritionalRoutineStatus) return (
+  if (!evaluation) return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
@@ -57,23 +45,23 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
       <ScrollView style={{ flex: 1 }}>
-        <ClientInfoDisplay client={client}/>
+        <ClientInfoDisplay client={evaluation.client}/>
 
-        {nutritionalRoutineStatus === NutritionalRoutineStatus.NOT_REQUESTED && (
-          <OrderNutritionalRoutineModal
-            evaluationUid={evaluationUid}
-            accessToken={accessToken}	
-            currentUser={currentUser}
-            navigation={navigation}
-          />
-        )}
+        <OrderNutritionalRoutineModal
+          evaluationUid={evaluationUid}
+          accessToken={accessToken}	
+          currentUser={currentUser}
+          navigation={navigation}
+          nutritionalRoutineStatus={evaluation.nutritionalRoutineStatus}
+          nutritionalRoutinePaymentStatus={evaluation.nutritionalRoutinePaymentStatus}
+          nutritionalRoutineLink={evaluation.nutritionalRoutineLink}
+        />
 
-
-        <BodyComposition client={client}/>
+        <BodyComposition client={evaluation.client}/>
           
-        {(bioimpedance && bioimpedance.fatPercentage && bioimpedance.muscleMassPercentage) && (
+        {(evaluation.bioimpedance && evaluation.bioimpedance.fatPercentage && evaluation.bioimpedance.muscleMassPercentage) && (
           
-          <Bioimpedance bioimpedance={bioimpedance} client={client}/>
+          <Bioimpedance bioimpedance={evaluation.bioimpedance} client={evaluation.client}/>
           
         )}
 

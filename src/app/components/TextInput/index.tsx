@@ -21,10 +21,11 @@ interface CustomTextInputProps {
   mask?: string
   description?: string
   value?: string
+  isEditable?: boolean
 }
 
 export const CustomTextInput = (props: CustomTextInputProps) => {
-  const { label, setValue, placeholder, isSecured, error, mask, description, value } = props
+  const { label, setValue, placeholder, isSecured, error, mask, description, value, isEditable = true } = props
 
   const [hideText, setHideText] = useState(!!isSecured)
   const [isFocused, setFocus] = useState(false)
@@ -49,6 +50,7 @@ export const CustomTextInput = (props: CustomTextInputProps) => {
             secureTextEntry={hideText}
             onChangeText={setValue}
             mask={mask}
+            editable={isEditable}
           />
           : <TextInput
             value={value}
@@ -59,6 +61,7 @@ export const CustomTextInput = (props: CustomTextInputProps) => {
             underlineColorAndroid='transparent'
             secureTextEntry={hideText}
             onChangeText={setValue}
+            editable={isEditable}
           />
         }
         {isSecured && (

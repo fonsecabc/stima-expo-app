@@ -1,8 +1,5 @@
-import { Client } from './Client'
-import { Bioimpedance } from './Bioimpedance'
-import { Measurements } from './Measurements'
-import { NutritionalRoutineStatus } from '@enums'
-import { NutritionistForm } from './NutritionistForm'
+import { Client, Measurements, Bioimpedance, NutritionistForm } from '@entities'
+import { NutritionalRoutineStatus, PaymentStatus } from '@enums'
 
 export type Evaluation = {
     uid: string
@@ -12,6 +9,8 @@ export type Evaluation = {
     measurements: Measurements
     nutricionistForm: NutritionistForm
     nutritionalRoutineStatus: NutritionalRoutineStatus
+    nutritionalRoutinePaymentStatus?: PaymentStatus 
+    orderUid?: string
     nutritionalRoutineLink?: string
     createdAt: any
     deletedAt?: any

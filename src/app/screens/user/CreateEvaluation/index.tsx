@@ -53,7 +53,10 @@ export const CreateEvaluationScreen = ({ navigation, route }: CreateEvaluationSc
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true}/>
-      <ProgressBar progress={formProgress}/>
+      <ProgressBar 
+        progress={formProgress}
+        label={`Progresso ${formProgress * 100}%`}
+      />
       <Container>
         {
           formProgress === 0 && <Form
