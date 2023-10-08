@@ -1,10 +1,10 @@
+import { Colors } from '@styles'
 import { 
   Display,
   DisplayLabel,
   DisplayState,
   DisplayText,  
-} from './styles'
-import { Colors } from '../../styles'
+} from '@components/BarChartDisplay/styles'
 
 import React from 'react'
 import { View } from 'react-native'

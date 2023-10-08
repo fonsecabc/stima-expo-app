@@ -4,7 +4,7 @@ import {
   DisplayText,
   DisplayDescription,
   DisplayState
-} from './styles'
+} from '@components/NumberDisplay/styles'
 
 import React from 'react'
 

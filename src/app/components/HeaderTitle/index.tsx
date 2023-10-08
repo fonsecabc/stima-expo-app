@@ -1,4 +1,9 @@
-import { GoBackIcon, HeaderTitleContainer, HeaderTitleText, /*NotificationIcon*/ } from './styles'
+import { 
+  GoBackIcon, 
+  HeaderTitleContainer, 
+  HeaderTitleText, 
+  /*NotificationIcon*/ 
+} from '@components/HeaderTitle/styles'
 
 import React from 'react'
 import { TouchableOpacity } from 'react-native'

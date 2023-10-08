@@ -1,34 +1,29 @@
-import { Colors } from './Colors'
-import { FontSizes } from './Fonts'
-import { Shadows } from './Shadows'
-import { StyleSheet } from 'react-native'
+import { Colors, FontSizes, Shadows, width } from '@styles'
 
-export const Containers = StyleSheet.create({
-  default: {
-    flex: 1,
-    margin: 0,
-    borderRadius: 16,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.white,
-    height: 100,
-    ...Shadows.default
-  },
-  listItem: {
-    marginBottom: 10,
-    paddingHorizontal: 20,
-    height: FontSizes.md * 3,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 16,
-    backgroundColor: Colors.white,
-  },
-  listItemSkeleton: {
-    marginBottom: 10,
-    paddingHorizontal: 20,
-    height: FontSizes.md * 3,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 16,
-    width: '100%',
-  }
-})
+import { Platform } from 'react-native'
+import styled from 'styled-components/native'
+
+export const Containers = {
+  ListItem: styled.View`
+    margin-bottom: 10px
+    padding-horizontal: 20px
+    height: ${FontSizes.md * 3}px
+    flex-direction: row
+    align-items: center
+    justify-content: space-between
+    border-radius: 16px
+    background-color: ${Colors.white}
+  `,
+  CenteredDefault: styled.View`
+    margin: 20px
+    margin-bottom: 60px
+    padding: 30px
+    border-radius: 16px
+    background-color: ${Colors.white}
+    align-content: center
+    max-width: ${width}px
+    ${Platform.OS === 'web' && 'align-self: center'}
+    ${Shadows.default}
+  `
+
+}

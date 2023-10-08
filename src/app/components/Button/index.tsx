@@ -1,5 +1,5 @@
-import { Loader } from '../Loader'
-import { ButtonContainer, ButtonText, IconContainer } from './styles'
+import { Loader } from '@components'
+import { ButtonContainer, ButtonText, IconContainer } from '@components/Button/styles'
 
 import React from 'react'
 

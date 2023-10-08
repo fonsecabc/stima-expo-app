@@ -1,5 +1,6 @@
+import { ScreenContainer } from '@components/Screen/styles'
+
 import React, { ReactNode } from 'react'
-import { ScreenContainer } from './styles'
 
 interface ScreenProps {
   background: 'gray' | 'blue'

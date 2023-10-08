@@ -1,7 +1,7 @@
-import { setupApp } from './src/config'
-import { Colors } from './src/app/styles'
 import { Routes } from './src/config/routes'
-import { Providers } from './src/app/contexts'
+import { Colors } from '@styles'
+import { setupApp } from '@config'
+import { Providers } from '@contexts'
 
 import React from 'react'
 import { View } from 'react-native'

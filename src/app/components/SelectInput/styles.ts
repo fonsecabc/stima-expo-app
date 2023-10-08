@@ -1,4 +1,4 @@
-import { Colors, FontSizes, Fonts } from '../../styles'
+import { Colors, FontSizes, Fonts } from '@styles'
 
 import Modal from 'react-native-modal'
 import styled from 'styled-components/native'
@@ -7,7 +7,6 @@ export const SelectInput = styled.TouchableOpacity<{
   isFocused: boolean
   isValid?: boolean
 }>`
-  margin: 20px
   margin-top: 5px
   margin-bottom: 0px
   padding-horizontal: 20px

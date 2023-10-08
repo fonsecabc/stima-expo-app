@@ -1,4 +1,4 @@
-import { Colors, FontSizes, Fonts } from '../../styles'
+import { Colors, FontSizes, Fonts } from '@styles'
 
 import styled from 'styled-components/native'
 
@@ -14,7 +14,7 @@ export const EmptyListItem = styled.View`
 `
 
 export const EmptyListItemText = styled.Text`
-  font-size: ${FontSizes.md}
+  font-size: ${FontSizes.md}px
   color: ${Colors.darkGray}
   font-family: ${Fonts.medium}
 `

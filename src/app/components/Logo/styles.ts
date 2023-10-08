@@ -1,6 +1,6 @@
+import { Platform } from 'react-native'
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { Platform } from 'react-native'
 
 const height = RFPercentage(10) >= 80 ? 80 : RFPercentage(10)
 

@@ -1,9 +1,10 @@
+import { Subscription } from './'
+
 export type User = {
     uid: string
-    name: string
     email: string
-    isActive: boolean
-    isEnabled: boolean
-    createdAt: Date
-    deletedAt?: Date
+    createdAt: any
+    customerUid: string
+    subscription?: Subscription
+    deletedAt?: any
 }

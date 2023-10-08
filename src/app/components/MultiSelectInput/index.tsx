@@ -1,10 +1,10 @@
-import { Item } from './styles'
-import { Colors } from '../../styles'
-import { SelectInput, BottomModal, Placeholder } from '../SelectInput/styles'
-import { ErrorText, Label, DescriptionText } from '../TextInput/styles'
+import { Colors } from '@styles'
+import { Item } from '@components/MultiSelectInput/styles'
+import { ErrorText, Label, DescriptionText } from '@components/TextInput/styles'
+import { SelectInput, BottomModal, Placeholder } from '@components/SelectInput/styles'
 
-import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { ChevronDownIcon } from 'react-native-heroicons/outline'
 
 interface MultiSelectInputProps {

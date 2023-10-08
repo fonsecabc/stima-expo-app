@@ -1,7 +1,7 @@
-import { Title } from './styles'
-import { input } from '../../../types/entities'
-import { CustomTextInput, CustomSelectInput, Button, MultiSelectInput } from '..'
-import * as validations from '../../../modules/_validations'
+import { input } from '@entities'
+import * as validations from '@validations'
+import { Title } from '@components/Form/styles'
+import { CustomTextInput, CustomSelectInput, Button, MultiSelectInput } from '@components'
 
 import React, { useEffect, useState } from 'react'
 import { Formik, Field } from 'formik'

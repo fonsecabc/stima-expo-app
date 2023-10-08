@@ -1,6 +1,6 @@
 import { setupAxios } from './axios'
 import { testVariables } from './variables'
-import { EnvironmentVariablesError } from '../types/errors'
+import { EnvironmentVariablesError } from '@errors'
 
 export const setupApp = () => {
   const isEnvValid = testVariables()
@@ -10,3 +10,7 @@ export const setupApp = () => {
 
   return true
 }
+
+export * from './axios'
+export * from './firebase'
+export * from './variables'

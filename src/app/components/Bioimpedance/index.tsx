@@ -1,9 +1,8 @@
-import { Sex } from '../../../types/enums'
-import { NumberDisplay } from '../NumberDisplay'
-import { Container, Label } from './styles'
-import { Client } from '../../../types/entities'
-import { BarChartDisplay } from '../BarChartDisplay'
-import { getAge } from '../../../modules/_helpers'
+import { Sex } from '@enums'
+import { getAge } from '@helpers'
+import { Client } from '@entities'
+import { NumberDisplay, BarChartDisplay } from '@components'
+import { Container, Label } from '@components/Bioimpedance/styles'
 
 interface BioimpedanceProps {
   bioimpedance: any

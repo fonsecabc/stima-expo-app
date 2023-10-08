@@ -1,6 +1,6 @@
-import { NumberDisplay } from '../NumberDisplay'
-import { Container, Label } from './styles'
-import { ClientsEvaluationHistory } from '../../../types/entities'
+import { NumberDisplay } from '@components'
+import { ClientsEvaluationHistory } from '@entities'
+import { Container, Label } from '@components/ClientsOverallResult/styles'
 
 interface ClientOverallResultsProps {
   overallResults: ClientsEvaluationHistory['overallResults']

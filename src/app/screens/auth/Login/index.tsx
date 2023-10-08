@@ -1,7 +1,8 @@
-import { Text, Container } from './styles'
-import { useAuth } from '../../../contexts'
-import { userForm } from '../../../../modules/_forms'
-import { Screen, Logo, Form } from '../../../components'
+import { userForm } from '@forms'
+import { useAuth } from '@contexts'
+import { Containers } from '@styles'
+import { Screen, Logo, Form } from '@components'
+import { Text } from '@screens/auth/Login/styles'
 
 import React, { useState } from 'react'
 
@@ -27,7 +28,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
   return (
     <Screen background='gray'>
       <Logo />
-      <Container>
+      <Containers.CenteredDefault>
         <Form
           values={{}}
           title='Login'
@@ -42,7 +43,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
         <Text isLink={false}>
           Esqueceu a senha? <Text isLink={true} onPress={() => navigation.navigate('ResetPassword')}> Resetar</Text>
         </Text>
-      </Container>
+      </Containers.CenteredDefault>
     </Screen>
   )
 }

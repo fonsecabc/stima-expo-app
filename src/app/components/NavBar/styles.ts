@@ -1,4 +1,4 @@
-import { Colors, Shadows, Fonts } from '../../styles'
+import { Colors, Shadows, Fonts } from '@styles'
 
 import styled from 'styled-components/native'
 

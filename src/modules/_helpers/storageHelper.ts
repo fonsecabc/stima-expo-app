@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface StorageProps {
-    key: string
-    value?: any
+  key: string
+  value?: any
 }
 
 export async function store({ key, value }: StorageProps): Promise<void> {

@@ -1,4 +1,5 @@
 export * from './userForm'
+export * from './cardForm'
 export * from './clientForm'
 export * from './measurementsForm'
 export * from './bioimpedanceForm'

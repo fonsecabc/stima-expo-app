@@ -1,4 +1,4 @@
-import { treatError } from '../_helpers'
+import { treatError } from '@helpers'
 
 import axios from 'axios'
 

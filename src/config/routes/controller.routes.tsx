@@ -1,14 +1,19 @@
+import { useAuth } from '@contexts'
+import { AuthStack } from './auth.routes'
+import { UserStack } from './user.routes'
+
 import React from 'react'
-import { useAuth } from '../../app/contexts'
-import { UserStack, AuthStack } from '.'
 
 export const Routes = () => {
-  const { currentUser } = useAuth()
+  const { currentUser, accessToken, isLoading } = useAuth()
 
-
+  if (isLoading) {
+    return null
+  }
+  
   return (
-    currentUser 
-      ? <UserStack/> 
+    currentUser && accessToken
+      ? <UserStack currentUser={currentUser} accessToken={accessToken}/> 
       : <AuthStack/>
   )
 } 

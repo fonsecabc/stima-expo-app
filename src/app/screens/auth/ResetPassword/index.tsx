@@ -1,7 +1,7 @@
-import { useAuth } from '../../../contexts'
-import { Text, Container } from '../Login/styles'
-import { Screen, Logo, Form } from '../../../components'
-import { resetPasswordForm } from '../../../../modules/_forms'
+import { resetPasswordForm } from '@forms'
+import { Screen, Logo, Form } from '@components'
+import { Containers } from '@styles'
+import { Text } from '@screens/auth/Login/styles'
 
 import React, { useState } from 'react'
 
@@ -12,19 +12,19 @@ interface ResetPasswordScreenProps {
 type ResetPasswordProps = { email: string }
 
 export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) => {
-  const { resetPassword } = useAuth()
+  // const { resetPassword } = useAuth()
   const [isLoading, setLoading] = useState(false)
     
   async function sendPasswordResetEmail(params: ResetPasswordProps)  {
     setLoading(true)
-    await resetPassword(params)
+    // await resetPassword(params)
     setLoading(false)
   }
 
   return (
     <Screen background='gray'>
       <Logo/>
-      <Container>
+      <Containers.CenteredDefault>
         <Form
           values={{}}
           title='Resetar Senha'
@@ -36,7 +36,7 @@ export const ResetPasswordScreen = ({ navigation }: ResetPasswordScreenProps) =>
         <Text isLink={false}>
           Senha Resetada? Faça <Text isLink={true} onPress={() => navigation.navigate('Login')}>Login</Text>
         </Text>
-      </Container>
+      </Containers.CenteredDefault>
     </Screen>
   )
 }

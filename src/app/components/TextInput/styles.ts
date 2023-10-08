@@ -1,4 +1,4 @@
-import { Colors, FontSizes, Fonts } from '../../styles'
+import { Colors, FontSizes, Fonts } from '@styles'
 
 import styled from 'styled-components/native'
 import { MaskedTextInput } from 'react-native-mask-text'
@@ -8,7 +8,6 @@ export const TextInputContainer = styled.View<{
     isFocused: boolean
     isValid?: boolean
   }>`
-    margin: 15px
     margin-top: 5px
     margin-bottom: 0px
     padding-horizontal: 20px
@@ -28,7 +27,6 @@ export const TextInput = styled.TextInput`
     color: ${Colors.darkGray}
     font-size: ${FontSizes.md}px
     flex: 1
-    outline-width: 0
 `
 
 export const MaskTextInput = styled(MaskedTextInput)`
@@ -36,7 +34,6 @@ export const MaskTextInput = styled(MaskedTextInput)`
     color: ${Colors.darkGray}
     font-size: ${FontSizes.md}px
     flex: 1
-    outline-width: 0
 `
   
 export const HideIcon = styled.TouchableOpacity`
@@ -45,12 +42,11 @@ export const HideIcon = styled.TouchableOpacity`
 `
 
 export const Label = styled.Text`
-    font-size: ${FontSizes.md}px
+    font-size: ${FontSizes.lg}px
     font-family: ${Fonts.medium}
     color: ${Colors.darkGray}
     text-align: left
     margin-top: 20px
-    margin-horizontal: 20px
 `
 
 export const DescriptionText = styled.Text`
@@ -58,7 +54,6 @@ export const DescriptionText = styled.Text`
     font-family: ${Fonts.light}
     color: ${Colors.darkGray}
     text-align: left
-    margin-horizontal: 20px
 `
 
 export const ErrorText = styled.Text`

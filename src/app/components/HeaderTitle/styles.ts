@@ -1,4 +1,4 @@
-import { Colors, Shadows, FontSizes, Fonts } from '../../styles'
+import { Colors, Shadows, FontSizes, Fonts } from '@styles'
 
 import { Platform } from 'react-native'
 import styled from 'styled-components/native'

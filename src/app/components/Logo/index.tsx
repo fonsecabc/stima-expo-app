@@ -1,4 +1,4 @@
-import { LogoContainer, LogoImage } from './styles'
+import { LogoContainer, LogoImage } from '@components/Logo/styles'
 
 import React from 'react'
 

@@ -1,6 +1,7 @@
+import { EmptyListItem, EmptyListItemText } from '@components/List/styles'
+
 import React from 'react'
 import { FlatList } from 'react-native'
-import { EmptyListItem, EmptyListItemText } from './styles'
 
 interface ListProps {
   list: any[]

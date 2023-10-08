@@ -1,4 +1,4 @@
-import { NutritionalRoutineStatus } from '../enums'
+import { NutritionalRoutineStatus } from '@enums'
 
 export type EvaluationListObject = {
     uid: string

@@ -1,13 +1,12 @@
+import { Colors, getPercentOfWidth } from '@styles'
 import { 
   Display,
   DisplayLabel,
   Container
-} from './styles'
-import { Colors } from '../../styles'
+} from '@components/LineChartDisplay/styles'
 
 import React from 'react'
 import { LineChart } from 'react-native-chart-kit'
-import { getPercentOfWidth } from '../../styles/Screen'
 
 interface LineChartDisplayProps {
   yAxisLabel?: string

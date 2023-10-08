@@ -1,4 +1,4 @@
-import { ScreenContainer } from './styles'
+import { ScreenContainer } from '@components/SplashScreen/styles'
 
 import React from 'react'
 import { Image } from 'react-native'

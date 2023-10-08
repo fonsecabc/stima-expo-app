@@ -1,5 +1,5 @@
-import { Sex } from '../../types/enums'
-import { input } from '../../types/entities'
+import { Sex } from '@enums'
+import { input } from '@entities'
 
 export const clientForm: input[] = [
   {

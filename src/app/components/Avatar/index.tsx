@@ -1,4 +1,4 @@
-import { AvatarContainer, Letter } from './styles'
+import { AvatarContainer, Letter } from '@components/Avatar/styles'
 
 import React from 'react'
 

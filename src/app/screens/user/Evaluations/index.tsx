@@ -1,41 +1,45 @@
-import { useAuth } from '../../../contexts'
-import { Containers, Texts, Colors } from '../../../styles'
-import { EvaluationListObject } from '../../../../types/entities'
-import { getEvaluationsList } from '../../../../modules/_requests'
-import { List, NavBar, HeaderTitle, Button, SearchBar, Screen } from '../../../components'
+import { getEvaluationsList } from '@requests'
+import { EvaluationListObject } from '@entities'
+import { Containers, Texts, Colors } from '@styles'
+import { List, NavBar, HeaderTitle, Button, SearchBar, Screen } from '@components'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
-import { formatDate } from '../../../../modules/_helpers'
+import { useFocusEffect } from '@react-navigation/native'
+import { formatDate } from '@helpers'
 
 type EvaluationScreenProps = { 
-    navigation: any
+  navigation: any
+  route: any
 }
 
-export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
-  const { accessToken, currentUser } = useAuth()
+export const EvaluationsScreen = ({ navigation, route }: EvaluationScreenProps ) => {
+  const { accessToken, currentUser } = route.params
 
   const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
   const [originalEvaluationList, setOriginalEvaluationList] = useState<EvaluationListObject[]>([])
 
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    const fetchData = async () =>  {
-      setIsLoading(true)
-      const list = await getList()
-      setEvaluationList(list)
-      setOriginalEvaluationList(list)
-      setIsLoading(false) 
-    }
-    fetchData()
-  }, [])
-    
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () =>  {
+        setIsLoading(true)
+        const list = await getList()
+        setEvaluationList(list)
+        setOriginalEvaluationList(list)
+        setIsLoading(false) 
+      }
+      fetchData()
+    }, [])
+  )
+
   const getList = async () => {
     const response = await getEvaluationsList({
-      accessToken: await accessToken(), 
-      userUid: currentUser?.uid ?? ''
+      accessToken: accessToken, 
+      userUid: currentUser.uid
     })
 
     return response instanceof Error ? [] : response.body || []
@@ -73,7 +77,7 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
           const evaluationDate = formatDate(item.createdAt)
 
           return (
-            <View style={[Containers.listItem,]}>
+            <Containers.ListItem>
               <View>
                 <Text style={Texts.md}>{item.clientName}</Text>
                 <Text style={Texts.xs}>Data da avaliação: {evaluationDate}</Text>
@@ -81,7 +85,7 @@ export const EvaluationsScreen = ({ navigation }: EvaluationScreenProps ) => {
               <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => navigation.navigate('Evaluation', { evaluationUid: item.uid })}>
                 <EyeIcon color={Colors.darkGray}/>
               </TouchableOpacity>
-            </View>
+            </Containers.ListItem>
           )
         }}
       />

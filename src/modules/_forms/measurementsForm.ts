@@ -1,4 +1,4 @@
-import { input } from '../../types/entities'
+import { input } from '@entities'
 
 export const measurementsForm: input[] = [
   {

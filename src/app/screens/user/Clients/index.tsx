@@ -1,20 +1,20 @@
-import { useAuth } from '../../../contexts'
-import { ClientListObject } from '../../../../types/entities'
-import { getClientsList } from '../../../../modules/_requests'
-import { Containers, Texts, Colors } from '../../../styles'
-import { NavBar, HeaderTitle, Button, SearchBar, Screen, List, Avatar } from '../../../components'
+import { formatDate } from '@helpers'
+import { getClientsList } from '@requests'
+import { ClientListObject } from '@entities'
+import { Containers, Texts, Colors } from '@styles'
+import { NavBar, HeaderTitle, Button, SearchBar, Screen, List, Avatar } from '@components'
 
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { PlusIcon, EyeIcon } from 'react-native-heroicons/outline'
-import { formatDate } from '../../../../modules/_helpers'
 
 type ClientScreenProps = { 
-    navigation: any
+  navigation: any
+  route: any
 }
 
-export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
-  const { accessToken, currentUser } = useAuth()
+export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
+  const { accessToken, currentUser } = route.params
 
   const [clientsList, setClientsList] = useState<ClientListObject[]>([])
   const [originalClientsList, setOriginalClientsList] = useState<ClientListObject[]>([])
@@ -31,10 +31,10 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
     }
     fetchData()
   }, [])
-    
+
   const getList = async () => {
     const response = await getClientsList({
-      accessToken: await accessToken(), 
+      accessToken: accessToken, 
       userUid: currentUser?.uid ?? ''
     })
 
@@ -76,7 +76,7 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
           }
 
           return (
-            <View style={[Containers.listItem,]}>
+            <Containers.ListItem>
               <Avatar letter={item.name.charAt(0)}/>
               <View style={{ marginLeft: 10 }}>
                 <Text style={Texts.md}>{item.name}</Text>
@@ -85,7 +85,7 @@ export const ClientsScreen = ({ navigation }: ClientScreenProps) => {
               <TouchableOpacity style={{ marginLeft:'auto' }} onPress={() => navigation.navigate('Client', { clientUid: item.uid })}>
                 <EyeIcon color={Colors.darkGray}/>
               </TouchableOpacity>
-            </View>
+            </Containers.ListItem>
           )}
         }
       />

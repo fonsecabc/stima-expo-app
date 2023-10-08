@@ -1,7 +1,7 @@
-import { Label } from './styles'
-import { formatDate } from '../../../modules/_helpers'
-import { LineChartDisplay } from '../LineChartDisplay'
-import { ClientsEvaluationHistory, HistoryObject } from '../../../types/entities'
+import { formatDate } from '@helpers'
+import { LineChartDisplay } from '@components'
+import { Label } from '@components/ClientHistory/styles'
+import { ClientsEvaluationHistory, HistoryObject } from '@entities'
 
 import React from 'react'
 

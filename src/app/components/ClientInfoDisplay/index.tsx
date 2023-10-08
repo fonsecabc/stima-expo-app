@@ -1,13 +1,13 @@
-import { Avatar } from '../Avatar'
-import { Sex } from '../../../types/enums'
-import { Client } from '../../../types/entities'
-import { getAge } from '../../../modules/_helpers'
 import { 
   Container,
   Description,
   Text,
   Title
-} from './styles'
+} from '@components/ClientInfoDisplay/styles'
+import { Sex } from '@enums'
+import { getAge } from '@helpers'
+import { Client } from '@entities'
+import { Avatar } from '@components'
 
 import React from 'react'
 import { View } from 'react-native'

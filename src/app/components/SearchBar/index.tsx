@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import { Colors } from '@styles'
+import { 
+  SearchBarContainer, 
+  SearchIcon, 
+  SearchInputContainer, 
+  SearchTextInput 
+} from '@components/SearchBar/styles'
 
+import React, { useState } from 'react'
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
-import { SearchBarContainer, SearchIcon, SearchInputContainer, SearchTextInput } from './styles'
-import { Colors } from '../../styles'
 
 interface SearchBarProps {
     handleSearch: (searchText: string) =>   void

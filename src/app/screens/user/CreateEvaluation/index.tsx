@@ -1,21 +1,21 @@
-import { Container } from './styles'
-import { useAuth } from '../../../contexts'
-import { Client } from '../../../../types/entities'
-import * as forms from '../../../../modules/_forms'
-import { createEvaluation } from '../../../../modules/_requests'
-import { HeaderTitle, Screen, Form, ProgressBar } from '../../../components'
+import * as forms from '@forms'
+import { Client } from '@entities'
+import { createEvaluation } from '@requests'
+import { Container } from '@screens/user/CreateEvaluation/styles'
+import { HeaderTitle, Screen, Form, ProgressBar } from '@components'
 
-import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
+import React, { useEffect, useState } from 'react'
 
 type CreateEvaluationScreenProps = { 
   navigation: any
+  route: any
 }
  
-export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenProps) => {
-  const { accessToken, currentUser } = useAuth()
+export const CreateEvaluationScreen = ({ navigation, route }: CreateEvaluationScreenProps) => {
+  const { accessToken, currentUser, client } = route.params
+  
   const [isLoading, setLoading] = useState(false)
-
   const [formProgress, setFormProgress] = useState(0)
 
   const [formValues, setFormValues] = useState({
@@ -25,14 +25,18 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
     nutricionistForm: {}
   })
 
+  useEffect(() => {
+    if (client) setFormValues({ ...formValues, client })
+  }, [client])
+
   const createNewEvaluation = async () => {
     if (!formValues.client) return
     
     setLoading(true)
 
     const response = await createEvaluation({
-      accessToken: await accessToken(),
-      userUid: currentUser?.uid ?? '',
+      accessToken: accessToken,
+      userUid: currentUser.uid,
       client: formValues.client as Client,
       bioimpedance: formValues.bioimpedance,
       measurements: formValues.measurements,
@@ -41,8 +45,9 @@ export const CreateEvaluationScreen = ({ navigation }: CreateEvaluationScreenPro
     setLoading(false)
     if (response instanceof Error || !response.body) return
 
-    navigation.navigate('Evaluation', { evaluationId: response.body.uid })
-    return Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
+    Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
+    
+    return navigation.navigate('Evaluation', { evaluationId: response.body.uid })
   }
 
   return (

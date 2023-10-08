@@ -1,9 +1,9 @@
-import { NavBarContainer, NavButton, IconText } from './styles'
+import { Colors } from '@styles'
+import { NavBarContainer, NavButton, IconText } from '@components/NavBar/styles'
 
 import React from 'react'
 import * as solid from 'react-native-heroicons/solid'
 import { ClipboardDocumentListIcon, UserGroupIcon, Cog6ToothIcon } from 'react-native-heroicons/outline'
-import { Colors } from '../../styles'
 
 interface NavBarProps {
   navigation: any

@@ -1,7 +1,7 @@
-import { Sex } from '../../../types/enums'
-import { NumberDisplay } from '../NumberDisplay'
-import { Container, Label } from './styles'
-import { Client } from '../../../types/entities'
+import { Sex } from '@enums'
+import { Client } from '@entities'
+import { NumberDisplay } from '@components'
+import { Container, Label } from '@components/BodyComposition/styles'
 
 interface BodyCompositionProps {
   client: Client

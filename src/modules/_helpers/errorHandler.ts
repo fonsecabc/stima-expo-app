@@ -4,7 +4,7 @@ import {
   NetworkError,
   UnknownError, 
   UserAlreadyExistsError
-} from '../../types/errors'
+} from '@errors'
 
 import Toast from 'react-native-toast-message'
 
@@ -21,6 +21,7 @@ export const ErrorMap: Map<string, Error> = new Map([
 
 export const treatError = (error: any): Error => {
   const message = error.message ?? error.code ?? error ?? ''
+  console.error(error)
 
   if (message.startsWith('Invalid param: ')) {
     const param = message.replace('Invalid param: ', '')

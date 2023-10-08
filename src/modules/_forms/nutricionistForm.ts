@@ -1,4 +1,4 @@
-import { input } from '../../types/entities'
+import { input } from '@entities'
 
 export const nutricionistForm: input[] = [
   {
@@ -132,8 +132,8 @@ export const nutricionistForm: input[] = [
   },
   {
     name: 'foodRestrictions',
-    label: 'Alimentos que evita',
-    description: 'Escreva os alimentos que costuma evitar',
+    label: 'Alimentos que não pode comer',
+    description: 'Escreva os alimentos evita por algum problema de saúde',
     placeholder: '',
     value: '',
     type: 'text',

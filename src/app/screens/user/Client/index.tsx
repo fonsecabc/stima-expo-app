@@ -5,15 +5,19 @@ import {
   BodyComposition, 
   Bioimpedance, 
   ClientEvaluationsList,
-  ClientOverallResults, 
-} from '../../../components'
-import { useAuth } from '../../../contexts'
-import { ClientHistory } from '../../../components/ClientHistory'
-import { ClientsEvaluationHistory } from '../../../../types/entities'
-import { getClientsEvaluationHistory  } from '../../../../modules/_requests'
+  ClientOverallResults,
+  Button,
+  StartEvaluationModal, 
+} from '@components'
+import { Colors } from '@styles'
+import { useAuth } from '@contexts'
+import { ClientHistory } from '@components'
+import { ClientsEvaluationHistory } from '@entities'
+import { getClientsEvaluationHistory  } from '@requests'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { PlusIcon } from 'react-native-heroicons/solid'
 
 type ClientScreenProps = { 
   navigation: any
@@ -25,6 +29,9 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   const { clientUid } = route.params
 
   const [clientsHistory, setClientsHistory] = useState<ClientsEvaluationHistory>()
+
+  const [isStartEvaluationModalFocused, setStartEvaluationModalFocus] = useState(false)
+  const [hasNutritionalRoutine, setHasNutritionalRoutine] = useState(false)
 
   useEffect(() => {
     const fetchData = async () =>  {
@@ -50,12 +57,30 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
       </ScrollView>
     </Screen>
   )
+
+  const createEvaluation = () => {
+    navigation.navigate('Create Evaluation', { hasNutritionalRoutine, client: clientsHistory.client })
+  }
   
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
         <ClientInfoDisplay client={clientsHistory.client}/>
+
+        <Button
+          action={() => setStartEvaluationModalFocus(true)} 
+          text='Nova avaliação' 
+          icon={<PlusIcon color={Colors.white}/>}
+          style={{ marginBottom: 0 }}
+          type='default'
+        />
+        <StartEvaluationModal
+          isDoneAction={createEvaluation}
+          isFocused={isStartEvaluationModalFocused}
+          setFocus={setStartEvaluationModalFocus}
+          setNutritionalRoutine={setHasNutritionalRoutine}
+        />
 
         {clientsHistory.evaluationList.length > 0 && (
           <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} navigation={navigation}/>

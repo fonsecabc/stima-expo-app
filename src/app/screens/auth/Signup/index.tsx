@@ -1,8 +1,9 @@
-import { useAuth } from '../../../contexts'
-import { Text, Container } from '../Login/styles'
-import { userForm } from '../../../../modules/_forms'
-import { Screen, Logo, Form } from '../../../components'
-import { createUser } from '../../../../modules/_requests'
+import { userForm } from '@forms'
+import { useAuth } from '@contexts'
+import { createUser } from '@requests'
+import { Containers } from '@styles'
+import { Screen, Logo, Form } from '@components'
+import { Text } from '@screens/auth/Login/styles'
 
 import React, { useState } from 'react'
 
@@ -32,7 +33,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
   return (
     <Screen background='gray'>
       <Logo/>
-      <Container>
+      <Containers.CenteredDefault>
         <Form
           values={{}}
           title='Crie sua conta'
@@ -44,7 +45,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
         <Text isLink={false}>
           Já tem conta?  <Text isLink={true} onPress={() => navigation.navigate('Login')}>Entre</Text>
         </Text>
-      </Container> 
+      </Containers.CenteredDefault> 
     </Screen>
   )
 }

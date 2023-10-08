@@ -9,5 +9,5 @@ export type input = {
   mask?: string
   isRequired: boolean
   isSecured?: boolean
-  validate?: 'email' | 'dateOfBirth' | 'phone' | 'password' | 'numberHigherThanZero' | 'time'
+  validate?: 'email' | 'dateOfBirth' | 'phone' | 'password' | 'numberHigherThanZero' | 'time' | 'cardNumber'
 }

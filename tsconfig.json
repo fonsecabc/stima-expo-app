@@ -9,7 +9,25 @@
     "strict": true,
     "target": "es2017",
     "jsx": "react-native",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [ "*" ],
+      "@components/*": [ "./app/components/*" ],
+      "@components": [ "./app/components" ],
+      "@styles": [ "./app/styles" ],
+      "@screens/*": [ "./app/screens/*" ],
+      "@screens": [ "./app/screens" ],
+      "@contexts": [ "./app/contexts" ],
+      "@forms": [ "./modules/_forms" ],
+      "@helpers": [ "./modules/_helpers" ],
+      "@requests": [ "./modules/_requests" ],
+      "@validations": [ "./modules/_validations" ],
+      "@entities": [ "./types/entities" ],
+      "@enums": [ "./types/enums" ],
+      "@errors": [ "./types/errors" ],
+      "@config": [ "./config" ],
+    }
   },
   "compileOnSave": false,
   "include": ["src", "App.tsx", "src/modules/_forms/.ts"  ]

@@ -1,6 +1,6 @@
-import { makeRequest } from './axiosHelper'
-import { GetType, Sex } from '../../types/enums'
-import { Client, ClientListObject, ClientsEvaluationHistory, GetQuery } from '../../types/entities'
+import { makeRequest } from '../_helpers/axiosHelper'
+import { GetType, Sex } from '@enums'
+import { Client, ClientListObject, ClientsEvaluationHistory, GetQuery } from '@entities'
 
 const endpoint = '/entities/client'
 

@@ -1,15 +1,15 @@
-import { useAuth } from '../../../contexts'
-import { Sex } from '../../../../types/enums'
-import { clientForm } from '../../../../modules/_forms'
-import { createClient } from '../../../../modules/_requests'
-import { HeaderTitle, Screen, Form } from '../../../components'
+import { Sex } from '@enums'
+import { clientForm } from '@forms'
+import { createClient } from '@requests'
+import { HeaderTitle, Screen, Form } from '@components'
+import { Container } from '@screens/user/CreateEvaluation/styles'
 
 import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
-import { Container } from '../CreateEvaluation/styles'
 
 type CreateClientScreenProps = { 
-    navigation: any
+  navigation: any
+  route: any
 }
 
 type CreateNewClient = { 
@@ -22,15 +22,15 @@ type CreateNewClient = {
   weight: number
 }
  
-export const CreateClientScreen = ({ navigation }: CreateClientScreenProps) => {
-  const { accessToken, currentUser } = useAuth()
+export const CreateClientScreen = ({ navigation, route }: CreateClientScreenProps) => {
+  const { accessToken, currentUser } = route.params
   const [isLoading, setLoading] = useState(false)
 
   const createNewClient = async (params: CreateNewClient) => {
     setLoading(true)
     const response = await createClient({
-      accessToken: await accessToken(),
-      userUid: currentUser?.uid ?? '',
+      accessToken: accessToken,
+      userUid: currentUser.uid,
       ...params
     })
     setLoading(false)

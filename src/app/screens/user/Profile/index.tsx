@@ -1,16 +1,17 @@
-import { useAuth } from '../../../contexts'
-import { Colors, Containers, FontSizes, Texts } from '../../../styles'
-import { NavBar, HeaderTitle, Screen } from '../../../components'
+import { useAuth } from '@contexts'
+import { Colors, Containers, FontSizes, Texts } from '@styles'
+import { NavBar, HeaderTitle, Screen } from '@components'
 
 import React from 'react'
 import * as icons from 'react-native-heroicons/outline'
 import { FlatList, Linking, Text, TouchableOpacity } from 'react-native'
 
-type ProfileScreenProps = {
+type OptionsScreenProps = {
   navigation: any
+  route: any
 }
 
-export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
+export const OptionsScreen = ({ navigation }: OptionsScreenProps) => {
   const { logout } = useAuth()
 
   const settingsList = [
@@ -35,12 +36,11 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         data={settingsList}
         extraData={settingsList}
         renderItem={({ item }) => 
-          <TouchableOpacity 
-            style={[Containers.listItem, { justifyContent: 'space-between' }]} 
-            onPress={() => item.onPress()}
-          >
-            <Text style={Texts.md}>{item.name}</Text>
-            {item.icon}
+          <TouchableOpacity onPress={item.onPress}>
+            <Containers.ListItem>
+              <Text style={Texts.md}>{item.name}</Text>
+              {item.icon}
+            </Containers.ListItem>
           </TouchableOpacity>
         }
         keyExtractor={(item: any) => item.name}

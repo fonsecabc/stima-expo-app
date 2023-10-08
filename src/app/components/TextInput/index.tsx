@@ -1,13 +1,13 @@
+import { Colors } from '@styles'
 import { 
-  TextInputContainer, 
-  TextInput, 
-  HideIcon, 
-  MaskTextInput, 
-  ErrorText, 
   Label, 
-  DescriptionText 
-} from './styles'
-import { Colors } from '../../styles'
+  HideIcon, 
+  TextInput, 
+  ErrorText, 
+  MaskTextInput, 
+  DescriptionText, 
+  TextInputContainer, 
+} from '@components/TextInput/styles'
 
 import React, { useEffect, useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline'

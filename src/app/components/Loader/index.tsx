@@ -1,4 +1,4 @@
-import { Colors } from '../../styles'
+import { Colors } from '@styles'
 
 import React from 'react'
 import { ActivityIndicator } from 'react-native'

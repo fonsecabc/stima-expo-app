@@ -1,9 +1,14 @@
-import { User } from '../../types/entities'
-import { makeRequest } from './axiosHelper'
+import { User } from '@entities'
+import { makeRequest } from '../_helpers/axiosHelper'
 
 const endpoint = '/user'
 
 interface CreateUserParams {
+  email: string
+  password: string
+}
+
+interface LoginUserParams {
   email: string
   password: string
 }
@@ -30,6 +35,20 @@ export async function createUser({
 }: CreateUserParams){
   return await makeRequest<User>({
     path: `${endpoint}/create`, 
+    body: {
+      email,
+      password
+    }, 
+    method: 'POST' 
+  })
+}
+
+export async function loginUser({
+  email,
+  password
+}: LoginUserParams){
+  return await makeRequest<{ accessToken: string, user: User }>({
+    path: `${endpoint}/login`, 
     body: {
       email,
       password

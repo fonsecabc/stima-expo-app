@@ -1,8 +1,8 @@
-import { Colors } from '../../styles'
+import { Colors } from '@styles'
+import { Label } from '@components/ProgressBar/style'
 
 import React from 'react'
 import { Bar } from 'react-native-progress'
-import { Label } from './style'
 
 interface ProgressBarProps {
   progress: number

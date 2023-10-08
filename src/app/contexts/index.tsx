@@ -1,9 +1,9 @@
-import { AuthProvider } from './'
+import { AuthProvider } from './AuthProvider'
 
 import React, { ReactNode } from 'react'
 
 interface ProvidersProps {
-    children: ReactNode
+  children: ReactNode
 }
 
 export const Providers: React.FC<ProvidersProps> = ({ children }: ProvidersProps) => {

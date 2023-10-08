@@ -1,4 +1,4 @@
-import { Colors, FontSizes, Fonts } from '../../styles'
+import { Colors, FontSizes, Fonts } from '@styles'
 
 import styled from 'styled-components/native'
 
@@ -14,6 +14,6 @@ export const AvatarContainer = styled.View`
 
 export const Letter = styled.Text`
   color: ${Colors.white}
-  font-size: ${FontSizes.lg}
+  font-size: ${FontSizes.lg}px
   font-family: ${Fonts.bold}
 `
