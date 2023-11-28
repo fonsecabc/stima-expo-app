@@ -5,7 +5,8 @@
     "start": "npx expo start --tunnel",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx .",
     "lintstaged": "eslint --ext .js,.ts,.tsx,.jsx . --fix",
-    "kill": "npx kill-port 9000, 9001"
+    "kill": "npx kill-port 9000, 9001",
+    "deploy:web": "npx expo export:web && firebase deploy"
   },
   "husky": {
     "hooks": {
