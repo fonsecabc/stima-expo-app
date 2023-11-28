@@ -2,7 +2,7 @@ import { Platform } from 'react-native'
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const height = RFPercentage(10) >= 80 ? 80 : RFPercentage(10)
+const height = RFPercentage(10) >= 60 ? 60 : RFPercentage(10)
 
 export const LogoContainer = styled.View`
   margin-top: ${Platform.OS === 'web' ? '20' : '60'}px

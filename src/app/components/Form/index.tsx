@@ -53,10 +53,11 @@ export const Form = (props: FormProps) => {
                     : input.validate === 'email' ? validations.checkEmail(value)
                       : input.validate === 'phone' ? validations.checkPhone(value)
                         : input.validate === 'dateOfBirth' ? validations.checkDateOfBirth(value)
-                          : input.validate === 'password' ? validations.checkPassword(value)
-                            : input.validate === 'numberHigherThanZero' ? validations.checkNumberHigherThanZero(value)
-                              : input.isRequired ? validations.checkValue(value)
-                                : undefined
+                          : input.validate === 'passwordInvalid' ? validations.checkPasswordInvalid(value)
+                            : input.validate === 'passwordLevel' ? validations.checkPasswordLevel(value)
+                              : input.validate === 'numberHigherThanZero' ? validations.checkNumberHigherThanZero(value)
+                                : input.isRequired ? validations.checkValue(value)
+                                  : undefined
                 }
               >{({ field, form }: { field: any, form: any }) => {
                   const showError = form.touched[input.name] && form.errors[input.name]

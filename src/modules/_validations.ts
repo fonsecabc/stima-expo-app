@@ -25,13 +25,22 @@ export const checkEmail = (email: string) => {
   return isValid ? undefined : 'Email inválido'
 }
 
-export const checkPassword = (password: string) => {
+export const checkPasswordLevel = (password: string) => {
   const uniqueChars = [...new Set(password)]
   const hasSpecialCharacters = /[!@#$%^&*(),.?':{}|<>]/.test(password)
 
   const isValid = (uniqueChars.length > 2 && password.length >= 8 && hasSpecialCharacters)
 
   return isValid ? undefined : 'Senha muito fraca'
+}
+
+export const checkPasswordInvalid = (password: string) => {
+  const uniqueChars = [...new Set(password)]
+  const hasSpecialCharacters = /[!@#$%^&*(),.?':{}|<>]/.test(password)
+
+  const isValid = (uniqueChars.length > 2 && password.length >= 8 && hasSpecialCharacters)
+
+  return isValid ? undefined : 'Senha inválida'
 }
 
 export const checkValue = (value: string) => {
