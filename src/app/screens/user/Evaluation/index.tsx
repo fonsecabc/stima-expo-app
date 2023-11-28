@@ -1,6 +1,6 @@
 import { Evaluation } from '@entities'
 import { getEvaluation as getEvaluationRequest } from '@requests'
-import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, OrderNutritionalRoutineModal } from '@components'
+import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay/*, OrderNutritionalRoutineModal*/ } from '@components'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
   const { accessToken, currentUser, evaluationUid } = route.params
 
   const [evaluation, setEvaluation] = useState<Evaluation>()
-  
+
   useEffect(() => {
     const fetchData = async () =>  {
       const evaluation = await getEvaluation()

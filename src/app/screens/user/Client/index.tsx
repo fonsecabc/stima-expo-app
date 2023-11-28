@@ -42,9 +42,12 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
       uid: clientUid,
       userUid: currentUser?.uid ?? ''
     })
+    console.log(response)
 
     return response instanceof Error ? undefined : response.body
   }
+
+  console.log(clientsHistory)
 
   if (!clientsHistory) return (
     <Screen background='gray'>
@@ -57,6 +60,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   const createEvaluation = () => {
     navigation.navigate('Create Evaluation', { client: clientsHistory.client })
   }
+  console.log(clientsHistory)
   
   return (
     <Screen background='gray'>

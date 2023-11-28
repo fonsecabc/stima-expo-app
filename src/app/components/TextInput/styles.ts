@@ -25,6 +25,7 @@ export const TextInputContainer = styled.View<{
 export const TextInput = styled.TextInput`
     margin-right: auto
     color: ${Colors.darkGray}
+    
     font-size: ${FontSizes.md}px
     flex: 1
 `

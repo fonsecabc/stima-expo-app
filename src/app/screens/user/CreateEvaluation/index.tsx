@@ -47,7 +47,7 @@ export const CreateEvaluationScreen = ({ navigation, route }: CreateEvaluationSc
 
     Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
     
-    return navigation.navigate('Evaluation', { evaluationId: response.body.uid })
+    return navigation.navigate('Evaluation', { evaluationUid: response.body.uid })
   }
 
   return (

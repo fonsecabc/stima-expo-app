@@ -14,8 +14,8 @@ export type HttpResponse<T = any> = {
 }
 
 export async function makeRequest<T = any>(request: HttpRequest): Promise<HttpResponse<T> | Error>{
+  const { path, body, method } = request
   try {
-    const { path, body, method } = request
 
     const response = await axios.request<T>({ 
       method, 

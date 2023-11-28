@@ -37,7 +37,6 @@ export const treatError = (error: any): Error => {
   }
  
   Toast.show({ type: 'error', text1: error.message })
-  
   return error 
 }
 
