@@ -10,6 +10,8 @@ export const Routes = () => {
   if (isLoading) {
     return null
   }
+
+  console.log(currentUser)
   
   return (
     currentUser && accessToken

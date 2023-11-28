@@ -19,7 +19,7 @@ export const CreateEvaluationScreen = ({ navigation, route }: CreateEvaluationSc
   const [formProgress, setFormProgress] = useState(0)
 
   const [formValues, setFormValues] = useState({
-    client: {},
+    client: client ?? {},
     bioimpedance: {},
     measurements: {},
     nutricionistForm: {}

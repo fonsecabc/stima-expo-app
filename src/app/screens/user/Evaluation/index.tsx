@@ -47,7 +47,7 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
       <ScrollView style={{ flex: 1 }}>
         <ClientInfoDisplay client={evaluation.client}/>
 
-        <OrderNutritionalRoutineModal
+        {/* <OrderNutritionalRoutineModal
           evaluationUid={evaluationUid}
           accessToken={accessToken}	
           currentUser={currentUser}
@@ -55,7 +55,7 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
           nutritionalRoutineStatus={evaluation.nutritionalRoutineStatus}
           nutritionalRoutinePaymentStatus={evaluation.nutritionalRoutinePaymentStatus}
           nutritionalRoutineLink={evaluation.nutritionalRoutineLink}
-        />
+        /> */}
 
         <BodyComposition client={evaluation.client}/>
           

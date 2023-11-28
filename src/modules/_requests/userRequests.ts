@@ -47,7 +47,7 @@ export async function loginUser({
   email,
   password
 }: LoginUserParams){
-  return await makeRequest<{ accessToken: string, user: User }>({
+  const response = await makeRequest<{ accessToken: string, user: User }>({
     path: `${endpoint}/login`, 
     body: {
       email,
@@ -55,6 +55,13 @@ export async function loginUser({
     }, 
     method: 'POST' 
   })
+
+  if (response instanceof Error || !response.body) return response
+
+  response.body.user.createdAt = new Date(response.body?.user.createdAt)
+  response.body.user.deletedAt = response.body?.user.deletedAt && new Date(response.body?.user.deletedAt)
+
+  return response
 }
 
 export async function getUser({

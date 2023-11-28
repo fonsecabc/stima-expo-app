@@ -6,8 +6,7 @@ import {
   Bioimpedance, 
   ClientEvaluationsList,
   ClientOverallResults,
-  Button,
-  StartEvaluationModal, 
+  Button 
 } from '@components'
 import { Colors } from '@styles'
 import { useAuth } from '@contexts'
@@ -30,9 +29,6 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
 
   const [clientsHistory, setClientsHistory] = useState<ClientsEvaluationHistory>()
 
-  const [isStartEvaluationModalFocused, setStartEvaluationModalFocus] = useState(false)
-  const [hasNutritionalRoutine, setHasNutritionalRoutine] = useState(false)
-
   useEffect(() => {
     const fetchData = async () =>  {
       const clientsHistory = await getClientHistory()
@@ -40,7 +36,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
     }
     fetchData()
   }, [])
-    
+
   const getClientHistory = async () => {
     const response = await getClientsEvaluationHistory({
       uid: clientUid,
@@ -59,7 +55,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   )
 
   const createEvaluation = () => {
-    navigation.navigate('Create Evaluation', { hasNutritionalRoutine, client: clientsHistory.client })
+    navigation.navigate('Create Evaluation', { client: clientsHistory.client })
   }
   
   return (
@@ -69,24 +65,18 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
         <ClientInfoDisplay client={clientsHistory.client}/>
 
         <Button
-          action={() => setStartEvaluationModalFocus(true)} 
+          action={createEvaluation} 
           text='Nova avaliação' 
           icon={<PlusIcon color={Colors.white}/>}
           style={{ marginBottom: 0 }}
           type='default'
-        />
-        <StartEvaluationModal
-          isDoneAction={createEvaluation}
-          isFocused={isStartEvaluationModalFocused}
-          setFocus={setStartEvaluationModalFocus}
-          setNutritionalRoutine={setHasNutritionalRoutine}
         />
 
         {clientsHistory.evaluationList.length > 0 && (
           <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} navigation={navigation}/>
         )}
 
-        {clientsHistory.overallResults && (
+        {(clientsHistory.overallResults && clientsHistory.evaluationList.length > 1) && (
           <ClientOverallResults overallResults={clientsHistory.overallResults}/>
         )}
 

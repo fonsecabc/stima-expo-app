@@ -1,8 +1,20 @@
 import { input } from '@entities'
+import { PaymentMethod } from '@enums'
 
 const currentYear = new Date().getFullYear()
 
 export const cardForm: input[] = [
+  {
+    name: 'paymentMethod',
+    label: 'Tipo de cartão',
+    value: '',
+    type: 'select',
+    isRequired: true,
+    items: [
+      { key: 'Cartão de crédito', value: PaymentMethod.CREDIT_CARD },
+      { key: 'Cartão de débito', value: PaymentMethod.DEBIT_CARD },
+    ]
+  },
   {
     name: 'number',
     label: 'Número do cartão',
@@ -19,7 +31,7 @@ export const cardForm: input[] = [
     placeholder: 'Seu nome',
     value: '',
     type: 'text',
-    isRequired: false
+    isRequired: true
   },
   {
     name: 'expirationMonth',
@@ -56,7 +68,7 @@ export const cardForm: input[] = [
   },
   {
     name: 'cvv',
-    label: 'Código cvv',
+    label: 'Código CVV',
     placeholder: 'CVV',
     value: '',
     isRequired: true,

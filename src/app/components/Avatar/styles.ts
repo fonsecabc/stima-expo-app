@@ -8,8 +8,8 @@ export const AvatarContainer = styled.View`
   display: flex
   justify-content: center
   align-items: center
-  width: ${FontSizes.md * 2}
-  height: ${FontSizes.md * 2}
+  width: ${FontSizes.md * 2}px
+  height: ${FontSizes.md * 2}px
 `
 
 export const Letter = styled.Text`

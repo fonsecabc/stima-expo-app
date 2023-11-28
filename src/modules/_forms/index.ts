@@ -1,6 +1,7 @@
 export * from './userForm'
 export * from './cardForm'
 export * from './clientForm'
+export * from './addressForm'
 export * from './measurementsForm'
 export * from './bioimpedanceForm'
 export * from './nutricionistForm'

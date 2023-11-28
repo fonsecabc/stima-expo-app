@@ -1,10 +1,10 @@
-import { Subscription } from './'
+import { Subscription } from '@entities'
 
 export type User = {
     uid: string
     email: string
-    createdAt: any
+    createdAt: Date
     customerUid: string
     subscription?: Subscription
-    deletedAt?: any
+    deletedAt?: Date
 }

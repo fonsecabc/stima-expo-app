@@ -15,6 +15,11 @@ export const OptionsScreen = ({ navigation }: OptionsScreenProps) => {
   const { logout } = useAuth()
 
   const settingsList = [
+    // {
+    //   name: 'Plano de assinatura',
+    //   onPress: () => navigation.navigate('Subscription Payment'),
+    //   icon: <icons.CreditCardIcon color={Colors.darkGray} size={FontSizes.lg}/>
+    // },
     {
       name: 'Ajuda',
       onPress: () => Linking.openURL('https://wa.me//5531983904021?text=Preciso%20de%20ajuda%20com%20o%20Stima!'),

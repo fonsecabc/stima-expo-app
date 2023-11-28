@@ -21,7 +21,7 @@ export const NavBar = ({ navigation, activeScreen }: NavBarProps) => {
         {activeScreen === 2 ? <solid.UserGroupIcon size={30} color={Colors.lightBlue}/> : <UserGroupIcon size={30} color={Colors.darkGray} />}
         <IconText isActive={activeScreen === 2}>Clientes</IconText>
       </NavButton>
-      <NavButton isActive={activeScreen === 3} onPress={() => navigation.navigate('Profile')}>
+      <NavButton isActive={activeScreen === 3} onPress={() => navigation.navigate('Options')}>
         {activeScreen === 3 ? <solid.Cog6ToothIcon size={30} color={Colors.lightBlue}/> : <Cog6ToothIcon size={30} color={Colors.darkGray} />}
         <IconText isActive={activeScreen === 3}>Opções</IconText>
       </NavButton>

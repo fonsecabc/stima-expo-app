@@ -67,8 +67,7 @@ export const OrderNutritionalRoutineModal = (props: OrderNutritionalRoutineModal
 
   if (
     nutritionalRoutineStatus === NutritionalRoutineStatus.REQUESTED &&
-    nutritionalRoutinePaymentStatus === PaymentStatus.PAID && 
-    nutritionalRoutineLink
+    nutritionalRoutinePaymentStatus === PaymentStatus.PAID
   ) {
     return  (
       <Button

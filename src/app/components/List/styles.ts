@@ -8,7 +8,7 @@ export const EmptyListItem = styled.View`
   justify-content: center
   marginb-bottom: 10px
   padding-horizontal: 20px
-  height: ${FontSizes.md * 3}
+  height: ${FontSizes.md * 3}px
   border-radius: 16px
   background-color: ${Colors.white}
 `
