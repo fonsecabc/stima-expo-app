@@ -1,4 +1,4 @@
-import { userForm } from '@forms'
+import { userFormSignup } from '@forms'
 import { useAuth } from '@contexts'
 import { createUser } from '@requests'
 import { Containers } from '@styles'
@@ -37,7 +37,7 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
         <Form
           values={{}}
           title='Crie sua conta'
-          inputs={userForm}
+          inputs={userFormSignup}
           submitAction={signupUser}
           buttonText='Criar'
           isLoading={isLoading}

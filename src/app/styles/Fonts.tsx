@@ -9,13 +9,13 @@ const sm = RFPercentage(2.2)
 const xs = RFPercentage(1.8)
 
 export const FontSizes = {
-  xl3: xl3 >= 36 ? 36 : xl3,
-  xl2: xl2 >= 30 ? 30 : xl2,
-  xl: xl >= 24 ? 24 : xl,
-  lg: lg >= 22 ? 22 : lg,
-  md: md >= 20 ? 20 : md,
-  sm: sm >= 18 ? 18 : sm,
-  xs: xs >= 16 ? 16 : xs,
+  xl3: xl3 >= 33 ? 33 : xl3,
+  xl2: xl2 >= 27 ? 27 : xl2,
+  xl: xl >= 21 ? 21 : xl,
+  lg: lg >= 19 ? 19 : lg,
+  md: md >= 17 ? 17 : md,
+  sm: sm >= 15 ? 15 : sm,
+  xs: xs >= 13 ? 13 : xs,
 }
 
 export const Fonts = {

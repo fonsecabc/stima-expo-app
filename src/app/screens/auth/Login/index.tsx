@@ -1,4 +1,4 @@
-import { userForm } from '@forms'
+import { userFormLogin } from '@forms'
 import { useAuth } from '@contexts'
 import { Containers } from '@styles'
 import { Screen, Logo, Form } from '@components'
@@ -32,7 +32,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
         <Form
           values={{}}
           title='Login'
-          inputs={userForm}
+          inputs={userFormLogin}
           submitAction={loginUser}
           buttonText='Entrar'
           isLoading={isLoading}
