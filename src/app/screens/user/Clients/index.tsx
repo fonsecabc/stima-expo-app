@@ -54,8 +54,6 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
     
   const createClient = () => navigation.navigate('Create Client')
 
-  console.log(clientsList)
-
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} title='Clientes'/>

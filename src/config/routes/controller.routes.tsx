@@ -11,8 +11,6 @@ export const Routes = () => {
     return null
   }
 
-  console.log(currentUser)
-  
   return (
     currentUser && accessToken
       ? <UserStack currentUser={currentUser} accessToken={accessToken}/> 
