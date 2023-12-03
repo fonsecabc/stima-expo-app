@@ -9,11 +9,11 @@ export const TextInputContainer = styled.View<{
 }>`
   margin-top: 5px
   margin-bottom: 0px
-  padding-horizontal: 20px
   height: ${FontSizes.xl * 2}px
   flex-direction: row
   align-items: center
   border-radius: 16px
+  padding-horizontal: 20px
   border-width: 2px
   border-color: ${({ isFocused, isValid }) => (
     !isValid ? Colors.red : isFocused ? Colors.lightBlue : Colors.lightGray
@@ -22,19 +22,17 @@ export const TextInputContainer = styled.View<{
 `
 
 export const TextInput = styled.TextInput`
-  margin-right: auto
-  color: ${Colors.darkGray}
-  font-size: ${FontSizes.md}px
-  flex: 1
+  height: ${FontSizes.xl * 2}px
+  flex-direction: row
+  align-items: center
+  border-width: 0px
+  outline-width: 0px
+  width: 100%
+  hover: background-color: transparent
 `
 
-export const MaskTextInput = styled(MaskedTextInput)`
-  margin-right: auto
-  color: ${Colors.darkGray}
-  font-size: ${FontSizes.md}px
-  flex: 1
-`
-  
+export const MaskTextInput = TextInput.withComponent(MaskedTextInput)
+
 export const HideIcon = styled.TouchableOpacity`
   margin-left: auto
   color: ${Colors.darkGray}

@@ -20,7 +20,9 @@ interface CreateEvaluationParams {
   measurements?: object
   nutricionistForm?: object
   nutritionalRoutineStatus?: NutritionalRoutineStatus
+  skinFold?: object
 }
+
 
 interface GetEvaluationParams {
   accessToken: string

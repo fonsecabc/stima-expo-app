@@ -1,7 +1,7 @@
-import { userFormSignup } from '@forms'
 import { useAuth } from '@contexts'
-import { createUser } from '@requests'
 import { Containers } from '@styles'
+import { createUser } from '@requests'
+import { userFormSignup } from '@forms'
 import { Screen, Logo, Form } from '@components'
 import { Text } from '@screens/auth/Login/styles'
 

@@ -53,16 +53,16 @@ export const CustomTextInput = (props: CustomTextInputProps) => {
             editable={isEditable}
           />
           : <TextInput
-            value={value}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            placeholder={placeholder}
-            clearButtonMode='while-editing'
-            underlineColorAndroid='transparent'
-            secureTextEntry={hideText}
-            onChangeText={setValue}
-            editable={isEditable}
-          />
+              value={value}
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              placeholder={placeholder}
+              clearButtonMode='while-editing'
+              underlineColorAndroid='transparent'
+              secureTextEntry={hideText}
+              onChangeText={setValue}
+              editable={isEditable}
+            />
         }
         {isSecured && (
           <HideIcon onPress={() => setHideText(!hideText)}>
