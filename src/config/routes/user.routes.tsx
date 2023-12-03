@@ -36,7 +36,7 @@ export const UserStack = (props: UserStackProps) => {
           {(screenProps: ScreenProps) => <screens.OptionsScreen {...screenProps} route={{ params: { ...props } }} />}
         </Stack.Screen>
         <Stack.Screen name='Create Evaluation'>
-          {(screenProps: ScreenProps) => <screens.CreateEvaluationScreen {...screenProps} route={{ params: { ...props } }} />}
+          {(screenProps: ScreenProps) => <screens.CreateEvaluationScreen {...screenProps} route={{ params: { ...props, client: screenProps?.route?.params?.client } }} />}
         </Stack.Screen>
         <Stack.Screen name='Create Client'>
           {(screenProps: ScreenProps) => <screens.CreateClientScreen {...screenProps} route={{ params: { ...props } }} />}
