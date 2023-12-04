@@ -11,5 +11,6 @@ export const Container = styled.ScrollView`
   background-color: ${Colors.white}
   align-content: center
   overflow: scroll
+  height: 100%
   ${Shadows.default}
 `
