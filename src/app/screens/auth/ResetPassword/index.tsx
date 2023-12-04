@@ -1,6 +1,6 @@
+import { Containers } from '@styles'
 import { resetPasswordForm } from '@forms'
 import { Screen, Logo, Form } from '@components'
-import { Containers } from '@styles'
 import { Text } from '@screens/auth/Login/styles'
 
 import React, { useState } from 'react'

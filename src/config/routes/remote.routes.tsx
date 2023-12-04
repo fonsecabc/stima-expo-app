@@ -17,7 +17,7 @@ type ScreenProps = {
 
 const remotePages: Map<string, string> = new Map([
   ['/remote/create-evaluation', 'Remote Create Evaluation'],
-  ['/remote/client', 'Client'],
+  ['/remote/client', 'Remote Client'],
   ['/remote/evaluation', 'Evaluation']
 ])
 
@@ -49,10 +49,10 @@ export const RemoteStack = (props: RemoteStackProps) => {
             route={{ params }} 
           />}
         </Stack.Screen>
-        <Stack.Screen name='Client'>
-          {(screenProps: ScreenProps) => <screens.ClientScreen 
+        <Stack.Screen name='Remote Client'>
+          {(screenProps: ScreenProps) => <screens.RemoteClientScreen 
             {...screenProps} 
-            route={{ params: { ...params, clientUid: screenProps?.route?.params?.clientUid } }} 
+            route={{ params }} 
           />}
         </Stack.Screen>
         <Stack.Screen name='Evaluation'>
