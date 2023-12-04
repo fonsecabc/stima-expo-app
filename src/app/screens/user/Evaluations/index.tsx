@@ -22,7 +22,6 @@ export const EvaluationsScreen = ({ navigation, route }: EvaluationScreenProps )
 
   const [isLoading, setIsLoading] = useState(false)
 
-
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () =>  {

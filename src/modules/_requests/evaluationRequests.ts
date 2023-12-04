@@ -5,7 +5,7 @@ import { Evaluation, EvaluationListObject, GetQuery } from '@entities'
 const endpoint = '/entities/evaluation'
 
 interface CreateEvaluationParams {
-  accessToken: string
+  accessToken?: string
   userUid: string
   client: {
     name: string

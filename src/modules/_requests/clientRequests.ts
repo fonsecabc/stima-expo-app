@@ -17,7 +17,7 @@ interface CreateClientRequest {
 }
 
 interface GetClientRequest {
-  accessToken: string
+  accessToken?: string
   uid: string
   userUid: string
 }
