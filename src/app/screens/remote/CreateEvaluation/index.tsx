@@ -16,8 +16,6 @@ type RemoteCreateEvaluationScreenProps = {
 export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreateEvaluationScreenProps) => {
   const { clientUid, userUid } = route.params
   
-  if (!userUid) return null
-  
   const [isLoading, setLoading] = useState(false)
   const [formProgress, setFormProgress] = useState(0)
   const [formValues, setFormValues] = useState({
@@ -69,6 +67,8 @@ export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreate
 
     return response instanceof Error ? undefined : response.body
   }
+
+  if (!userUid) return null
 
   if (!formValues.client && clientUid) return (
     <Screen background='gray'>

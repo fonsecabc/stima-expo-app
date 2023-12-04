@@ -25,12 +25,12 @@ export const RemoteStack = (props: RemoteStackProps) => {
   const { path } = props
   
   const params = path
-  .split('?')
-  .slice(1)
-  .toLocaleString()
-  .split('&')
-  .map(param => param.split('='))
-  .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+    .split('?')
+    .slice(1)
+    .toLocaleString()
+    .split('&')
+    .map(param => param.split('='))
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
   const initialRouteName = remotePages.get(path.split('?')[0])
   if (!initialRouteName) {
@@ -45,21 +45,21 @@ export const RemoteStack = (props: RemoteStackProps) => {
       >
         <Stack.Screen name='Remote Create Evaluation'>
           {(screenProps: ScreenProps) => <screens.RemoteCreateEvaluationScreen 
-          {...screenProps} 
-          route={{ params }} 
-        />}
+            {...screenProps} 
+            route={{ params }} 
+          />}
         </Stack.Screen>
         <Stack.Screen name='Client'>
           {(screenProps: ScreenProps) => <screens.ClientScreen 
-          {...screenProps} 
-          route={{ params: { ...params, clientUid: screenProps?.route?.params?.clientUid } }} 
-        />}
+            {...screenProps} 
+            route={{ params: { ...params, clientUid: screenProps?.route?.params?.clientUid } }} 
+          />}
         </Stack.Screen>
         <Stack.Screen name='Evaluation'>
           {(screenProps: ScreenProps) => <screens.EvaluationScreen 
-          {...screenProps} 
-          route={{ params: { ...params, evaluationUid: screenProps?.route?.params?.evaluationUid } }} 
-        />}
+            {...screenProps} 
+            route={{ params: { ...params, evaluationUid: screenProps?.route?.params?.evaluationUid } }} 
+          />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

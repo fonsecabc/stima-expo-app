@@ -45,7 +45,14 @@
       "node_modules",
       "build",
       "dist",
-      "public"
+      "public",
+      "web-build",
+      ".firebase",
+      ".expo",
+      ".github",
+      ".vscode",
+      "android",
+      "ios"
     ],
     "settings": {
       "react": {
