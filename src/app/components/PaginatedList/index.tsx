@@ -1,6 +1,5 @@
 import { Colors } from '@styles'
-import { IconButton } from '@components'
-import { Container, ListContainer, PaginationContainer } from '@components/PaginatedList/styles'
+import { Container, IconContainer, ListContainer, PaginationContainer } from '@components/PaginatedList/styles'
 
 import React, { useEffect, useState } from 'react'
 import { ChevronRightIcon, ChevronLeftIcon } from 'react-native-heroicons/outline'
@@ -57,20 +56,18 @@ export const PaginatedList = (props: PaginatedListProps) => {
         }
       </ListContainer>
       <PaginationContainer>
-        <IconButton
-          action={handleLoadPrevious}
-          isDisabled={isFirstPage}
-          type='default'
-          icon={<ChevronLeftIcon color={Colors.white}/>}
-          style={{ width: 5, height: 45, borderRadius: 16, margin: 0 }}
-        />
-        <IconButton
-          action={handleLoadMore}
-          isDisabled={isLastPage}
-          type='default'
-          icon={<ChevronRightIcon color={Colors.white}/>}
-          style={{ width: 5, height: 45, borderRadius: 16 }}
-        />
+        <IconContainer
+          onPress={handleLoadPrevious}
+          disabled={isFirstPage}
+        >
+          <ChevronLeftIcon color={Colors.white}/>
+        </IconContainer>
+        <IconContainer
+          onPress={handleLoadMore}
+          disabled={isLastPage}
+        >
+          <ChevronRightIcon color={Colors.white}/>
+        </IconContainer>
       </PaginationContainer>
     </Container>
   )

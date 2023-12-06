@@ -1,4 +1,4 @@
-import { Colors, FontSizes, Fonts } from '@styles'
+import { Colors, FontSizes, Fonts, Shadows } from '@styles'
 
 import styled from 'styled-components/native'
 
@@ -29,8 +29,25 @@ export const PaginationContainer = styled.View`
   flex-direction: row
   justify-content: space-between
   align-items: center
+  margin-top: 20px
+  margin-bottom: 20px
 `
 
 export const ListContainer = styled.ScrollView`
 
+`
+
+export const IconContainer = styled.TouchableOpacity<{
+  disabled?: boolean
+}>`
+  margin-right: 20px
+  padding: 10px
+  padding-right: 20px
+  padding-left: 20px
+  justify-content: center
+  height: ${FontSizes.md * 3}px
+  border-radius: 16px
+  color: ${Colors.white}
+  background-color: ${(props) => props.disabled ? Colors.gray : Colors.green}
+  ${Shadows.default}
 `
