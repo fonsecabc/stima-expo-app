@@ -1,8 +1,8 @@
 import { formatDate } from '@helpers'
 import { getClientsList } from '@requests'
-import { ClientListObject } from '@entities'
 import { Containers, Texts, Colors } from '@styles'
-import { NavBar, HeaderTitle, Button, SearchBar, Screen, List, Avatar } from '@components'
+import { ClientListObject, Filters, PaginationFilters } from '@entities'
+import { NavBar, HeaderTitle, Button, SearchBar, Screen, PaginatedList, Avatar } from '@components'
 
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -17,42 +17,51 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
   const { accessToken, currentUser } = route.params
 
   const [clientsList, setClientsList] = useState<ClientListObject[]>([])
-  const [originalClientsList, setOriginalClientsList] = useState<ClientListObject[]>([])
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [filters, setFilters] = useState<Filters>()
+  const [isLoading, setLoading] = useState(false)
+  const [paginationFilters, setPaginationFilters] = useState<PaginationFilters>({
+    pageSize: 6,
+    currentPage: 1
+  })
 
   useEffect(() => {
-    const fetchData = async () =>  {
-      setIsLoading(true)
-      const list = await getList()
-      setClientsList(list)
-      setOriginalClientsList(list)
-      setIsLoading(false)
-    }
-    fetchData()
+    loadItems(1)
   }, [])
 
-  const getList = async () => {
-    const response = await getClientsList({
-      accessToken: accessToken, 
-      userUid: currentUser?.uid ?? ''
-    })
-
-    return response instanceof Error ? [] : response.body || []
-  }
-    
   const handleSearch = (searchText: string) => {
-    if (!searchText || !originalClientsList) {
-      setClientsList(originalClientsList)
-    } else {
-      const filteredList = originalClientsList.filter((client) =>
-        client.name.toLowerCase().includes(searchText.toLowerCase())
-      )
-      setClientsList(filteredList)
-    }
+    // if (!searchText) return setFilters(undefined)
+    
+    // return setFilters({
+    //   name: searchText.toLocaleLowerCase()
+    // })
   }
     
   const createClient = () => navigation.navigate('Create Client')
+
+  const loadItems = async (newPage: number) => {
+    setLoading(true)
+    setPaginationFilters(prev => ({ ...prev, currentPage: newPage }))
+
+    const response = await getClientsList({
+      filters,
+      accessToken: accessToken, 
+      userUid: currentUser.uid,
+      paginationFilters: { ...paginationFilters, currentPage: newPage },
+    })
+
+    if (response instanceof Error || !response.body) return setLoading(false)
+
+    setLoading(false)
+    setClientsList(response.body as ClientListObject[])
+  }
+
+  const loadMore = async () => await loadItems(paginationFilters.currentPage + 1)
+  const loadPrevious = async () => {
+    if (paginationFilters.currentPage > 1) {
+      await loadItems(paginationFilters.currentPage - 1)
+    }
+  }
 
   return (
     <Screen background='gray'>
@@ -64,9 +73,13 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
         type='default'
       />
       <SearchBar handleSearch={handleSearch} placeholder='Pesquise pelo nome'/>
-      <List
+      <PaginatedList
         list={clientsList}
-        emptyListMessage={isLoading ? 'Carregando...' : 'Nenhum cliente cadastrado'}
+        nextPage={loadMore}
+        previousPage={loadPrevious}
+        isLoading={isLoading}
+        setLoading={setLoading}
+        currentPage={paginationFilters.currentPage}
         ItemComponent={({ item }: {item: ClientListObject}) => {
           let lastEvaluatedAt = 'Cliente a ser avaliado'
 
@@ -88,6 +101,16 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
             </Containers.ListItem>
           )}
         }
+        EmptyComponent={() => (
+          <Containers.ListItem>
+            <Text style={Texts.md}>Nenhum cliente encontrado...</Text>
+          </Containers.ListItem>
+        )}
+        LoadingComponent={() => (
+          <Containers.ListItem>
+            <Text style={Texts.md}>Carregando...</Text>
+          </Containers.ListItem>
+        )}
       />
       <NavBar navigation={navigation} activeScreen={2}/>
     </Screen>

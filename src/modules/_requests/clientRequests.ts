@@ -1,6 +1,6 @@
-import { makeRequest } from '../_helpers/axiosHelper'
-import { GetType, Sex } from '@enums'
-import { Client, ClientListObject, ClientsEvaluationHistory, GetQuery } from '@entities'
+import { Sex } from '@enums'
+import { makeRequest } from '@helpers'
+import { Client, ClientListObject, ClientsEvaluationHistory, Filters, PaginationFilters } from '@entities'
 
 const endpoint = '/entities/client'
 
@@ -30,12 +30,8 @@ interface GetClientsEvaluationHistoryRequest {
 interface GetClientListRequest {
   accessToken: string
   userUid: string
-}
-
-interface GetClientQueryRequest {
-  accessToken: string
-  userUid: string
-  query: GetQuery
+  paginationFilters?: PaginationFilters
+  filters?: Filters
 }
 
 interface UpdateClientRequest {
@@ -60,10 +56,7 @@ export async function createClient(params: CreateClientRequest){
 export async function getClient(params: GetClientRequest){
   return await makeRequest<Client>({
     path: `${endpoint}/get`,
-    body: {
-      ...params,
-      type: GetType.ENTITY
-    },
+    body: params,
     method: 'GET'
   })
 }
@@ -78,22 +71,8 @@ export async function getClientsEvaluationHistory(params: GetClientsEvaluationHi
 
 export async function getClientsList(params: GetClientListRequest){
   return await makeRequest<ClientListObject[]>({ 
-    path: `${endpoint}/get`,
-    body: {
-      ...params,
-      type: GetType.LIST
-    }, 
-    method: 'GET' 
-  })
-}
-
-export async function getClientsQuery(params: GetClientQueryRequest){
-  return await makeRequest<ClientListObject[]>({ 
-    path: `${endpoint}/get`,
-    body: {
-      ...params,
-      type: GetType.QUERY
-    }, 
+    path: `${endpoint}/get-list`,
+    body: params,
     method: 'GET' 
   })
 }

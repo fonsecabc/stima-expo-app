@@ -1,6 +1,6 @@
-import { makeRequest } from '../_helpers/axiosHelper'
-import { GetType, NutritionalRoutineStatus, Sex } from '@enums'
-import { Evaluation, EvaluationListObject, GetQuery } from '@entities'
+import { makeRequest } from '@helpers'
+import { NutritionalRoutineStatus, Sex } from '@enums'
+import { Evaluation, EvaluationListObject, Filters, PaginationFilters } from '@entities'
 
 const endpoint = '/entities/evaluation'
 
@@ -33,12 +33,8 @@ interface GetEvaluationParams {
 interface GetEvaluationsListParams {
   accessToken: string
   userUid: string
-}
-
-interface GetEvaluationsQueryParams {
-  accessToken: string
-  userUid: string
-  query: GetQuery
+  paginationFilters?: PaginationFilters
+  filters?: Filters
 }
 
 interface UpdateEvaluationParams {
@@ -63,32 +59,15 @@ export async function createEvaluation(params: CreateEvaluationParams){
 export async function getEvaluation(params: GetEvaluationParams){
   return await makeRequest<Evaluation>({
     path: `${endpoint}/get`, 
-    body: {
-      ...params,
-      type: GetType.ENTITY
-    }, 
+    body: params,
     method: 'GET' 
   })
 }
 
 export async function getEvaluationsList(params: GetEvaluationsListParams){
   return await makeRequest<EvaluationListObject[]>({
-    path: `${endpoint}/get`, 
-    body: {
-      ...params,
-      type: GetType.LIST
-    }, 
-    method: 'GET' 
-  })
-}
-
-export async function getEvaluationsQuery(params: GetEvaluationsQueryParams){
-  return await makeRequest<EvaluationListObject[]>({
-    path: `${endpoint}/get`, 
-    body: {
-      ...params,
-      type: GetType.QUERY
-    }, 
+    path: `${endpoint}/get-list`, 
+    body: params, 
     method: 'GET' 
   })
 }
