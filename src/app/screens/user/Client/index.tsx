@@ -6,8 +6,7 @@ import {
   Bioimpedance, 
   ClientEvaluationsList,
   ClientOverallResults,
-  Button, 
-  IconButton
+  Button
 } from '@components'
 import { Colors } from '@styles'
 import { useAuth } from '@contexts'
@@ -16,6 +15,7 @@ import { ClientHistory } from '@components'
 import { ClientsEvaluationHistory } from '@entities'
 import { getClientsEvaluationHistory  } from '@requests'
 import { ButtonContainer } from '@screens/user/Client/styles'
+import { IconContainer } from '@components/PaginatedList/styles'
 
 import React, { useEffect, useState } from 'react'
 import { Linking, Platform, ScrollView, Share } from 'react-native'
@@ -95,14 +95,15 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
             action={createEvaluation} 
             text='Nova avaliação' 
             icon={<PlusIcon color={Colors.white}/>}
-            style={{ flex: 1, marginRight: 0 }}
+            style={{ flex: 1, marginLeft: 0 }}
             type='default'
           />
-          <IconButton
-            action={shareRemoteEvaluationLink} 
-            icon={<ShareIcon color={Colors.white}/>}
-            type='default'
-          />
+          <IconContainer
+            style={{ marginHorizontal: 0 }}
+            onPress={shareRemoteEvaluationLink}
+          >
+            <ShareIcon color={Colors.white}/>
+          </IconContainer>
         </ButtonContainer>
 
         {clientsHistory.evaluationList.length > 0 && (

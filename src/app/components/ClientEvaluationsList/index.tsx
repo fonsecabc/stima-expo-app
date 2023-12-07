@@ -28,11 +28,9 @@ export const ClientEvaluationsList = (props: ClientEvaluationsListProps) => {
   })
 
   return (
-    <>
+    <Container>
       <Label>Ultimas avaliações</Label>
-      <Container>
-        {items}
-      </Container>
-    </>
+      {items}
+    </Container>
   )
 }

@@ -8,8 +8,7 @@ export const Label = styled.Text`
   color: ${Colors.darkGray}
   text-align: left
   padding-horizontal: 5px
-  margin-top: 20px
-  margin-horizontal: 20px
+  margin-vertical: 10px
 `
 
 export const Title = styled.Text`
@@ -20,6 +19,8 @@ export const Title = styled.Text`
 `
 
 export const Container = styled.View`
+  width: 100%
   margin-top: 10px
-  padding-horizontal: 20px
+  padding-left: 20px
+  padding-right: 20px
 `

@@ -13,6 +13,7 @@ export const Containers = {
     justify-content: space-between
     border-radius: 16px
     background-color: ${Colors.white}
+    ${Shadows.default}
   `,
   CenteredDefault: styled.View`
     margin: 20px

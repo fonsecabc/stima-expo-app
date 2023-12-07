@@ -1,6 +1,7 @@
 import { Evaluation } from '@entities'
+import { getNutricionistFormValues } from '@forms'
 import { getEvaluation as getEvaluationRequest } from '@requests'
-import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay/*, OrderNutritionalRoutineModal*/ } from '@components'
+import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, NutricionistForm /*, OrderNutritionalRoutineModal*/ } from '@components'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
@@ -64,6 +65,11 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
           <Bioimpedance bioimpedance={evaluation.bioimpedance} client={evaluation.client}/>
           
         )}
+
+        {(evaluation.nutricionistForm) && <NutricionistForm
+          title='Questionário Nutricional'
+          nutritionistForm={getNutricionistFormValues(evaluation.nutricionistForm)}
+        />}
 
       </ScrollView>
     </Screen>

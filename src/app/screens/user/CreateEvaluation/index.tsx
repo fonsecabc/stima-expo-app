@@ -72,7 +72,7 @@ export const CreateEvaluationScreen = ({ navigation, route }: CreateEvaluationSc
           values={formValues.client}
         />}
         {formProgress === 0.25 && <Form
-          title='Avaliação Nutricional'
+          title='Questionário Nutricional'
           inputs={forms.nutricionistForm}
           submitAction={(params) => { 
             setFormValues({ ...formValues, nutricionistForm: params })

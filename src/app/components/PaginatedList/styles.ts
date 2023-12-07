@@ -40,13 +40,13 @@ export const ListContainer = styled.ScrollView`
 export const IconContainer = styled.TouchableOpacity<{
   disabled?: boolean
 }>`
-  margin-right: 20px
   padding: 10px
   padding-right: 20px
   padding-left: 20px
   justify-content: center
   height: ${FontSizes.md * 3}px
   border-radius: 16px
+  align-self: center
   color: ${Colors.white}
   background-color: ${(props) => props.disabled ? Colors.gray : Colors.green}
   ${Shadows.default}

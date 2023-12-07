@@ -293,3 +293,62 @@ export const nutricionistForm: input[] = [
     isRequired: false,
   },
 ]
+
+export function getNutricionistFormValues(nutricionistFormObject: any): any {
+
+  const result = nutricionistForm.map((input) => {
+    const name = input.name
+    const type = input.type
+    const question = input.label
+    const description = input.description
+
+    let value = nutricionistFormObject[name]
+
+    if (type === 'text') {
+      return {
+        label: question,
+        description,
+        answer: transformTextValues(value)
+      }
+    }
+
+    if (!input.items) return
+
+    if (type === 'select') {
+      value = transformSelectValues(value, input.items)
+    }
+
+    if (type === 'multiSelect') {
+      value = transformMultiSelectValues(value, input.items)
+    }
+
+    return {
+      label: question,
+      description,
+      answer: value
+    }
+  })
+  console.log(Object.assign(result))
+
+  return Object.assign(result)
+}
+
+export function transformMultiSelectValues(value: string, itemsOfMultiSelect: Array<{ key: string, value: string }>): string {
+  return value.split(',').map((item) => {
+    const itemFound = itemsOfMultiSelect.find((itemOfMultiSelect) => itemOfMultiSelect.value === item)
+    if (itemFound) {
+      return itemFound.key
+    }
+    return 'Sem resposta'
+  }).join(', ')
+}
+
+export function transformSelectValues(value: string, itemsOfSelect: Array<{ key: string, value: string }>): string {
+  return itemsOfSelect.find((item) => item.value === value)?.key || 'Sem resposta'
+}
+
+export function transformTextValues(string: string): string {
+  if (!string) return 'Sem resposta'
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+

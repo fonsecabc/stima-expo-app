@@ -1,9 +1,9 @@
 import styled from 'styled-components/native'
 
 export const ButtonContainer = styled.View`
-  flex: 1
-  align-content: center
+  display: flex
   flex-direction: row
-  justify-content: space-between 
-  margin-bottom: 80px
+  justify-content: space-between
+  margin-left: 20px
+  margin-right: 20px
 ` 
