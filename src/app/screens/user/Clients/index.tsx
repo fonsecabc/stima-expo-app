@@ -18,7 +18,10 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
 
   const [clientsList, setClientsList] = useState<ClientListObject[]>([])
 
-  const [filters, setFilters] = useState<Filters>()
+  const [filters, setFilters] = useState<Filters>({
+    order: 'asc',
+    by: 'clientName'
+  })
   const [isLoading, setLoading] = useState(false)
   const [paginationFilters, setPaginationFilters] = useState<PaginationFilters>({
     pageSize: 6,
@@ -29,25 +32,23 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
     loadItems(1)
   }, [])
 
-  const handleSearch = (searchText: string) => {
-    // if (!searchText) return setFilters(undefined)
-    
-    // return setFilters({
-    //   name: searchText.toLocaleLowerCase()
-    // })
-  }
-    
   const createClient = () => navigation.navigate('Create Client')
 
-  const loadItems = async (newPage: number) => {
+  const loadItems = async (newPage: number, searchText?: string) => {
     setLoading(true)
     setPaginationFilters(prev => ({ ...prev, currentPage: newPage }))
 
     const response = await getClientsList({
-      filters,
       accessToken: accessToken, 
       userUid: currentUser.uid,
       paginationFilters: { ...paginationFilters, currentPage: newPage },
+      filters: {
+        ...filters,
+        search: {
+          by: 'name',
+          value: searchText || ''
+        }
+      },
     })
 
     if (response instanceof Error || !response.body) return setLoading(false)
@@ -72,7 +73,7 @@ export const ClientsScreen = ({ navigation, route }: ClientScreenProps) => {
         text='ADICIONAR'
         type='default'
       />
-      <SearchBar handleSearch={handleSearch} placeholder='Pesquise pelo nome'/>
+      <SearchBar handleSearch={(searchText) => loadItems(1, searchText)} placeholder='Pesquise pelo nome'/>
       <PaginatedList
         list={clientsList}
         nextPage={loadMore}

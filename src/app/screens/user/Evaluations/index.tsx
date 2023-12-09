@@ -17,8 +17,11 @@ export const EvaluationsScreen = ({ navigation, route }: EvaluationScreenProps) 
   const { accessToken, currentUser } = route.params
 
   const [evaluationList, setEvaluationList] = useState<EvaluationListObject[]>([])
-  
-  const [filters, setFilters] = useState<Filters>()
+
+  const [filters, setFilters] = useState<Filters>({
+    order: 'desc',
+    by: 'createdAt',
+  })
   const [isLoading, setLoading] = useState(false)
   const [paginationFilters, setPaginationFilters] = useState<PaginationFilters>({
     pageSize: 6,
@@ -29,25 +32,23 @@ export const EvaluationsScreen = ({ navigation, route }: EvaluationScreenProps) 
     loadItems(1)
   }, [])
 
-  const handleSearch = (searchText: string) => {
-    // if (!searchText) return setFilters(undefined)
-    
-    // return setFilters({
-    //   clientName: searchText.toLocaleLowerCase()
-    // })
-  }
-
   const createEvaluation = () => navigation.navigate('Create Evaluation')
 
-  const loadItems = async (newPage: number) => {
+  const loadItems = async (newPage: number, searchText?: string) => {
     setLoading(true)
     setPaginationFilters(prev => ({ ...prev, currentPage: newPage }))
 
     const response = await getEvaluationsList({
-      filters,
       accessToken: accessToken, 
       userUid: currentUser.uid,
       paginationFilters: { ...paginationFilters, currentPage: newPage },
+      filters: {
+        ...filters,
+        search: {
+          by: 'name',
+          value: searchText || ''
+        }
+      },
     })
 
     if (response instanceof Error || !response.body) return setLoading(false)
@@ -72,7 +73,7 @@ export const EvaluationsScreen = ({ navigation, route }: EvaluationScreenProps) 
         icon={<PlusIcon color={Colors.white}/>}
         type='default'
       />
-      <SearchBar handleSearch={handleSearch} placeholder='Pesquise pelo nome do cliente'/>
+      <SearchBar handleSearch={(searchText) => loadItems(1, searchText)} placeholder='Pesquise pelo nome do cliente'/>
       <PaginatedList
         list={evaluationList}
         nextPage={loadMore}

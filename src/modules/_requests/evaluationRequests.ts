@@ -65,6 +65,7 @@ export async function getEvaluation(params: GetEvaluationParams){
 }
 
 export async function getEvaluationsList(params: GetEvaluationsListParams){
+  console.log('params', params)
   return await makeRequest<EvaluationListObject[]>({
     path: `${endpoint}/get-list`, 
     body: params, 

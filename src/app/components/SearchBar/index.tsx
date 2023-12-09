@@ -18,15 +18,15 @@ export const SearchBar = ({ handleSearch, placeholder }: SearchBarProps) => {
   const [searchText, setSearchText] = useState('')
 
   return (
-    <SearchBarContainer behavior="padding">
+    <SearchBarContainer behavior='padding'>
       <SearchInputContainer>
         <SearchTextInput
           placeholder={placeholder}
-          onChangeText={(searchText) => (setSearchText(searchText), handleSearch(searchText))}
+          onChangeText={setSearchText}
           defaultValue={searchText}
-          onSubmitEditing={() => (setSearchText(searchText), handleSearch(searchText))}
-          underlineColorAndroid="transparent"
-          clearButtonMode="while-editing"
+          onSubmitEditing={() => setSearchText(searchText)}
+          underlineColorAndroid='transparent'
+          clearButtonMode='while-editing'
         />
       </SearchInputContainer>
       <SearchIcon onPress={() => handleSearch(searchText)}>
