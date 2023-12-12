@@ -1,24 +1,25 @@
 import * as forms from '@forms'
 import { Client } from '@entities'
+import { variables } from '@config'
 import { Screen, Form, ProgressBar, Logo } from '@components'
 import { Container } from '@screens/user/CreateEvaluation/styles'
 import { createEvaluation, getClient as getClientRequest } from '@requests'
 
+import { Linking } from 'react-native'
 import React, { useState } from 'react'
 import Toast from 'react-native-toast-message'
 import { useFocusEffect } from '@react-navigation/native'
 
 type RemoteCreateEvaluationScreenProps = { 
-  navigation: any
   route: any
 }
 
-export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreateEvaluationScreenProps) => {
+export const RemoteCreateEvaluationScreen = ({ route }: RemoteCreateEvaluationScreenProps) => {
   const { clientUid, userUid } = route.params
   
   const [isLoading, setLoading] = useState(false)
   const [formProgress, setFormProgress] = useState(0)
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<{[k: string]: any}>({
     client: {},
     bioimpedance: {},
     measurements: {},
@@ -32,7 +33,16 @@ export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreate
         const response = await getClient()
 
         if (!response) return
-        setFormValues({ ...formValues, client: response })
+        setFormValues({ 
+          ...formValues, 
+          client: {
+            name: response.name,
+            email: response.email,
+            phone: response.phone,
+            dateOfBirth: response.dateOfBirth,
+            sex: response.sex
+          } 
+        })
       }
       fetchData()
     }, [])
@@ -56,7 +66,7 @@ export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreate
 
     Toast.show({ type: 'success', text1: 'Avaliação criada com sucesso' })
 
-    return navigation.navigate('Evaluation', { evaluationUid: response.body.uid })
+    return Linking.openURL(`${variables.domain}/remote/evaluation?uid=${response.body.uid}`)
   }
 
   const getClient = async () => {
@@ -70,11 +80,13 @@ export const RemoteCreateEvaluationScreen = ({ navigation, route }: RemoteCreate
 
   if (!userUid) return null
 
-  if (!formValues.client && clientUid) return (
+  if (!formValues.client.name && clientUid) return (
     <Screen background='gray'>
       <Logo />
     </Screen>
   ) 
+
+  console.log(formValues.client)
 
   return (
     <Screen background='gray'>

@@ -1,29 +1,25 @@
 import { 
-  HeaderTitle, 
   Screen, 
-  ClientInfoDisplay, 
-  BodyComposition, 
+  HeaderTitle, 
   Bioimpedance, 
-  ClientEvaluationsList,
+  BodyComposition, 
+  ClientInfoDisplay, 
   ClientOverallResults,
+  ClientEvaluationsList
 } from '@components'
-import { useAuth } from '@contexts'
+import { variables } from '@config'
 import { ClientHistory } from '@components'
-import { ClientsEvaluationHistory } from '@entities'
 import { getClientsEvaluationHistory  } from '@requests'
+import { ClientsEvaluationHistory, EvaluationListObject } from '@entities'
 
+import { Linking, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native'
 
 type RemoteClientScreenProps = { 
-  navigation: any
   route: any
 }
 
-export const RemoteClientScreen = ({ navigation, route }: RemoteClientScreenProps) => {
-  const { currentUser } = useAuth()
-  const { clientUid } = route.params
-
+export const RemoteClientScreen = ({ route }: RemoteClientScreenProps) => {
   const [clientsHistory, setClientsHistory] = useState<ClientsEvaluationHistory>()
 
   useEffect(() => {
@@ -35,17 +31,14 @@ export const RemoteClientScreen = ({ navigation, route }: RemoteClientScreenProp
   }, [])
 
   const getClientHistory = async () => {
-    const response = await getClientsEvaluationHistory({
-      uid: clientUid,
-      userUid: currentUser?.uid ?? ''
-    })
+    const response = await getClientsEvaluationHistory(route.params)
 
     return response instanceof Error ? undefined : response.body
   }
 
   if (!clientsHistory) return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
+      <HeaderTitle title='Cliente'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
       </ScrollView>
     </Screen>
@@ -53,12 +46,17 @@ export const RemoteClientScreen = ({ navigation, route }: RemoteClientScreenProp
 
   return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
+      <HeaderTitle title='Cliente'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
         <ClientInfoDisplay client={clientsHistory.client}/>
 
         {clientsHistory.evaluationList.length > 0 && (
-          <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} navigation={navigation}/>
+          <ClientEvaluationsList 
+            evaluationList={clientsHistory.evaluationList} 
+            action={(evaluation: EvaluationListObject) =>
+              Linking.openURL(`${variables.domain}/remote/evaluation?uid=${evaluation.uid}`)
+            }
+          />
         )}
 
         {(clientsHistory.overallResults && clientsHistory.evaluationList.length > 1) && (

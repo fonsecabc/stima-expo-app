@@ -1,18 +1,17 @@
 import { Evaluation } from '@entities'
 import { getNutricionistFormValues } from '@forms'
 import { getEvaluation as getEvaluationRequest } from '@requests'
-import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, NutricionistForm /*, OrderNutritionalRoutineModal*/ } from '@components'
+import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, NutricionistForm } from '@components'
 
 import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
-type EvaluationScreenProps = { 
-  navigation: any
+type RemoteEvaluationScreenProps = { 
   route: any
 }
 
-export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) => {
-  const { evaluationUid } = route.params
+export const RemoteEvaluationScreen = ({ route }: RemoteEvaluationScreenProps) => {
+  const { uid } = route.params
 
   const [evaluation, setEvaluation] = useState<Evaluation>()
 
@@ -25,14 +24,14 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
   }, [])
 
   async function getEvaluation(): Promise<void | Evaluation> {
-    const response = await getEvaluationRequest({ uid: evaluationUid })
+    const response = await getEvaluationRequest({ uid })
 
-    return response instanceof Error ? navigation.goBack() : response.body
+    if (!(response instanceof Error)) response.body
   }
 
   if (!evaluation) return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
+      <HeaderTitle title='Avaliação'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
       </ScrollView>
     </Screen>
@@ -40,19 +39,9 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
 
   return (
     <Screen background='gray'>
-      <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
+      <HeaderTitle title='Avaliação'/>
       <ScrollView style={{ flex: 1 }}>
         <ClientInfoDisplay client={evaluation.client}/>
-
-        {/* <OrderNutritionalRoutineModal
-          evaluationUid={evaluationUid}
-          accessToken={accessToken}	
-          currentUser={currentUser}
-          navigation={navigation}
-          nutritionalRoutineStatus={evaluation.nutritionalRoutineStatus}
-          nutritionalRoutinePaymentStatus={evaluation.nutritionalRoutinePaymentStatus}
-          nutritionalRoutineLink={evaluation.nutritionalRoutineLink}
-        /> */}
 
         <BodyComposition client={evaluation.client}/>
           

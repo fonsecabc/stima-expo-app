@@ -21,6 +21,7 @@ export const clientForm: input[] = [
   },
   {
     name: 'phone',
+    description: '*O cliente será atrelado ao número de telefone informado (caso já exista um cliente com esse número, o cliente será atualizado)',
     label: 'Whatsapp',
     placeholder: '(00) 00000-0000',
     value: '',

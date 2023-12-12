@@ -1,25 +1,25 @@
 import { 
-  HeaderTitle, 
+  Button,
   Screen, 
+  HeaderTitle, 
+  Bioimpedance,
+  BodyComposition,
   ClientInfoDisplay, 
-  BodyComposition, 
-  Bioimpedance, 
-  ClientEvaluationsList,
   ClientOverallResults,
-  Button
+  ClientEvaluationsList
 } from '@components'
 import { Colors } from '@styles'
 import { useAuth } from '@contexts'
 import { variables } from '@config'
 import { ClientHistory } from '@components'
-import { ClientsEvaluationHistory } from '@entities'
+import { ClientsEvaluationHistory, EvaluationListObject } from '@entities'
 import { getClientsEvaluationHistory  } from '@requests'
 import { ButtonContainer } from '@screens/user/Client/styles'
 import { IconContainer } from '@components/PaginatedList/styles'
 
 import React, { useEffect, useState } from 'react'
-import { Linking, Platform, ScrollView, Share } from 'react-native'
 import { PlusIcon, ShareIcon } from 'react-native-heroicons/solid'
+import { Linking, Platform, ScrollView, Share } from 'react-native'
 
 type ClientScreenProps = { 
   navigation: any
@@ -49,7 +49,6 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
     return response instanceof Error ? undefined : response.body
   }
 
-
   if (!clientsHistory) return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
@@ -59,17 +58,32 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   )
 
   const createEvaluation = () => {
-    navigation.navigate('Create Evaluation', { client: clientsHistory.client })
+    const { client } = clientsHistory
+    navigation.navigate(
+      'Create Evaluation', 
+      { 
+        client: {
+          name: client.name,
+          email: client.email,
+          phone: client.phone,
+          dateOfBirth: client.dateOfBirth,
+          sex: client.sex
+        }   
+      }
+    )
   }
 
   const shareRemoteEvaluationLink = () => {
+    const { client } = clientsHistory
+    client.phone = client.phone.replace(/\D/g, '')
+
     if (!currentUser) return
 
     const origin = Platform.OS === 'web' ? window.location.origin : variables.domain 
-    const link = `${origin}/remote/create-evaluation?clientUid=${clientsHistory.client.uid}&userUid=${currentUser?.uid}`
+    const link = `${origin}/remote/create-evaluation?clientUid=${client.uid}&userUid=${currentUser?.uid}`
 
-    const message = `Olá Caio Braga, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link}`
-    const whatsappLink = `https://wa.me//5531983904021?text=${encodeURIComponent(message)}`
+    const message = `Olá ${client.name}, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link}`
+    const whatsappLink = `https://wa.me//${client.phone}?text=${encodeURIComponent(message)}`
 
     if (Platform.OS === 'web') {
       Linking.openURL(whatsappLink)
@@ -78,12 +92,12 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
 
     Share.share({
       message: `
-        Olá ${clientsHistory.client.name}, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link} \n\nQualquer duvida, pode me chamar!💚
+        Olá ${client.name}, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link} \n\nQualquer duvida, pode me chamar!💚
       `,
       url: link
     })
   }
-  
+
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
@@ -107,7 +121,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
         </ButtonContainer>
 
         {clientsHistory.evaluationList.length > 0 && (
-          <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} navigation={navigation}/>
+          <ClientEvaluationsList evaluationList={clientsHistory.evaluationList} action={(evaluation: EvaluationListObject) => navigation.navigate('Evaluation', { evaluationUid: evaluation.uid })}/>
         )}
 
         {(clientsHistory.overallResults && clientsHistory.evaluationList.length > 1) && (

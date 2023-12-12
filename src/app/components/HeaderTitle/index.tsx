@@ -9,7 +9,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native'
 
 interface HeaderTitleProps {
-  navigation: any
+  navigation?: any
   title?: string
   goBack?: true
 }

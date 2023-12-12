@@ -15,11 +15,11 @@ type ScreenProps = {
   route: any
 }
 
-const remotePages: Map<string, string> = new Map([
-  ['/remote/create-evaluation', 'Remote Create Evaluation'],
-  ['/remote/client', 'Remote Client'],
-  ['/remote/evaluation', 'Evaluation']
-])
+const remotePages: {[k: string]: string} = {
+  '/remote/client': 'Remote Client',
+  '/remote/evaluation': 'Remote Evaluation',
+  '/remote/create-evaluation': 'Remote Create Evaluation',
+}
 
 export const RemoteStack = (props: RemoteStackProps) => {
   const { path } = props
@@ -32,7 +32,7 @@ export const RemoteStack = (props: RemoteStackProps) => {
     .map(param => param.split('='))
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
-  const initialRouteName = remotePages.get(path.split('?')[0])
+  const initialRouteName = remotePages[path.split('?')[0]]
   if (!initialRouteName) {
     return null
   }
@@ -55,8 +55,8 @@ export const RemoteStack = (props: RemoteStackProps) => {
             route={{ params }} 
           />}
         </Stack.Screen>
-        <Stack.Screen name='Evaluation'>
-          {(screenProps: ScreenProps) => <screens.EvaluationScreen 
+        <Stack.Screen name='Remote Evaluation'>
+          {(screenProps: ScreenProps) => <screens.RemoteEvaluationScreen 
             {...screenProps} 
             route={{ params: { ...params, evaluationUid: screenProps?.route?.params?.evaluationUid } }} 
           />}

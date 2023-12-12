@@ -9,18 +9,18 @@ import { TouchableOpacity } from 'react-native'
 
 interface ClientEvaluationsListProps {
   evaluationList: EvaluationListObject[]
-  navigation: any
+  action: (evaluation: EvaluationListObject) => void
 }
 
 export const ClientEvaluationsList = (props: ClientEvaluationsListProps) => {
-  const { evaluationList, navigation } = props
+  const { evaluationList, action } = props
 
   const items = evaluationList.map((evaluation) => {
     const createdAt = formatDate(evaluation.createdAt)
     return (
       <Containers.ListItem key={evaluation.uid}>
         <Title>Data da avaliação: {createdAt}</Title>
-        <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => navigation.navigate('Evaluation', { evaluationUid: evaluation.uid })}>
+        <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => action(evaluation)}>
           <EyeIcon color={Colors.darkGray}/>
         </TouchableOpacity>
       </Containers.ListItem>

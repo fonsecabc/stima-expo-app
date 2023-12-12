@@ -3,8 +3,8 @@ import * as validations from '@validations'
 import { Title } from '@components/Form/styles'
 import { CustomTextInput, CustomSelectInput, Button, MultiSelectInput } from '@components'
 
-import React, { useEffect, useState } from 'react'
 import { Formik, Field } from 'formik'
+import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, View } from 'react-native'
 
 type FormProps = {

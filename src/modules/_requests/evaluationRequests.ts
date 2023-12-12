@@ -25,9 +25,7 @@ interface CreateEvaluationParams {
 
 
 interface GetEvaluationParams {
-  accessToken: string
   uid: string
-  userUid: string
 }
 
 interface GetEvaluationsListParams {
@@ -65,7 +63,6 @@ export async function getEvaluation(params: GetEvaluationParams){
 }
 
 export async function getEvaluationsList(params: GetEvaluationsListParams){
-  console.log('params', params)
   return await makeRequest<EvaluationListObject[]>({
     path: `${endpoint}/get-list`, 
     body: params, 

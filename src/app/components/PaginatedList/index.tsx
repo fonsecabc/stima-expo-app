@@ -24,7 +24,9 @@ export const PaginatedList = (props: PaginatedListProps) => {
   const isLastPage = list.length === 0
 
   useEffect(() => {
+    setLoading(true)
     setData(list)
+    setLoading(false)
   }, [list])
   
   const handleLoadMore = async () => {
@@ -42,7 +44,6 @@ export const PaginatedList = (props: PaginatedListProps) => {
       setLoading(false)
     }
   }
-
 
   return (
     <Container>
