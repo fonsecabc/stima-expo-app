@@ -1,9 +1,20 @@
+import { 
+  Screen, 
+  HeaderTitle, 
+  Bioimpedance, 
+  BodyComposition, 
+  NutricionistForm, 
+  ClientInfoDisplay,
+  Button, 
+  // OrderNutritionalRoutineModal 
+} from '@components'
+import { variables } from '@config'
 import { Evaluation } from '@entities'
+import { shareRemoteLink } from '@helpers'
 import { getNutricionistFormValues } from '@forms'
 import { getEvaluation as getEvaluationRequest } from '@requests'
-import { HeaderTitle, Screen, Bioimpedance, BodyComposition, ClientInfoDisplay, NutricionistForm /*, OrderNutritionalRoutineModal*/ } from '@components'
 
-import { ScrollView } from 'react-native'
+import { Platform, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 type EvaluationScreenProps = { 
@@ -38,11 +49,26 @@ export const EvaluationScreen = ({ navigation, route }: EvaluationScreenProps) =
     </Screen>
   )
 
+  const shareRemoteEvaluationLink = () => {
+    const origin = Platform.OS === 'web' ? window.location.origin : variables.domain 
+    const link = `${origin}/remote/evaluation?uid=${evaluation.uid}`
+    const message = `Aqui está o link para ver a avaliação de ${evaluation.client.name}: \n\n${link}`
+    const whatsappLink = `https://wa.me//?text=${encodeURIComponent(message)}`
+
+    shareRemoteLink(whatsappLink, message, link)
+  }
+
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Avaliação'/>
       <ScrollView style={{ flex: 1 }}>
         <ClientInfoDisplay client={evaluation.client}/>
+
+        <Button
+          action={shareRemoteEvaluationLink}
+          text='Compartilhar link da avaliação'
+          type='default'            
+        />
 
         {/* <OrderNutritionalRoutineModal
           evaluationUid={evaluationUid}

@@ -58,7 +58,7 @@ export const RemoteStack = (props: RemoteStackProps) => {
         <Stack.Screen name='Remote Evaluation'>
           {(screenProps: ScreenProps) => <screens.RemoteEvaluationScreen 
             {...screenProps} 
-            route={{ params: { ...params, evaluationUid: screenProps?.route?.params?.evaluationUid } }} 
+            route={{ params }} 
           />}
         </Stack.Screen>
       </Stack.Navigator>

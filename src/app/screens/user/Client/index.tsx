@@ -6,20 +6,20 @@ import {
   BodyComposition,
   ClientInfoDisplay, 
   ClientOverallResults,
-  ClientEvaluationsList
+  ClientEvaluationsList,
+  ShareRemoteLinksModal
 } from '@components'
 import { Colors } from '@styles'
 import { useAuth } from '@contexts'
-import { variables } from '@config'
 import { ClientHistory } from '@components'
 import { ClientsEvaluationHistory, EvaluationListObject } from '@entities'
 import { getClientsEvaluationHistory  } from '@requests'
 import { ButtonContainer } from '@screens/user/Client/styles'
 import { IconContainer } from '@components/PaginatedList/styles'
 
+import { ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { PlusIcon, ShareIcon } from 'react-native-heroicons/solid'
-import { Linking, Platform, ScrollView, Share } from 'react-native'
 
 type ClientScreenProps = { 
   navigation: any
@@ -30,6 +30,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
   const { currentUser } = useAuth()
   const { clientUid } = route.params
 
+  const [shareRemoteLinksModalFocus, setShareRemoteLinksModalFocus] = useState(false)
   const [clientsHistory, setClientsHistory] = useState<ClientsEvaluationHistory>()
 
   useEffect(() => {
@@ -73,36 +74,18 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
     )
   }
 
-  const shareRemoteEvaluationLink = () => {
-    const { client } = clientsHistory
-    client.phone = client.phone.replace(/\D/g, '')
-
-    if (!currentUser) return
-
-    const origin = Platform.OS === 'web' ? window.location.origin : variables.domain 
-    const link = `${origin}/remote/create-evaluation?clientUid=${client.uid}&userUid=${currentUser?.uid}`
-
-    const message = `Olá ${client.name}, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link}`
-    const whatsappLink = `https://wa.me//${client.phone}?text=${encodeURIComponent(message)}`
-
-    if (Platform.OS === 'web') {
-      Linking.openURL(whatsappLink)
-      return
-    }
-
-    Share.share({
-      message: `
-        Olá ${client.name}, como vai? \n\nAqui está o link para realizar sua avaliação personalizada remotamente: \n\n${link} \n\nQualquer duvida, pode me chamar!💚
-      `,
-      url: link
-    })
-  }
-
   return (
     <Screen background='gray'>
       <HeaderTitle navigation={navigation} goBack={true} title='Cliente'/>
       <ScrollView style={{ flex: 1, paddingTop: 10 }}>
         <ClientInfoDisplay client={clientsHistory.client}/>
+
+        <ShareRemoteLinksModal
+          client={clientsHistory.client}
+          userUid={currentUser?.uid ?? ''}
+          isFocused={shareRemoteLinksModalFocus}
+          setFocus={setShareRemoteLinksModalFocus}
+        />
 
         <ButtonContainer>
           <Button
@@ -114,7 +97,7 @@ export const ClientScreen = ({ navigation, route }: ClientScreenProps) => {
           />
           <IconContainer
             style={{ marginHorizontal: 0 }}
-            onPress={shareRemoteEvaluationLink}
+            onPress={() => setShareRemoteLinksModalFocus(true)}
           >
             <ShareIcon color={Colors.white}/>
           </IconContainer>

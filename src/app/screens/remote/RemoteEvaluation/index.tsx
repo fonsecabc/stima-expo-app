@@ -26,8 +26,12 @@ export const RemoteEvaluationScreen = ({ route }: RemoteEvaluationScreenProps) =
   async function getEvaluation(): Promise<void | Evaluation> {
     const response = await getEvaluationRequest({ uid })
 
-    if (!(response instanceof Error)) response.body
+    if (response instanceof Error) return undefined
+
+    return response.body
   }
+
+  console.log(uid)
 
   if (!evaluation) return (
     <Screen background='gray'>
