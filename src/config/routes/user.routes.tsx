@@ -18,8 +18,7 @@ type ScreenProps = {
 }
 
 export const UserStack = (props: UserStackProps) => {
-  //const initialRouteName = props.currentUser.createdAt.getTime() < (Date.now() - 7 * 24 * 60 * 60 * 1000) && !props.currentUser.subscription ? 'Subscription Payment' : 'Evaluations'
-  const initialRouteName = 'Evaluations'
+  const initialRouteName = props.currentUser.createdAt.getTime() < (Date.now() - 7 * 24 * 60 * 60 * 1000) && !props.currentUser.subscription ? 'Subscription Payment' : 'Evaluations'
   return (
     <NavigationContainer>
       <Stack.Navigator 

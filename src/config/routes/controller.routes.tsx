@@ -19,7 +19,6 @@ export const Routes = () => {
     if (initialPath === 'remote') return <RemoteStack path={webPath}/>
   }
 
-
   return (
     currentUser && accessToken
       ? <UserStack currentUser={currentUser} accessToken={accessToken}/> 

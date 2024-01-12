@@ -58,7 +58,7 @@ export const SubscriptionPaymentScreen = ({ navigation, route }: SubscriptionPay
 
     Toast.show({ type: 'success', text1: 'Plano criado com sucesso' })
     
-    return navigation.navigate('Options')
+    return navigation.navigate('Evaluations')
   }
 
   const getIconColor = (isFocused: boolean) => {
